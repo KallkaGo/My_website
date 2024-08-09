@@ -23,10 +23,20 @@ const Contact = () => {
 
     setForm({ ...form, [name]: value })
   }
+
+  const validateEform = () => {
+    const nameInput = form.name.trim()
+    const emailInput = form.email.trim()
+    const messageInput = form.message.trim()
+    return (!nameInput || !emailInput || !messageInput)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!form.name && !form.email && !form.message) {
-      alert('Please fill in form')
+    console.log(!form.name, !form.email, !form.message)
+    const result = validateEform()
+    if (result) {
+      alert('Please fill in all fields')
       return
     }
     setLoading(true)

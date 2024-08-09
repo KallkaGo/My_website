@@ -14,7 +14,6 @@ import {
   AdditiveBlending as l,
   Object3D as m,
   Vector3 as p,
-  Color,
 } from "three"
 import "three/addons/loaders/GLTFLoader.js"
 import "three/addons/loaders/DRACOLoader.js"
