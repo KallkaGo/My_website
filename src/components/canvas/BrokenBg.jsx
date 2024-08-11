@@ -20,6 +20,10 @@ const BrokenBg = () => {
     bokeh1Background.bindMap(diffuseTex)
     bokeh1Background.setColors([0xc18417,0x510de5,0xa8381f])
     // bokeh1Background.setColors([0xffffff * Math.random(), 0xffffff * Math.random(), 0xffffff * Math.random()])
+
+    return () => {
+      bokeh1Background.dispose()
+    }
   }, [])
 
   return null

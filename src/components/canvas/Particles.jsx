@@ -90,6 +90,8 @@ const Particles = () => {
 
     return () => {
       window.removeEventListener('pointermove', handlePointerMove)
+      displacement.canvas.width = displacement.canvas.height = 0
+      displacement.context.fillRect(0, 0, 0, 0)
     }
 
   }, [])
