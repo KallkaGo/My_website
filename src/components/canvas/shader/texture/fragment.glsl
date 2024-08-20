@@ -27,5 +27,5 @@ void main() {
   gl_FragColor.xyz *= mix(1., light, .7);
 
   #include <tonemapping_fragment>
-	#include <encodings_fragment>
+	#include <colorspace_fragment>
 }

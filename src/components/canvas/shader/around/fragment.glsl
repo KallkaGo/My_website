@@ -19,5 +19,5 @@ void main() {
   gl_FragColor.a = radial * .5;
 
   #include <tonemapping_fragment>
-	#include <encodings_fragment>
+	#include <colorspace_fragment>
 }

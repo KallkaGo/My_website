@@ -8,6 +8,7 @@ import fragmentSun from './shader/sun/fragment.glsl'
 import vertexAround from './shader/around/vertex.glsl'
 import fragmentAround from './shader/around/fragment.glsl'
 import * as THREE from 'three'
+import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
 const Sun = () => {
 
@@ -76,6 +77,15 @@ const Sun = () => {
         <boxGeometry></boxGeometry>
         <meshBasicMaterial></meshBasicMaterial>
       </mesh>
+
+      <EffectComposer>
+        <Bloom
+          intensity={1}
+          luminanceThreshold={0.6}
+          mipmapBlur
+          radius={0.5}
+        />
+      </EffectComposer>
     </>
   )
 }

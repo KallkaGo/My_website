@@ -1,4 +1,4 @@
-import { sRGBEncoding } from 'three'
+import { SRGBColorSpace, sRGBEncoding } from 'three'
 import { Canvas, useThree } from '@react-three/fiber'
 import { particleTex } from '../../assets/index.js'
 import { useEffect } from 'react'
@@ -10,7 +10,7 @@ import { Suspense } from 'react'
 const BrokenBg = () => {
   const gl = useThree(state => state.gl)
   const diffuseTex = useTexture(particleTex)
-  diffuseTex.encoding = sRGBEncoding
+  diffuseTex.colorSpace = SRGBColorSpace
 
 
 
@@ -18,7 +18,7 @@ const BrokenBg = () => {
   useEffect(() => {
     const bokeh1Background = Bokeh1Background(gl.domElement)
     bokeh1Background.bindMap(diffuseTex)
-    bokeh1Background.setColors([0xc18417,0x510de5,0xa8381f])
+    bokeh1Background.setColors([0xc18417, 0x510de5, 0xa8381f])
     // bokeh1Background.setColors([0xffffff * Math.random(), 0xffffff * Math.random(), 0xffffff * Math.random()])
 
     return () => {

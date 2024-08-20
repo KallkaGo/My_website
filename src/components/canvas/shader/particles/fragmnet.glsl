@@ -9,5 +9,5 @@ void main() {
   vec3 col = texture2D(uDiffuseTexture, vUv).rgb;
   gl_FragColor = vec4(col, 1.);
   #include <tonemapping_fragment>
-	#include <encodings_fragment>
+	#include <colorspace_fragment>
 }

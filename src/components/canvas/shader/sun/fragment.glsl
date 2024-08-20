@@ -34,6 +34,6 @@ void main() {
   gl_FragColor = vec4(col, 1.);
   // gl_FragColor = vec4(strength );
   #include <tonemapping_fragment>
-	#include <encodings_fragment>
+	#include <colorspace_fragment>
 
 }

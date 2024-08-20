@@ -14,9 +14,9 @@ import { useEffect } from 'react'
 
 const Particles = () => {
   const pictureTex = useTexture(picUrl)
-  pictureTex.encoding = THREE.sRGBEncoding
+  pictureTex.colorSpace = THREE.SRGBColorSpace
   const diffuseTex = useTexture(diffuseUrl)
-  diffuseTex.encoding = THREE.sRGBEncoding
+  diffuseTex.colorSpace = THREE.SRGBColorSpace
 
   const pointsRef = useRef(null)
 
