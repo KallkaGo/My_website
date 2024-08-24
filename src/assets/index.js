@@ -4,6 +4,7 @@ import creator from "./about/creator.png"
 import mobile from "./about/mobile.png"
 import web from "./about/web.png"
 import github from "./other/github.png"
+import preview from './other/preview.png'
 import menu from "./svg/menu.svg"
 import close from "./svg/close.svg"
 
@@ -50,7 +51,9 @@ import pen1 from './article/1.png'
 
 import particleTex from './particles/particles.png'
 
+
 export {
+  preview,
   genshinImpact,
   celShading,
   carousel,

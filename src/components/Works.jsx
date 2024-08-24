@@ -2,12 +2,13 @@ import { Tilt } from "react-tilt"
 import { motion } from 'framer-motion'
 import { styles } from "../styles"
 import { github } from "../assets"
+import { preview } from '../assets'
 import SectionWrapper from "../hoc"
 import { projects } from "../constants"
 import { fadeIn, textVariant } from "../utils/motion"
 
 const ProjectCard = ({ project, index }) => {
-  const { name, description, tags, image, source_code_link } = project
+  const { name, description, tags, image, source_code_link, type = 'github' } = project
   return (
     <>
       <motion.div
@@ -36,8 +37,8 @@ const ProjectCard = ({ project, index }) => {
               cursor-pointer
               "
               >
-                <img src={github} alt="github"
-                  className="w-1/2 h-1/2 object-contain"
+                <img src={type === 'github' ? github : preview} alt="github"
+                  className="w-3/4 h-3/4 object-contain"
                 />
               </div>
 

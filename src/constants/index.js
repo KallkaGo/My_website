@@ -253,6 +253,7 @@ const projects = [
     ],
     image: meoCloud,
     source_code_link: "https://meo.meo.plus",
+    type: 'preview'
   },
   {
     name: 'NanXiang-AIGC',
@@ -270,6 +271,7 @@ const projects = [
     ],
     image: aigc,
     source_code_link: "https://meo.meo.plus/aigc",
+    type: 'preview'
   },
   {
     name: 'su7',
@@ -342,6 +344,7 @@ const projects = [
     ],
     image: genshinImpact,
     source_code_link: "https://hoyo.link/1pVkFBAL",
+    type: 'preview'
   }
 ]
 
