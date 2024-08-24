@@ -24,7 +24,8 @@ import {
   su7,
   carousel,
   celShading,
-  pen1
+  pen1,
+  genshinImpact
 } from "../assets"
 
 export const navLinks = [
@@ -136,13 +137,13 @@ const learningNote = [
     title: "Cel Shading in Threejs Part2",
     description: "highlight and face shadows",
     image: pen1,
-    articlelink:"https://juejin.cn/post/7384629198130151463"
+    articlelink: "https://juejin.cn/post/7384629198130151463"
   },
   {
     title: "Cel Shading in Threejs Part1",
     description: "model processing and add diffuse reflection",
     image: pen1,
-    articlelink:"https://juejin.cn/post/7384274075231256614"
+    articlelink: "https://juejin.cn/post/7384274075231256614"
   },
 
 ]
@@ -239,11 +240,11 @@ const projects = [
       },
       {
         name: "GSAP",
-        color: "ivory-text-gradient",
+        color: "green-text-gradient",
       },
       {
         name: "JQuery",
-        color: "red-text-gradient",
+        color: "orange-text-gradient",
       },
       {
         name: "TypeScript",
@@ -320,6 +321,27 @@ const projects = [
     ],
     image: celShading,
     source_code_link: "https://github.com/KallkaGo/ToonShading",
+  },
+  {
+    name: 'Genshin Impact XR',
+    description:
+      "Genshin Impact XR Interactive h5",
+    tags: [
+      {
+        name: "WebXR",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "TypeScript",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "threejs",
+        color: "orange-text-gradient",
+      }
+    ],
+    image: genshinImpact,
+    source_code_link: "https://hoyo.link/1pVkFBAL",
   }
 ]
 
