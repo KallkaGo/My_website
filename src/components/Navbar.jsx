@@ -16,7 +16,7 @@ const Navbar = () => {
     SetisMuted(!isMuted)
     if (!isMuted) {
       musicRef.current.play()
-    }else{
+    } else {
       musicRef.current.pause()
     }
 
@@ -38,7 +38,7 @@ const Navbar = () => {
             window.scrollTo(0, 0)
           }}
         >
-          <img src={kallkaLogo} alt="logo" className='w-9 h-9 object-contain' />
+          <img src={kallkaLogo} alt="logo" className='w-[80px] h-[60px] object-contain rounded-lg' />
           <p className='text-white text-[18px] font-bold cursor-pointer flex '> Kallka &nbsp; <span
             className='sm:block hidden'
           >| A Front end Web Developer
@@ -92,10 +92,10 @@ const Navbar = () => {
           </div>
         </div>
         <div className=' ml-5 '>
-          <audio  loop ref={musicRef}>
+          <audio loop ref={musicRef}>
             <source src={backgroundMusic} />
           </audio>
-          <img src={isMuted ? music : muted} alt="music" onClick={toggleMuted}  className='cursor-pointer' />
+          <img src={isMuted ? music : muted} alt="music" onClick={toggleMuted} className='cursor-pointer' />
         </div>
       </div>
     </nav >
