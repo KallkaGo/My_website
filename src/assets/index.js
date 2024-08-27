@@ -44,6 +44,7 @@ import aigc from './project/aigc.png'
 import su7 from './project/su7.png'
 import carousel from './project/carousel.png'
 import celShading from './project/celShading.png'
+import toonWater from './project/toonWater.png'
 import genshinImpact from './project/genshinImpactxr.jpg'
 
 import pen1 from './article/1.png'
@@ -53,6 +54,7 @@ import particleTex from './particles/particles.png'
 
 
 export {
+  toonWater,
   preview,
   genshinImpact,
   celShading,

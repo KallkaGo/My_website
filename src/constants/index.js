@@ -24,6 +24,7 @@ import {
   su7,
   carousel,
   celShading,
+  toonWater,
   pen1,
   genshinImpact
 } from "../assets"
@@ -323,6 +324,23 @@ const projects = [
     ],
     image: celShading,
     source_code_link: "https://github.com/KallkaGo/ToonShading",
+  },
+  {
+    name: 'Toon Water',
+    description:
+      "stylized water shader",
+    tags: [
+      {
+        name: "react-three-fiber",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "TypeScript",
+        color: "blue-text-gradient",
+      },
+    ],
+    image: toonWater,
+    source_code_link: "https://github.com/KallkaGo/Stylized-Water",
   },
   {
     name: 'Genshin Impact XR',
