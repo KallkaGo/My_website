@@ -111,12 +111,14 @@ class x {
       (this.#a = setTimeout(this.resize.bind(this), 100))
   }
   resize () {
-    let e, i
+    let e, i,rect
     this.#e.size instanceof Object
       ? ((e = this.#e.size.width), (i = this.#e.size.height))
       : "parent" === this.#e.size && this.canvas.parentNode
-        ? ((e = this.canvas.parentNode.offsetWidth),
-          (i = this.canvas.parentNode.offsetHeight))
+        ? (
+          (rect = this.canvas.parentNode.getBoundingClientRect()),
+          (e = Number(rect.width.toFixed(2))),
+          (i = Number(rect.height.toFixed(2))))
         : ((e = window.innerWidth), (i = window.innerHeight)),
       (this.size.width = e),
       (this.size.height = i),
