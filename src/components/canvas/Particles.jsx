@@ -29,7 +29,7 @@ const Particles = () => {
 
 
   const uniforms = useMemo(() => ({
-    uResolution: new THREE.Uniform(new THREE.Vector2(width * gl.getPixelRatio(), height * gl.getPixelRatio())),
+    uResolution: new THREE.Uniform(new THREE.Vector2(width, height)),
     uPictureTexture: new THREE.Uniform(pictureTex),
     uDiffuseTexture: new THREE.Uniform(diffuseTex),
     uDisplacementTexture: new THREE.Uniform(),
