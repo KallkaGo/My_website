@@ -46,6 +46,7 @@ import carousel from './project/carousel.png'
 import celShading from './project/celShading.png'
 import toonWater from './project/toonWater.png'
 import genshinImpact from './project/genshinImpactxr.jpg'
+import smoothNormalTool from './project/smoothNormalTool.png'
 
 import pen1 from './article/1.png'
 
@@ -54,6 +55,7 @@ import particleTex from './particles/particles.png'
 
 
 export {
+  smoothNormalTool,
   toonWater,
   preview,
   genshinImpact,

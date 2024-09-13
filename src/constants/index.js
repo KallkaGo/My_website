@@ -24,6 +24,7 @@ import {
   su7,
   carousel,
   celShading,
+  smoothNormalTool,
   toonWater,
   pen1,
   genshinImpact
@@ -156,17 +157,13 @@ const projects = [
       "Webgl-3D-FireWork,through shader learn , in order to improve one's shader skill demo,may be have some bug, if you find ,please submit issue for me. Thanks! ",
     tags: [
       {
-        name: "vue",
+        name: "Vue",
         color: "blue-text-gradient",
       },
       {
-        name: "threejs",
+        name: "Threejs",
         color: "green-text-gradient",
-      },
-      {
-        name: "GLSL",
-        color: "pink-text-gradient",
-      },
+      }
     ],
     image: firework,
     source_code_link: "https://github.com/KallkaGo/FireWork",
@@ -177,15 +174,15 @@ const projects = [
       "Reproduction events of Genshin Impact 'Genius Invokation TCG',you have two chance to throw dice, you can lock result you want, next time will throw dice without locked result.  ",
     tags: [
       {
-        name: "vue3/typescript",
+        name: "Vue/Typescript",
         color: "blue-text-gradient",
       },
       {
-        name: "threejs",
+        name: "Threejs",
         color: "green-text-gradient",
       },
       {
-        name: "cannon-es",
+        name: "Cannon-es",
         color: "pink-text-gradient",
       },
     ],
@@ -198,11 +195,11 @@ const projects = [
       "Practice with point cloud particle effects, switch between point cloud models by mouse wheel, also do the gradient of particle colour, switch between model gradients.",
     tags: [
       {
-        name: "R3F/React-three/drei",
+        name: "React-Three-Fiber",
         color: "blue-text-gradient",
       },
       {
-        name: "threejs",
+        name: "Threejs",
         color: "green-text-gradient",
       },
       {
@@ -219,7 +216,7 @@ const projects = [
       "AdachiBOT Plugin which search animation name by  picture  ",
     tags: [
       {
-        name: "TraceMoe",
+        name: "NodeJs",
         color: "green-text-gradient",
       },
       {
@@ -275,12 +272,12 @@ const projects = [
     type: 'preview'
   },
   {
-    name: 'su7',
+    name: 'Su7',
     description:
       "GameMCU Su7 Replica",
     tags: [
       {
-        name: "react-three-fiber",
+        name: "React-Three-Fiber",
         color: "pink-text-gradient",
       },
       {
@@ -297,7 +294,7 @@ const projects = [
       "Webgl 3d Carousel",
     tags: [
       {
-        name: "react-three-fiber",
+        name: "React-Three-Fiber",
         color: "pink-text-gradient",
       },
       {
@@ -314,7 +311,7 @@ const projects = [
       "Genshin Impact Cel Shading",
     tags: [
       {
-        name: "react-three-fiber",
+        name: "React-Three-Fiber",
         color: "pink-text-gradient",
       },
       {
@@ -326,12 +323,29 @@ const projects = [
     source_code_link: "https://github.com/KallkaGo/ToonShading",
   },
   {
+    name: 'Smooth Normal Tool',
+    description:
+      "Tool for calculating smooth normals of models",
+    tags: [
+      {
+        name: "Electron",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "JavaScript",
+        color: "blue-text-gradient",
+      },
+    ],
+    image: smoothNormalTool,
+    source_code_link: "https://github.com/KallkaGo/SmoothNormalTool",
+  },
+  {
     name: 'Toon Water',
     description:
       "stylized water shader",
     tags: [
       {
-        name: "react-three-fiber",
+        name: "React-Three-Fiber",
         color: "pink-text-gradient",
       },
       {
@@ -356,7 +370,7 @@ const projects = [
         color: "blue-text-gradient",
       },
       {
-        name: "threejs",
+        name: "Threejs",
         color: "orange-text-gradient",
       }
     ],
