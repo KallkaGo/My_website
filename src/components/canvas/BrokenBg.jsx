@@ -1,10 +1,8 @@
-import { SRGBColorSpace, sRGBEncoding, TextureLoader } from 'three'
-import { Canvas, useThree } from '@react-three/fiber'
+import { SRGBColorSpace, TextureLoader } from 'three'
 import { particleTex } from '../../assets/index.js'
 import { useEffect } from 'react'
 import { Bokeh1Background } from '../../utils/brokenBg.js'
-import { useTexture } from '@react-three/drei'
-import { Suspense } from 'react'
+
 import { useMemo, useRef } from 'react'
 
 
@@ -25,7 +23,7 @@ const BrokenBg = () => {
       bokeh1Background.dispose()
       diffuseTex.dispose()
     }
-  }, [])
+  },[])
 
   return (
     <canvas ref={canvasRef}></canvas>
