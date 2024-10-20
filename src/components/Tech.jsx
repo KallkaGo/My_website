@@ -8,8 +8,8 @@ const Tech = () => {
 
   return (
 
-    <>{
-      flag && (<div className='flex flex-row flex-wrap justify-center gap-10'>
+    <>
+      <div className='flex flex-row flex-wrap justify-center gap-10'>
         {technologies.map((technologie, index) => {
           return (
 
@@ -19,8 +19,7 @@ const Tech = () => {
 
           )
         })}
-      </div>)
-    }
+      </div>
     </>
 
   )

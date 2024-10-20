@@ -2,9 +2,11 @@ import { BrowserRouter } from "react-router-dom"
 
 import { About, Contact, Hero, Navbar, Tech, Works, StarsCanvas, Target, Feedbacks, Effect } from './components'
 import LearningNote from "./components/LearningNote"
+import { getSystem } from './utils/getSystem'
 
 
 const App = () => {
+  const flag = getSystem() === 'pc'
 
   return (
     <BrowserRouter>
@@ -14,8 +16,12 @@ const App = () => {
           <Hero />
         </div>
         <About />
-        <Tech />
-        <Effect />
+        {
+          flag && <>
+            <Tech />
+            <Effect />
+          </>
+        }
         <LearningNote />
         <Works />
         <Target />

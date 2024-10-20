@@ -144,9 +144,8 @@ const Contact = () => {
       md:h-[550px]
       h-[350px]
       '
-        onAnimationEnd={() => setframeLoop('always')}
       >
-        <SunCanvas frameLoop={frameLoop} />
+        <SunCanvas />
       </motion.div>
     </div>
   )

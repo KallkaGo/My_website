@@ -3,6 +3,8 @@ import SectionWrapper from '../hoc'
 
 
 const MouseEffect = () => {
+  
+
   return (
 
     <>

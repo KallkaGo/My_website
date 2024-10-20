@@ -1,4 +1,4 @@
-import { Suspense, useMemo, useRef, memo } from 'react'
+import { Suspense, useMemo, useRef, memo, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, RenderCubeTexture } from '@react-three/drei'
 import textureVertex from './shader/texture/vertex.glsl'
@@ -78,7 +78,9 @@ const Sun = () => {
         <meshBasicMaterial></meshBasicMaterial>
       </mesh>
 
-      <EffectComposer>
+      <EffectComposer
+        disableNormalPass
+      >
         <Bloom
           intensity={1}
           luminanceThreshold={0.6}
@@ -94,9 +96,23 @@ const Sun = () => {
 
 
 const SunCanvas = ({ frameLoop }) => {
+  const canvasRef = useRef()
+  const [frameloop, setFrameloop] = useState('never')
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([{ isIntersecting }]) => {
+      console.log('@@@@@', isIntersecting);
+      setFrameloop(isIntersecting ? 'always' : 'never')
+    }, {})
+
+    observer.observe(canvasRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <Canvas
-      demand={frameLoop}
+      ref={canvasRef}
+      frameloop={frameloop}
       camera={{
         fov: 45,
         near: 0.1,

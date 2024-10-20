@@ -15,11 +15,11 @@ const LearningNoteCard = ({ index, title, description, image, articlelink }) => 
         onClick={() => window.open(articlelink)}
       >
         <div className='bg-tertiary rounded-3xl p-[20px] flex justify-between  items-center h-[148px]' >
-          <p className='text-white font-bold text-[36px] line-clamp-2 text-ellipsis basis-[80%] break-words '>
+          <p className='text-white font-bold xs:text-[36px] text-[16px] xs:line-clamp-2 text-ellipsis xs:basis-[80%] flex-1 xs:break-words break-all '>
             {title}-{description}
           </p>
           <img src={image}
-            className='w-[110px] h-[74px] rounded-[5px] object-fill ml-[20px]'
+            className='w-[110px] h-[74px] rounded-[5px] object-fill ml-[20px] xs:block hidden'
           />
         </div>
 
