@@ -38,8 +38,8 @@ const Navbar = () => {
             window.scrollTo(0, 0)
           }}
         >
-          <img src={kallkaLogo} alt="logo" className='w-[80px] h-[60px] object-contain rounded-lg' />
-          <p className='text-white text-[18px] font-bold cursor-pointer flex '> Kallka &nbsp; <span
+          <img src={kallkaLogo} alt="logo" className=' xs:w-[80px] xs:h-[60px] w-[56px] h-[42px] object-contain rounded-lg' />
+          <p className='text-white xs:text-[18px] text-[14px] font-bold cursor-pointer flex '> Kallka &nbsp; <span
             className='sm:block hidden'
           >| A Front end Web Developer
           </span> </p>
@@ -62,7 +62,7 @@ const Navbar = () => {
           }
         </ul>
         <div className='sm:hidden flex flex-1 justify-end items-center'>
-          <img src={toggle ? close : menu} alt="menu " className='w-[28px] h-[28px] object-contain cursor-pointer'
+          <img src={toggle ? close : menu} alt="menu " className='xs:w-[28px] xs:h-[28px] w-[20px] h-[20px] object-contain cursor-pointer'
             onClick={() => { setToggle(!toggle) }}
           />
           <div className={`${!toggle ? 'hidden' : 'flex'} p-6 black-gradient absolute
@@ -91,11 +91,11 @@ const Navbar = () => {
 
           </div>
         </div>
-        <div className=' ml-5 '>
+        <div className=' ml-5 xs:w-[40px] xs:h-[40px] w-[30px] h-[30px] '>
           <audio loop ref={musicRef}>
             <source src={backgroundMusic} />
           </audio>
-          <img src={isMuted ? music : muted} alt="music" onClick={toggleMuted} className='cursor-pointer' />
+          <img src={isMuted ? music : muted}   alt="music" onClick={toggleMuted} className='cursor-pointer' />
         </div>
       </div>
     </nav >
