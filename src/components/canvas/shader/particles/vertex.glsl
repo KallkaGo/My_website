@@ -32,7 +32,7 @@ void main() {
   vec4 projectedPosition = projectionMatrix * viewPosition;
   float pictureIntensity = texture2D(uPictureTexture, uv).r;
   vColor = vec3(pow(pictureIntensity, 3.));
-  pictureIntensity = clamp(pictureIntensity, .4, 1.);
+  pictureIntensity = clamp(pictureIntensity, .35, 1.);
   gl_Position = projectedPosition;
   gl_PointSize = 0.2 * uResolution.y * pictureIntensity;
   gl_PointSize *= (1.0 / -viewPosition.z);

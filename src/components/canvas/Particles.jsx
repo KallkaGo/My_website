@@ -154,6 +154,8 @@ const Particles = () => {
           vertexShader={vertexShader}
           fragmentShader={fragmentShader}
           uniforms={uniforms}
+          blending={THREE.AdditiveBlending}
+          transparent
         ></shaderMaterial>
       </points>
       <mesh visible={false} onPointerMove={handleMove} position={[0, 0, .01]} onPointerEnter={() => hoverStateRef.current = true} onPointerLeave={() => hoverStateRef.current = false} >

@@ -4,10 +4,9 @@ varying vec2 vUv;
 
 void main() {
   float dis = distance(gl_PointCoord, vec2(0.5));
-  if(dis >= 0.5)
-    discard;
+  float alpha = 1. - smoothstep(0.3, 0.5, dis);
   vec3 col = texture2D(uDiffuseTexture, vUv).rgb;
-  gl_FragColor = vec4(col, 1.);
+  gl_FragColor = vec4(col, alpha);
   #include <tonemapping_fragment>
 	#include <colorspace_fragment>
 }
