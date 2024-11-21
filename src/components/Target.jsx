@@ -4,7 +4,7 @@ import SectionWrapper from '../hoc'
 import { fadeIn, textVariant } from '../utils/motion'
 import { targets } from '../constants'
 
-const FeedBackCard = ({ index, target, name}) => {
+const TargetCard = ({ index, target, name}) => {
   return (
     <>
       <motion.div
@@ -20,21 +20,6 @@ const FeedBackCard = ({ index, target, name}) => {
           <p className='text-white tracking-wider
           text-[18px]
           ' >{target}</p>
-          {/* <div className='mt-7 flex justify-between items-center gap-1'>
-            <div className='flex-1 flex flex-col '>
-              <p className='text-white font-medium text-[16px]' >
-                <span className='blue-text-gradient' >@</span>{name}
-              </p>
-              <p className='mt-1 text-secondary text-[12px]' >
-                {designation} of {company}
-              </p>
-            </div>
-
-            <img src={image} alt={`feedback-by-${name}`}
-              className='w-10 h-10 rounded-full object-cover'
-            />
-
-          </div> */}
         </div>
 
       </motion.div>
@@ -43,7 +28,7 @@ const FeedBackCard = ({ index, target, name}) => {
 }
 
 
-const Feedbacks = () => {
+const Target = () => {
   return (
     <div className='mt-12 bg-black-100 rounded-[20px] '>
       <div className={`${styles.padding} 
@@ -61,7 +46,7 @@ const Feedbacks = () => {
       >
         {targets.length > 0 && targets.map((target, index) => {
           return (
-            <FeedBackCard key={target.name} index={index} {...target} />
+            <TargetCard key={target.name} index={index} {...target} />
           )
         })}
       </div>
@@ -69,4 +54,4 @@ const Feedbacks = () => {
   )
 }
 
-export default SectionWrapper(Feedbacks, '')
+export default SectionWrapper(Target, '')

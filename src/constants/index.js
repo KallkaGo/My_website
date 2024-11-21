@@ -376,7 +376,8 @@ const projects = [
     ],
     image: genshinImpact,
     source_code_link: "https://hoyo.link/1pVkFBAL",
-    type: 'preview'
+    type: 'preview',
+    active: false
   }
 ]
 

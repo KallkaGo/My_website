@@ -8,7 +8,7 @@ import { projects } from "../constants"
 import { fadeIn, textVariant } from "../utils/motion"
 
 const ProjectCard = ({ project, index }) => {
-  const { name, description, tags, image, source_code_link, type = 'github' } = project
+  const { name, description, tags, image, source_code_link, type = 'github', active = true } = project
   return (
     <>
       <motion.div
@@ -22,13 +22,20 @@ const ProjectCard = ({ project, index }) => {
           }}
           className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full"
         >
-          <div className="relative w-full h-[230px]
+          <div className="relative w-full h-[230px] overflow-hidden
           ">
             <img src={image} alt={name}
               className="w-full h-full object-cover rounded-2xl"
             />
+
+            <div className={`absolute flex justify-center items-center h-[40px] w-[140px] top-[25px]  left-[25px]  bg-red-500  -rotate-45 -translate-x-1/2  -translate-y-1/2 font-bold ${active ? 'hidden' : 'visible'}`}>
+              <div className="flex justify-center items-center  ">
+                END
+              </div>
+            </div>
+
             <div
-              className="absolute inset-0 flex justify-end m-3 card-img_hover"
+              className="absolute inset-0 flex justify-end m-3 card-img_hover "
             >
               <div onClick={() => window.open(source_code_link, "_blank")}
                 className="black-gradient w-10 h-10 rounded-full flex justify-center items-center
@@ -39,7 +46,6 @@ const ProjectCard = ({ project, index }) => {
                   className="w-3/4 h-3/4 object-contain"
                 />
               </div>
-
             </div>
           </div>
           <div

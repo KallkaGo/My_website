@@ -101,7 +101,6 @@ const SunCanvas = ({ frameLoop }) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(([{ isIntersecting }]) => {
-      console.log('@@@@@', isIntersecting);
       setFrameloop(isIntersecting ? 'always' : 'never')
     }, {})
 
