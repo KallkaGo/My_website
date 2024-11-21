@@ -13,6 +13,7 @@ const ProjectCard = ({ project, index }) => {
     <>
       <motion.div
         variants={fadeIn('up', 'spring', index * 0.5, 0.75)}
+        className="sm:w-[360px] w-full"
       >
         <Tilt
           options={{
@@ -20,12 +21,12 @@ const ProjectCard = ({ project, index }) => {
             scale: 1,
             speed: 450
           }}
-          className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full"
+          className="bg-tertiary p-5 rounded-2xl "
         >
-          <div className="relative w-full h-[230px] overflow-hidden
+          <div className="relative w-full h-[230px] overflow-hidden 
           ">
             <img src={image} alt={name}
-              className="w-full h-full object-cover rounded-2xl"
+              className="w-full h-full object-cover rounded-2xl flex-1"
             />
 
             <div className={`absolute flex justify-center items-center h-[40px] w-[140px] top-[25px]  left-[25px]  bg-red-500  -rotate-45 -translate-x-1/2  -translate-y-1/2 font-bold ${active ? 'hidden' : 'visible'}`}>
@@ -96,7 +97,7 @@ const Works = () => {
           It reflects my ability to  work with different technologies, and manage projects effectively.
         </motion.p>
       </div>
-      <div className="mt-20 flex flex-wrap gap-7 justify-center items-center">
+      <div className="mt-20 flex flex-wrap gap-7  justify-center items-center">
         {projects.map((project, index) =>
           <ProjectCard key={index} project={project} index={index} />
         )}
