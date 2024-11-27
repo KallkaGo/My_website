@@ -111,7 +111,7 @@ class x {
       (this.#a = setTimeout(this.resize.bind(this), 100))
   }
   resize () {
-    let e, i,rect
+    let e, i, rect
     this.#e.size instanceof Object
       ? ((e = this.#e.size.width), (i = this.#e.size.height))
       : "parent" === this.#e.size && this.canvas.parentNode
@@ -376,7 +376,7 @@ class O extends v {
           })
       }
     })(this.config.colors)
-    for (let i = 0; i < this.count; i++) 
+    for (let i = 0; i < this.count; i++)
       this.setColorAt(i, e.getColorAt(Math.random()))
     this.instanceColor.needsUpdate = !0
   }
@@ -384,8 +384,8 @@ class O extends v {
 
 
     (this.config.colors = e),
-      this.#M(),
-      console.log(e.map((e) => (16777215 & e).toString(16).padStart(6, "0")))
+      this.#M()
+    // ,console.log(e.map((e) => (16777215 & e).toString(16).padStart(6, "0")))
   }
   update (e) {
     this.uniforms.uTime.value += e.delta * this.uniforms.uTimeScale.value

@@ -27,7 +27,9 @@ import {
   smoothNormalTool,
   toonWater,
   pen1,
-  genshinImpact
+  genshinImpact,
+  customEffect,
+  grass
 } from "../assets"
 
 export const navLinks = [
@@ -378,6 +380,48 @@ const projects = [
     source_code_link: "https://hoyo.link/1pVkFBAL",
     type: 'preview',
     active: false
+  },
+  {
+    name: 'Custom Effect',
+    description:
+      "Custom post-processing",
+    tags: [
+      {
+        name: "R3F",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "TypeScript",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "PostProcessing",
+        color: "orange-text-gradient",
+      }
+    ],
+    image: customEffect,
+    source_code_link: "https://github.com/KallkaGo/CustomEffect",
+  },
+  {
+    name: 'Grass',
+    description:
+      "base to gdc_2021_procedural_grass_in_got grass webgl implement",
+    tags: [
+      {
+        name: "R3F",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "TypeScript",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "Procedural Grass",
+        color: "orange-text-gradient",
+      }
+    ],
+    image: grass,
+    source_code_link: "https://github.com/KallkaGo/Grass",
   }
 ]
 

@@ -47,6 +47,8 @@ import celShading from './project/celShading.png'
 import toonWater from './project/toonWater.png'
 import genshinImpact from './project/genshinImpactxr.jpg'
 import smoothNormalTool from './project/smoothNormalTool.png'
+import customEffect from './project/customEffect.png'
+import grass from './project/grass.png'
 
 import pen1 from './article/1.png'
 
@@ -98,5 +100,7 @@ export {
   dice,
   particles,
   pen1,
-  particleTex
+  particleTex,
+  grass,
+  customEffect
 }
