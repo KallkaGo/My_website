@@ -21,8 +21,13 @@ module.exports = {
       },
       backgroundImage: {
         "hero-pattern": "url('/src/assets/herobg.png')",
-        "particle-pattern": "url('/src/assets/particle.png')"
+        "particle-pattern": "url('/src/assets/particle.png')",
+        "home-pattern": 'url("/src/assets/other/home.jpg")'
       },
+      backgroundSize: {
+        "full": "100% 100%",
+      }
+
     },
   },
   plugins: [],
