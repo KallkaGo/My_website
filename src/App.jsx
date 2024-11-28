@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className=" w-full h-screen bg-home-pattern bg-full  bg-fixed  flex flex-col justify-center items-center" >
+      <div className=" w-full h-screen bg-home-pattern saturate-150 bg-full  bg-fixed  flex flex-col justify-center items-center" >
 
         <div className="relative mb-[20px] text-[40px] pc:text-[80px]  font-extrabol " >
           <h1 className="glitch" data-text="KALLKA" >KALLKA</h1>
