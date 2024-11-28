@@ -56,14 +56,14 @@ const Navbar = () => {
 
     <motion.div
       className='navbar'
-      style={{ backgroundColor: `rgba(0,0,0,${opacity}) !important`, position: "fixed", top: 0, zIndex: 20, width: "100%" }}
-      initial={{ backgroundColor: `rgba(0,0,0,0)` }}
-      animate={{ backgroundColor: `rgba(0,0,0,${opacity})` }}
+      style={{ opacity }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      whileHover={{ backgroundColor: `rgba(0,0,0,1)` }}
+      whileHover={{ opacity: 1 }}
     >
       <nav
-        className={`${styles.paddingX} w-full flex items-center py-5 `}
+        className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 bg-primary `}
       >
         <div className='w-full flex justify-between items-center max-w-7xl mx-auto'>
           <Link to='/'
