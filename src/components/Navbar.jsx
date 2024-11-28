@@ -14,6 +14,7 @@ const Navbar = () => {
   const [opacity, setOpacity] = useState(0)
   const musicRef = useRef(null)
 
+
   const toggleMuted = () => {
     SetisMuted(!isMuted)
     if (!isMuted) {
@@ -29,6 +30,18 @@ const Navbar = () => {
       const scrollTop = window.scrollY // 获取滚动的像素
       const newOpacity = Math.min(scrollTop / 200, 1) // 控制透明度 0 到 1
       setOpacity(newOpacity)
+      // for (let i = 0; i < navLinks.length; i++) {
+      //   const section = document.getElementById(navLinks[i].id)
+      //   if (section) {
+      //     const rect = section.getBoundingClientRect()
+      //     const isVisible = rect.top >= -200 && rect.bottom <= window.innerHeight
+      //     if (isVisible) {
+      //       setActive(navLinks[i].title)
+      //       break
+      //     }
+      //     setActive('')
+      //   }
+      // }
     }, 100)
 
     window.addEventListener("scroll", handleScroll)
@@ -38,16 +51,19 @@ const Navbar = () => {
     }
   }, [])
 
+
   return (
 
     <motion.div
-      style={{ opacity }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity }}
+      className='navbar'
+      style={{ backgroundColor: `rgba(0,0,0,${opacity}) !important`, position: "fixed", top: 0, zIndex: 20, width: "100%" }}
+      initial={{ backgroundColor: `rgba(0,0,0,0)` }}
+      animate={{ backgroundColor: `rgba(0,0,0,${opacity})` }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
+      whileHover={{ backgroundColor: `rgba(0,0,0,1)` }}
     >
       <nav
-        className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 bg-primary `}
+        className={`${styles.paddingX} w-full flex items-center py-5 `}
       >
         <div className='w-full flex justify-between items-center max-w-7xl mx-auto'>
           <Link to='/'
@@ -74,7 +90,7 @@ const Navbar = () => {
                     }
                     onClick={() => setActive(link.title)}
                   >
-                    <a href={`#${link.id}`}>{link.title}</a>
+                    <a href={`#${link.id}`}>{link.title} </a>
                   </li >
                 )
               })

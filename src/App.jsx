@@ -5,6 +5,7 @@ import LearningNote from "./components/LearningNote"
 import { getSystem } from './utils/getSystem'
 
 
+
 const App = () => {
   const flag = getSystem() === 'pc'
 
