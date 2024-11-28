@@ -34,7 +34,7 @@ const LearningNote = () => {
   return (
     <div className='mt-12 bg-black-100 rounded-[20px] '>
       <div className={`${styles.padding} 
-    bg-tertiary rounded-2xl min-h-[300px] 
+    bg-tertiary rounded-2xl 
     `}>
         <motion.div
           variants={textVariant()}
@@ -44,7 +44,7 @@ const LearningNote = () => {
         </motion.div>
       </div>
       <div
-        className={`${styles.paddingX} -mt-20 pb-14 flex flex-wrap flex-col  justify-center items-center gap-7 `}
+        className={`${styles.paddingX} mt-10 pb-14 flex flex-wrap flex-col  justify-center items-center gap-7 `}
       >
         {learningNote.length > 0 && learningNote.map((notes, index) => {
           return (
@@ -56,4 +56,4 @@ const LearningNote = () => {
   )
 }
 
-export default SectionWrapper(LearningNote, '')
+export default SectionWrapper(LearningNote, 'learningNote')
