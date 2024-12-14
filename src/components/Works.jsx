@@ -80,7 +80,6 @@ const Works = () => {
     <>
       <motion.div
         variants={textVariant()}
-        onAnimationStart={() => console.log('animation started')}
       >
         <p className={styles.sectionSubText}>My work</p>
         <p className={styles.sectionHeadText}>Projects.</p>
