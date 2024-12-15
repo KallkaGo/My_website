@@ -1,8 +1,9 @@
 import React, { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Float, Decal, Preload, useTexture } from '@react-three/drei'
-
+import { useEffect,useState,useRef } from 'react'
 import CanvasLoader from '../Loader'
+
 
 const Ball = (props) => {
 
@@ -33,9 +34,24 @@ const Ball = (props) => {
 }
 
 const BallCanvas = ({ icon }) => {
+
+   const [frameloop, setFrameloop] = useState('never')
+
+   const canvasRef = useRef(null)
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(([{ isIntersecting }]) => {
+        setFrameloop(isIntersecting ? 'always' : 'never')
+      }, {})
+  
+      observer.observe(canvasRef.current)
+      return () => observer.disconnect()
+    }, [])
+
   return (
     <Canvas
-      gl={{ preserveDrawingBuffer: true }}
+      ref={canvasRef}
+      frameloop={frameloop}
       dpr={[1, 2]}
     >
       <OrbitControls enableZoom={false} />
