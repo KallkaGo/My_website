@@ -54,7 +54,7 @@ const BallCanvas = ({ icon }) => {
       frameloop={frameloop}
       dpr={[1, 2]}
     >
-      <OrbitControls enableZoom={false} />
+      <OrbitControls enableZoom={false} enablePan={false} />
 
       <Suspense fallback={<CanvasLoader/>}>
         <Ball imgUrl={icon} />
