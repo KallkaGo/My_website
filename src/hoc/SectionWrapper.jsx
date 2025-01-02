@@ -1,20 +1,19 @@
 import { motion } from 'framer-motion'
 import { styles } from '../styles'
 import { staggerContainer } from '../utils/motion'
-import { getSystem } from '../utils/getSystem'
-import { useState } from 'react'
+import { useInteractStore } from '../utils/Store'
 
 const SectionWrapper = (Component, idName) =>
   function HighOrderComponent () {
 
-    const [isPC] = useState(() => getSystem() === 'pc')
+    const system = useInteractStore((state) => state.system)
 
     return (
       <motion.section
         variants={staggerContainer()}
         initial='hidden'
         whileInView={'show'}
-        viewport={{ once: true, amount: isPC ? 0.1 : 'some' }}
+        viewport={{ once: true, amount: system === 'pc' ? 0.1 : 'some' }}
         className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
       >
         <span className='hash-span' id={idName}>

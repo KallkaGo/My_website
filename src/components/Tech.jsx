@@ -1,11 +1,9 @@
 import { BallCanvas } from './canvas'
 import SectionWrapper from '../hoc'
 import { technologies } from '../constants'
-import { getSystem } from '../utils/getSystem'
+
 
 const Tech = () => {
-  const flag = getSystem() === 'pc'
-
   return (
 
     <>

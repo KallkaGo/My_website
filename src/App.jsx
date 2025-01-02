@@ -3,11 +3,18 @@ import { BrowserRouter } from "react-router-dom"
 import { About, Contact, Hero, Navbar, Tech, Works, StarsCanvas, Target, Effect } from './components'
 import LearningNote from "./components/LearningNote"
 import { getSystem } from './utils/getSystem'
+import { useEffect } from "react"
+import { useInteractStore } from "./utils/Store"
 
 
 
 const App = () => {
-  const flag = getSystem() === 'pc'
+
+  const flag = getSystem()
+
+  useEffect(() => {
+    useInteractStore.setState({ system: flag })
+  }, [])
 
   return (
     <BrowserRouter>
