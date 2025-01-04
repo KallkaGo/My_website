@@ -13,8 +13,9 @@ const CardInfo = (props) => {
 
   const { name, description, tags, image, source_code_link, type = 'github', active = true } = props
 
-  return <>
-    <div className="relative w-full h-[230px] overflow-hidden ">
+  return (
+    <div className="min-h-[400px]" >
+        <div className="relative w-full h-[230px] overflow-hidden ">
       <img src={image} alt={name}
         className="w-full h-full object-cover rounded-2xl flex-1"
       />
@@ -55,7 +56,8 @@ const CardInfo = (props) => {
         )
       })}
     </div>
-  </>
+    </div>
+  )
 }
 
 
