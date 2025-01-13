@@ -8,7 +8,7 @@ import { fadeIn, textVariant } from '../utils/motion.js'
 
 import SectionWrapper from '../hoc'
 import { useInteractStore } from '../utils/Store.js'
-import { s } from 'maath/dist/misc-7d870b3c.esm.js'
+
 
 const Content = ({ index, title, icon }) => {
   return (
