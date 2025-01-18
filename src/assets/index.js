@@ -31,7 +31,9 @@ import firework from "./project/firework.png"
 import dice from "./project/dice.png"
 import particles from "./project/particles.png"
 
-import backgroundMusic from './music/bgm.mp3'
+import bgm1 from './music/bgm.mp3'
+import bgm2 from './music/bgm2.mp3'
+
 import music from './music/music.png'
 import muted from './music/muted.png'
 
@@ -68,7 +70,8 @@ export {
   meoCloud,
   tracemoe,
   primogem,
-  backgroundMusic,
+  bgm1,
+  bgm2,
   music,
   muted,
   kallkaLogo,

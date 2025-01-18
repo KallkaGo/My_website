@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { styles } from '../styles'
 import { navLinks } from '../constants'
-import { kallkaLogo, menu, close, backgroundMusic, music, muted } from '../assets'
+import { kallkaLogo, menu, close, bgm1, bgm2,music, muted } from '../assets'
 import { throttle } from '../utils/tool'
 
 
@@ -12,6 +12,11 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false)
   const [isMuted, SetisMuted] = useState(false)
   const [opacity, setOpacity] = useState(0)
+  const [bgm,_] = useState(()=>{
+    const arr = [bgm1,bgm2]
+    return arr[Math.floor(Math.random() * arr.length)]
+  })
+
   const musicRef = useRef(null)
 
 
@@ -128,7 +133,7 @@ const Navbar = () => {
           </div>
           <div className=' ml-5 xs:w-[40px] xs:h-[40px] w-[30px] h-[30px] '>
             <audio loop ref={musicRef}>
-              <source src={backgroundMusic} />
+              <source src={bgm} />
             </audio>
             <img src={isMuted ? music : muted} alt="music" onClick={toggleMuted} className='cursor-pointer' />
           </div>
