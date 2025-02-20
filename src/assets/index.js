@@ -51,6 +51,7 @@ import genshinImpact from './project/genshinImpactxr.jpg'
 import smoothNormalTool from './project/smoothNormalTool.png'
 import customEffect from './project/customEffect.png'
 import grass from './project/grass.png'
+import laser from './project/laser.png'
 
 import pen1 from './article/1.png'
 
@@ -59,6 +60,7 @@ import particleTex from './particles/particles.png'
 
 
 export {
+  laser,
   smoothNormalTool,
   toonWater,
   preview,

@@ -29,7 +29,8 @@ import {
   pen1,
   genshinImpact,
   customEffect,
-  grass
+  grass,
+  laser
 } from "../assets"
 
 export const navLinks = [
@@ -422,6 +423,23 @@ const projects = [
     ],
     image: grass,
     source_code_link: "https://github.com/KallkaGo/Grass",
+  },
+  {
+    name: 'Laser',
+    description:
+      "Webgl Laser Material",
+    tags: [
+      {
+        name: "R3F",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "TypeScript",
+        color: "blue-text-gradient",
+      },
+    ],
+    image: laser,
+    source_code_link: "https://github.com/KallkaGo/Laser",
   }
 ]
 

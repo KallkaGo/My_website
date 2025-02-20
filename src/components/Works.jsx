@@ -74,7 +74,7 @@ const ProjectCard = ({ project, index }) => {
 
         {system === 'pc' ? <Tilt
           options={{
-            max: 45,
+            max: 20,
             scale: 1,
             speed: 450
           }}
