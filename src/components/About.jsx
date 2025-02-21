@@ -43,7 +43,7 @@ const ServiceCard = (props) => {
 
   return (
     <>
-      {system === 'pc' ? <Tilt className='xs:w-[250px] w-full'  >
+      {system === 'pc' ? <Tilt className='xs:w-[250px] w-full' options={{max:20}}  >
         <Content {...props} />
       </Tilt> : <Content {...props} />}
     </>
