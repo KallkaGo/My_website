@@ -23,6 +23,7 @@
     "react-tilt": "^1.0.2",
     "react-vertical-timeline-component": "^3.6.0",
     "three": "^0.161.0",
+    "vconsole": "^3.15.1",
     "vercel": "^28.18.5",
     "zustand": "^5.0.2"
   },

@@ -12,6 +12,8 @@ const App = () => {
 
   const flag = getSystem()
 
+  console.log('flag');
+
   useEffect(() => {
     useInteractStore.setState({ system: flag })
   }, [])
@@ -36,7 +38,7 @@ const App = () => {
         </div>
         <About />
         {
-          flag && <>
+          flag === 'pc' && <>
             <Tech />
             <Effect />
           </>
