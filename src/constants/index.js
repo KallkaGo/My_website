@@ -124,7 +124,7 @@ const experiences = [
 
 const targets = [
   {
-    target: 'I want to read and learn GLSL Shader Language book to improve myself',
+    target: 'Unity learning',
     name: 'target-1'
   },
   {
@@ -132,7 +132,7 @@ const targets = [
     name: 'target-2'
   },
   {
-    target: "Develop projects with partners",
+    target: "Opengl learning",
     name: 'target-3'
   }
 ]
