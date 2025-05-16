@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom"
-
+import {HomeBgCanvas} from './components/canvas/HomeBg'
 import { About, Contact, Hero, Navbar, Tech, Works, StarsCanvas, Target, Effect } from './components'
 import LearningNote from "./components/LearningNote"
 import { getSystem } from './utils/getSystem'
@@ -12,7 +12,7 @@ const App = () => {
 
   const flag = getSystem()
 
-  console.log('flag');
+  console.log('flag')
 
   useEffect(() => {
     useInteractStore.setState({ system: flag })
@@ -21,7 +21,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className=" w-full h-screen bg-home-pattern saturate-150  bg-cover pc:bg-full bg-no-repeat bg-center  bg-fixed  flex flex-col justify-center items-center" >
-
+        <HomeBgCanvas />
         <div className="relative mb-[20px] text-[40px] pc:text-[80px]  font-extrabol " >
           <h1 className="glitch" data-text="KALLKA" >KALLKA</h1>
         </div>
