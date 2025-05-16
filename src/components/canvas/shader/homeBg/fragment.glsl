@@ -18,6 +18,7 @@ void main() {
 
   o = 25.6 / (min(o, 13.) + 164. / o) - dot(u, u) / 250.;
   o = clamp(o, 0., 1.);
+  o = pow(o, vec4(2.2));
   o.a = 1.;
   gl_FragColor = o;
 }
