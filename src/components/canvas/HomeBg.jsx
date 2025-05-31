@@ -46,7 +46,7 @@ const HomeBg = () => {
 
   return (
     <>
-      <OrthographicCamera makeDefault left={-1} right={1} top={1} bottom={-1} near={0} far={1} />
+      <OrthographicCamera makeDefault manual left={-1} right={1} top={1} bottom={-1} near={0} far={1} />
       <mesh geometry={geometry} material={material} />
     </>
   )
