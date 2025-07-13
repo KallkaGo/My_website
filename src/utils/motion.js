@@ -1,41 +1,41 @@
+
 export const textVariant = (delay) => {
   return {
     hidden: {
-      y: -50,
+      transform: "translateY(-50%)",
       opacity: 0,
     },
     show: {
-      y: 0,
+      transform: "translateY(0)",
       opacity: 1,
       transition: {
-        type: "spring",
-        duration: 1.25,
+        // type: "spring",
+        duration: 0.5,
         delay: delay,
+        ease: "easeInOut",
       },
     },
-  };
-};
+  }
+}
 
 export const fadeIn = (direction, type, delay, duration) => {
   return {
     hidden: {
-      x: direction === "left" ? 100 : direction === "right" ? -100 : 0,
-      y: direction === "up" ? 100 : direction === "down" ? -100 : 0,
+      transform: `translateX(${direction === "left" ? 101 : direction === "right" ? -101 : 0}%) translateY(${direction === "up" ? 101 : direction === "down" ? -101 : 0}%)`,
       opacity: 0,
     },
     show: {
-      x: 0,
-      y: 0,
+      transform: "translateX(0%) translateY(0%)",
       opacity: 1,
       transition: {
         type: type,
         delay: delay,
         duration: duration,
-        ease: "easeOut",
+        ease: "easeInOut",
       },
     },
-  };
-};
+  }
+}
 
 export const zoomIn = (delay, duration) => {
   return {
@@ -53,29 +53,27 @@ export const zoomIn = (delay, duration) => {
         ease: "easeOut",
       },
     },
-  };
-};
+  }
+}
 
 export const slideIn = (direction, type, delay, duration) => {
   return {
     hidden: {
-      x: direction === "left" ? "-100%" : direction === "right" ? "100%" : 0,
-      y: direction === "up" ? "100%" : direction === "down" ? "100%" : 0,
+      transform: `translateX(${direction === "left" ? -100 : direction === "right" ? 100 : 0}%) translateY(${direction === "up" ? 101 : direction === "down" ? -101 : 0}%)`,
       opacity: 0,
     },
     show: {
       opacity: 1,
-      x: 0,
-      y: 0,
+      transform: "translateX(0%) translateY(0%)",
       transition: {
         type: type,
         delay: delay,
         duration: duration,
-        ease: "easeOut",
+        ease: "easeInOut",
       },
     },
-  };
-};
+  }
+}
 
 export const staggerContainer = (staggerChildren, delayChildren) => {
   return {
@@ -86,5 +84,5 @@ export const staggerContainer = (staggerChildren, delayChildren) => {
         delayChildren: delayChildren || 0,
       },
     },
-  };
-};
+  }
+}

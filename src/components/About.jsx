@@ -3,36 +3,38 @@ import { Tilt } from 'react-tilt'
 import { motion } from 'framer-motion'
 import { styles } from '../styles'
 import { services } from '../constants'
-
 import { fadeIn, textVariant } from '../utils/motion.js'
-
 import SectionWrapper from '../hoc'
 import { useInteractStore } from '../utils/Store.js'
 
 
+
 const Content = ({ index, title, icon }) => {
   return (
-    <motion.div
-      variants={fadeIn('right', 'spring', 0.5 * index, 0.75)}
-      className='w-full green-pink-gradient p-[1px] rounded-[20px]  shadow-card '
-    >
-      <div
-        options={{
-          max: 45,
-          scale: 1,
-          speed: 450
-        }}
-        className='bg-tertiary rounded-[20px] 
+    <div >
+      <motion.div
+        variants={fadeIn('right', 'spring', 0.5 * index, 1)}
+        className='w-full green-pink-gradient p-[1px] rounded-[20px]  shadow-card '
+      >
+        <div
+          options={{
+            max: 45,
+            scale: 1,
+            speed: 450
+          }}
+          className='bg-tertiary rounded-[20px] 
       py-5 px-12 min-h-[280px] flex
       justify-evenly items-center flex-col
       '
-      >
-        <img src={icon} alt={title}
-          className='w-16 h-16 object-contain'
-        />
-        <h3 className='text-white text-[20px] font-bold text-center' >{title}</h3>
-      </div>
-    </motion.div>
+        >
+          <img src={icon} alt={title}
+            className='w-16 h-16 object-contain'
+          />
+          <h3 className='text-white text-[20px] font-bold text-center' >{title}</h3>
+        </div>
+      </motion.div>
+    </div>
+
   )
 }
 
@@ -43,7 +45,7 @@ const ServiceCard = (props) => {
 
   return (
     <>
-      {system === 'pc' ? <Tilt className='xs:w-[250px] w-full' options={{max:20}}  >
+      {system === 'pc' ? <Tilt className='xs:w-[250px] w-full' options={{ max: 20 }}  >
         <Content {...props} />
       </Tilt> : <Content {...props} />}
     </>
@@ -68,7 +70,7 @@ const About = () => {
         real-world problems.Also I am a fan of games from MMORPG to FPS, I wish I could be your friend!
 
       </motion.p>
-      <div className='mt-20 flex flex-wrap gap-10 justify-center '>
+      <div className='mt-20 flex flex-wrap gap-10 justify-center  '>
         {services.map((service, index) => {
           return (<ServiceCard key={service.title} index={index} {...service} />)
         })}
