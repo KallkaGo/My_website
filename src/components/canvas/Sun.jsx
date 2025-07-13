@@ -118,8 +118,8 @@ const SunCanvas = ({ frameLoop }) => {
         far: 100,
         position: [-4, 3, 7]
       }}
-      gl={{ preserveDrawingBuffer: true, toneMapping: THREE.NoToneMapping }}
-      dpr={[1, 2]}
+      gl={{ toneMapping: THREE.NoToneMapping }}
+      dpr={[1, 1.5]}
     >
       <OrbitControls
         autoRotate
