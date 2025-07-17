@@ -17,14 +17,14 @@ void main() {
   displacementIntensity = smoothstep(0.1, .5, displacementIntensity);
   // vec3 displacement = vec3(cos(aAngle) * 0.2, sin(aAngle) * 0.2, .5);
 
-  vec2 offset = snoise2(newPosition.xy) * .5;
-  vec3 displacement = vec3(offset, 1.);
-
+  vec2 offset = snoise2(newPosition.xy) * 0.1;
+  vec3 displacement = vec3(offset, 0.);
   displacement = normalize(displacement);
   displacement *= displacementIntensity;
   displacement *= 2.;
   displacement *= aIntensity;
   displacement *= uIntensity * 3.;
+  displacement *= 0.4;
   newPosition += displacement;
 
   vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
@@ -34,7 +34,7 @@ void main() {
   vColor = vec3(pow(pictureIntensity, 3.));
   pictureIntensity = clamp(pictureIntensity, .35, 1.);
   gl_Position = projectedPosition;
-  gl_PointSize = 0.2 * uResolution.y * pictureIntensity;
+  gl_PointSize = .2 * uResolution.y * pictureIntensity;
   gl_PointSize *= (1.0 / -viewPosition.z);
   vUv = uv;
 }

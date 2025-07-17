@@ -33,7 +33,7 @@ const Particles = () => {
     uPictureTexture: new THREE.Uniform(pictureTex),
     uDiffuseTexture: new THREE.Uniform(diffuseTex),
     uDisplacementTexture: new THREE.Uniform(),
-    uIntensity: new THREE.Uniform(0)
+    uIntensity: new THREE.Uniform(1)
   }), [])
 
   useEffect(() => {
@@ -155,6 +155,7 @@ const Particles = () => {
           fragmentShader={fragmentShader}
           uniforms={uniforms}
           blending={THREE.AdditiveBlending}
+          depthWrite={false}
           transparent
         ></shaderMaterial>
       </points>
