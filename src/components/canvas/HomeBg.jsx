@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useMemo, useState, useRef, useEffect } from "react"
 import { Float32BufferAttribute, BufferGeometry, ShaderMaterial, Uniform, Vector2, NoToneMapping } from "three"
 import vertexShader from './shader/homeBg/vertex.glsl'
 import fragmentShader from './shader/homeBg/fragment.glsl'
@@ -40,6 +40,7 @@ const HomeBg = () => {
 
   useFrame((state, delta) => {
     delta %= 1
+    console.log('delta', delta)
     material.uniforms.uTime.value += delta
     material.uniforms.uResolution.value.set(innerWidth, innerHeight)
   })
@@ -54,11 +55,27 @@ const HomeBg = () => {
 
 
 export const HomeBgCanvas = () => {
+
+  const [frameloop, setFrameloop] = useState('never')
+
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([{ isIntersecting }]) => {
+      setFrameloop(isIntersecting ? 'always' : 'never')
+    }, {})
+
+    observer.observe(canvasRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div className="absolute w-full h-full">
       <Canvas
         dpr={[1, 1]}
         gl={{ toneMapping: NoToneMapping }}
+        frameloop={frameloop}
+        ref={canvasRef}
       >
         <Suspense>
           <HomeBg />
