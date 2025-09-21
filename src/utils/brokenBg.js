@@ -432,6 +432,7 @@ function E (e, i) {
       setColors: s.setColors.bind(s),
       dispose () {
         t.dispose()
+        o.dispose()
       },
     }
   )
