@@ -461,6 +461,7 @@ const projects = [
       }
     ],
     image: gem,
+    type: 'preview',
     source_code_link: "https://gem-ochre.vercel.app/#debug",
   }
 ]

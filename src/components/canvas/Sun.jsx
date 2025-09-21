@@ -137,4 +137,4 @@ const SunCanvas = ({ frameLoop }) => {
   )
 }
 
-export default memo(SunCanvas)
+export default SunCanvas

@@ -1,8 +1,5 @@
 import { motion } from 'framer-motion'
-
 import { styles } from '../styles'
-
-import { ComputersCanvas } from './canvas'
 import BrokenBgCanvas from './canvas/BrokenBg'
 
 const Hero = () => {
@@ -32,7 +29,6 @@ const Hero = () => {
         </div>
       </div>
       <BrokenBgCanvas />
-      <ComputersCanvas />
       <div className='absolute xs:bottom-10 bottom-10 pc:bottom-32
        w-full flex 
        justify-center items-center'
