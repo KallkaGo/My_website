@@ -52,6 +52,7 @@ import smoothNormalTool from './project/smoothNormalTool.png'
 import customEffect from './project/customEffect.png'
 import grass from './project/grass.png'
 import laser from './project/laser.png'
+import gem from './project/gem.png'
 
 import pen1 from './article/1.png'
 
@@ -60,6 +61,7 @@ import particleTex from './particles/particles.png'
 
 
 export {
+  gem,
   laser,
   smoothNormalTool,
   toonWater,

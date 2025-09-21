@@ -30,7 +30,8 @@ import {
   genshinImpact,
   customEffect,
   grass,
-  laser
+  laser,
+  gem
 } from "../assets"
 
 export const navLinks = [
@@ -440,6 +441,27 @@ const projects = [
     ],
     image: laser,
     source_code_link: "https://github.com/KallkaGo/Laser",
+  },
+  {
+    name: 'Gem',
+    description:
+      "Webgl Gem Material",
+    tags: [
+      {
+        name: "R3F",
+        color: "pink-text-gradient",
+      },
+      {
+        name: "TypeScript",
+        color: "blue-text-gradient",
+      },
+       {
+        name: "Webgl",
+        color: "orange-text-gradient",
+      }
+    ],
+    image: gem,
+    source_code_link: "https://gem-ochre.vercel.app/#debug",
   }
 ]
 

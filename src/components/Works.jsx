@@ -118,7 +118,7 @@ const Works = () => {
         </motion.p>
       </div>
       <div className="mt-20 flex flex-wrap gap-7  justify-center items-center">
-        {projects.map((project, index) =>
+        {[...projects].reverse().map((project, index) =>
           <ProjectCard key={index} project={project} index={index} />
         )}
       </div>
