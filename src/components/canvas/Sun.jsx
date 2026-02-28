@@ -118,18 +118,12 @@ const SunCanvas = ({ frameLoop }) => {
         far: 100,
         position: [-4, 3, 7]
       }}
+      style={{
+        pointerEvents: 'none'
+      }}
       gl={{ toneMapping: THREE.NoToneMapping }}
       dpr={[1, 1.5]}
     >
-      <OrbitControls
-        autoRotate
-        autoRotateSpeed={0.5}
-        enableZoom={false}
-        enablePan={false}
-        rotateSpeed={0.1}
-        maxPolarAngle={Math.PI / 2}
-        minPolarAngle={Math.PI / 2}
-      />
       <Suspense fallback={null}>
         <Sun />
       </Suspense>
