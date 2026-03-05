@@ -37,9 +37,9 @@ const App = () => {
           <Hero />
         </div>
         <About />
+        <Tech />
         {
           flag === 'pc' && <>
-            <Tech />
             <Effect />
           </>
         }

@@ -19,6 +19,15 @@ module.exports = {
         xs: "450px",
         pc: "1280px"
       },
+      animation: {
+        scan: 'scan 2s linear infinite',
+      },
+      keyframes: {
+        scan: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+      },
       backgroundImage: {
         "hero-pattern": "url('/src/assets/herobg.png')",
         "particle-pattern": "url('/src/assets/particle.png')",

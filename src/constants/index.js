@@ -158,7 +158,7 @@ const projects = [
   {
     name: "FireWork",
     description:
-      "Webgl-3D-FireWork,through shader learn , in order to improve one's shader skill demo,may be have some bug, if you find ,please submit issue for me. Thanks! ",
+      "WebGL 3D fireworks demo using custom shaders to enhance graphics programming skills.",
     tags: [
       {
         name: "Vue",
@@ -175,7 +175,7 @@ const projects = [
   {
     name: "Genius Invokation TCG",
     description:
-      "Reproduction events of Genshin Impact 'Genius Invokation TCG',you have two chance to throw dice, you can lock result you want, next time will throw dice without locked result.  ",
+      "Genshin Impact TCG dice rolling simulator with lock mechanics for strategic gameplay.",
     tags: [
       {
         name: "Vue/Typescript",
@@ -196,7 +196,7 @@ const projects = [
   {
     name: "ParticlesEffect",
     description:
-      "Practice with point cloud particle effects, switch between point cloud models by mouse wheel, also do the gradient of particle colour, switch between model gradients.",
+      "Interactive point cloud particle system with model switching and dynamic color gradients.",
     tags: [
       {
         name: "React-Three-Fiber",
@@ -217,7 +217,7 @@ const projects = [
   {
     name: "ACG-SEARCH",
     description:
-      "AdachiBOT Plugin which search animation name by  picture  ",
+      "AdachiBOT plugin for anime identification through image search.",
     tags: [
       {
         name: "NodeJs",
@@ -234,7 +234,7 @@ const projects = [
   {
     name: 'MEO.CLOUD',
     description:
-      "Web 3D virtual world, six scenes, includ challenges , chat, relax ",
+      "Web 3D virtual world featuring six immersive scenes with social and gaming experiences.",
     tags: [
       {
         name: "Threejs",
@@ -260,7 +260,7 @@ const projects = [
   {
     name: 'NanXiang-AIGC',
     description:
-      "3D art exhibition, roaming + clicking the button to automatically go ",
+      "Interactive 3D art exhibition with automated navigation and roaming capabilities.",
     tags: [
       {
         name: "Threejs",
@@ -278,7 +278,7 @@ const projects = [
   {
     name: 'Su7',
     description:
-      "GameMCU Su7 Replica",
+      "GameMCU Su7 replica with realistic 3D rendering and interactive controls.",
     tags: [
       {
         name: "React-Three-Fiber",
@@ -295,7 +295,7 @@ const projects = [
   {
     name: '3D-Carousel',
     description:
-      "Webgl 3d Carousel",
+      "Interactive WebGL 3D carousel component with smooth animations.",
     tags: [
       {
         name: "React-Three-Fiber",
@@ -312,7 +312,7 @@ const projects = [
   {
     name: 'Cel Shading',
     description:
-      "Genshin Impact Cel Shading",
+      "Genshin Impact inspired cel shading technique with diffuse reflection.",
     tags: [
       {
         name: "React-Three-Fiber",
@@ -329,7 +329,7 @@ const projects = [
   {
     name: 'Smooth Normal Tool',
     description:
-      "Tool for calculating smooth normals of models",
+      "Desktop tool for calculating and optimizing smooth normals of 3D models.",
     tags: [
       {
         name: "Electron",
@@ -346,7 +346,7 @@ const projects = [
   {
     name: 'Toon Water',
     description:
-      "stylized water shader",
+      "Stylized water shader with cartoon-like visual effects for 3D scenes.",
     tags: [
       {
         name: "React-Three-Fiber",
@@ -363,7 +363,7 @@ const projects = [
   {
     name: 'Genshin Impact XR',
     description:
-      "Genshin Impact XR Interactive h5",
+      "WebXR interactive experience based on Genshin Impact gameplay mechanics.",
     tags: [
       {
         name: "WebXR",
@@ -386,7 +386,7 @@ const projects = [
   {
     name: 'Custom Effect',
     description:
-      "Custom post-processing",
+      "Custom post-processing effects for enhanced visual rendering in 3D scenes.",
     tags: [
       {
         name: "R3F",
@@ -407,7 +407,7 @@ const projects = [
   {
     name: 'Grass',
     description:
-      "base to gdc_2021_procedural_grass_in_got grass webgl implement",
+      "Procedural grass rendering system based on GDC 2021 implementation techniques.",
     tags: [
       {
         name: "R3F",
@@ -428,7 +428,7 @@ const projects = [
   {
     name: 'Laser',
     description:
-      "Webgl Laser Material",
+      "WebGL laser material with dynamic glow and beam effects.",
     tags: [
       {
         name: "R3F",
@@ -445,7 +445,7 @@ const projects = [
   {
     name: 'Gem',
     description:
-      "Webgl Gem Material",
+      "WebGL gem material with realistic refraction and light dispersion.",
     tags: [
       {
         name: "R3F",
