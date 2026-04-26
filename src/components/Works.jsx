@@ -53,8 +53,10 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
             {/* Link button - only show if active */}
             {active && (
               <div className='absolute inset-0 flex justify-end items-start m-3'>
-                <div
-                  onClick={() => window.open(source_code_link, '_blank')}
+                <a
+                  href={source_code_link}
+                  target='_blank'
+                  rel='noopener noreferrer'
                   className='w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm
                     flex justify-center items-center cursor-pointer
                     border border-gray-600/50 hover:border-purple-500/50
@@ -68,7 +70,7 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
                     alt='link'
                     className='w-1/2 h-1/2 object-contain'
                   />
-                </div>
+                </a>
               </div>
             )}
           </div>

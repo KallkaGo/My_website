@@ -10,10 +10,12 @@ const LearningNoteCard = ({ index, title, description, image, articlelink }) => 
   const system = useInteractStore((state) => state.system)
 
   const cardContent = (
-    <motion.div
+    <motion.a
       variants={fadeIn('', 'spring', index * 0.1, 0.5)}
-      onClick={() => window.open(articlelink)}
-      className='relative group cursor-pointer h-full'
+      href={articlelink}
+      target='_blank'
+      rel='noopener noreferrer'
+      className='relative group cursor-pointer h-full block'
     >
       {/* Subtle glow effect */}
       <div className='absolute -inset-0.5 bg-gradient-to-br from-purple-600/20 to-pink-600/20
@@ -83,7 +85,7 @@ const LearningNoteCard = ({ index, title, description, image, articlelink }) => 
           </div>
         </div>
       </div>
-    </motion.div>
+    </motion.a>
   )
 
   return system === 'pc' ? (
