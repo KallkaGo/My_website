@@ -1,4 +1,3 @@
-import kallkaLogo from './svg/kallka_logo.svg'
 import backend from "./about/backend.png"
 import creator from "./about/creator.png"
 import mobile from "./about/mobile.png"
@@ -78,7 +77,6 @@ export {
   bgm2,
   music,
   muted,
-  kallkaLogo,
   backend,
   creator,
   mobile,

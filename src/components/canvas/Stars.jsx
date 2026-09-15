@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { useRef, Suspense, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
+import { markModuleReady } from '../../utils/Store'
 
 import { Points, PointMaterial, Preload } from '@react-three/drei'
 
@@ -15,6 +16,8 @@ const Stars = (props) => {
   const ref = useRef()
 
   const materialRef = useRef()
+
+  useEffect(() => markModuleReady('stars'), [])
 
   const count = 5000
 
@@ -94,9 +97,7 @@ const Stars = (props) => {
 
 const StarsCanvas = () => {
   return (
-    <div className='w-full h-auto absolute inset-0
-    z-[-1]
-    '>
+    <div className='w-full h-auto absolute inset-0 z-[-1]'>
       <Canvas
         camera={{ position: [0, 0, 1] }}
         dpr={[1, 1]}
@@ -106,7 +107,6 @@ const StarsCanvas = () => {
         </Suspense>
         <Preload />
       </Canvas>
-
     </div>
   )
 }

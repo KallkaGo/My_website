@@ -1,18 +1,19 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import emailJs from '@emailjs/browser'
 import { styles } from '../styles'
 import { SunCanvas } from './canvas'
 import SectionWrapper from '../hoc'
-import { fadeIn, textVariant } from '../utils/motion.js'
+import { useGsapReveal } from '../utils/useGsapReveal'
 
 const Contact = () => {
   const [form, setForm] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   })
   const [loading, setLoading] = useState(false)
+  const [statusMessage, setStatusMessage] = useState(null)
+  const containerRef = useGsapReveal({ y: 30, stagger: 0.15 })
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -28,175 +29,153 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const result = validateForm()
-    if (result) {
-      alert('Please fill in all fields')
+    if (validateForm()) {
+      setStatusMessage({ type: 'error', text: 'Please fill in all fields before sending.' })
       return
     }
+
     setLoading(true)
-    emailJs.send(
-      'service_hzorj2i',
-      'template_q26i4rg',
-      {
-        from_name: form.name,
-        to_name: 'Kallka',
-        from_email: form.email,
-        to_mail: 'bettermarry1016@gmail.com',
-        message: form.message
-      },
-      'shVZm0O5U1s-sguCF'
-    ).then(() => {
-      setLoading(false)
-      alert('Thank you. I will get back to you as soon as possible')
-      setForm({
-        name: '',
-        email: '',
-        message: ''
-      })
-    }, (err) => {
-      setLoading(false)
-      console.error(err)
-      alert('Something went wrong.')
-    })
+    setStatusMessage(null)
+
+    emailJs
+      .send(
+        'service_hzorj2i',
+        'template_q26i4rg',
+        {
+          from_name: form.name,
+          to_name: 'Kallka',
+          from_email: form.email,
+          to_mail: 'bettermarry1016@gmail.com',
+          message: form.message,
+        },
+        'shVZm0O5U1s-sguCF'
+      )
+      .then(
+        () => {
+          setLoading(false)
+          setStatusMessage({ type: 'success', text: 'Thank you! Your message has been sent successfully.' })
+          setForm({
+            name: '',
+            email: '',
+            message: '',
+          })
+        },
+        (err) => {
+          setLoading(false)
+          console.error(err)
+          setStatusMessage({ type: 'error', text: 'Something went wrong. Please try again later.' })
+        }
+      )
   }
 
-  const FormField = ({ label, name, type = 'text', placeholder, rows }) => (
-    <motion.label
-      variants={fadeIn('up', 'spring', 0.1, 0.5)}
-      className='flex flex-col relative group'
-    >
-      <span className='text-white font-medium mb-3 text-sm tracking-wide'>
-        {label}
-      </span>
-      {type === 'textarea' ? (
-        <textarea
-          rows={rows}
-          name={name}
-          value={form[name]}
-          onChange={handleChange}
-          placeholder={placeholder}
-          className='bg-[#151525] py-4 px-6
-            placeholder:text-gray-500 text-white
-            rounded-xl outline-none
-            border border-gray-700/50
-            focus:border-purple-500/50
-            focus:ring-2 focus:ring-purple-500/20
-            transition-all duration-300
-            resize-none
-            font-medium'
-        />
-      ) : (
-        <input
-          type={type}
-          name={name}
-          value={form[name]}
-          onChange={handleChange}
-          placeholder={placeholder}
-          className='bg-[#151525] py-4 px-6
-            placeholder:text-gray-500 text-white
-            rounded-xl outline-none
-            border border-gray-700/50
-            focus:border-purple-500/50
-            focus:ring-2 focus:ring-purple-500/20
-            transition-all duration-300
-            font-medium'
-        />
-      )}
-    </motion.label>
-  )
-
   return (
-    <div className='relative xl:mt-12'>
-      {/* Background grid */}
-      <div className='absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),
-        linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] -z-10'>
-      </div>
-
-      <div className='xl:flex-row flex-col-reverse flex gap-10 overflow-hidden'>
-        {/* Form Section */}
-        <motion.div
-          variants={fadeIn('right', 'spring', 0.2, 1)}
-          className='flex-[0.75] relative'
-        >
-          {/* Subtle glow effect */}
-          <div className='absolute -inset-0.5 bg-gradient-to-br from-purple-600/20 to-pink-600/20
-            rounded-2xl blur-lg opacity-50'>
-          </div>
-
-          {/* Card */}
-          <div className='relative bg-gradient-to-br from-[#1a1a2e]/80 to-[#151525]/80
-            backdrop-blur-sm rounded-2xl p-8
-            border border-gray-700/50
-            shadow-2xl'>
+    <div ref={containerRef} className='relative w-full'>
+      <div className='flex flex-col-reverse xl:flex-row gap-10 items-stretch'>
+        {/* Left: Contact Form Card */}
+        <div className='gsap-reveal flex-[0.8] relative'>
+          <div className='relative h-full bg-[#0c0d12] rounded-3xl p-8 sm:p-10 border border-white/[0.08] shadow-[0_20px_60px_rgba(0,0,0,0.8)] flex flex-col justify-between'>
             {/* Header */}
-            <motion.div variants={textVariant()} className='mb-8'>
-              <p className={`${styles.sectionSubText} text-purple-400`}>Get in touch</p>
-              <h2 className={`${styles.sectionHeadText} bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400
-                bg-clip-text text-transparent`}>
-                Contact.
-              </h2>
-              <div className='h-1 w-32 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-4'>
+            <div>
+              <div className='mb-6'>
+                <p className={styles.sectionSubText}>GET IN TOUCH</p>
+                <h2 className={`${styles.sectionHeadText} mt-2 text-gradient-white`}>
+                  Contact.
+                </h2>
+                <p className='text-neutral-400 text-sm font-light mt-2'>
+                  Have an inquiry, collaborative project idea, or just want to discuss WebGL and shaders? Drop a message.
+                </p>
               </div>
-            </motion.div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className='mt-8 flex flex-col gap-6'>
-              <FormField
-                label='Your Name'
-                name='name'
-                placeholder="What's your name?"
-              />
-              <FormField
-                label='Your Email'
-                name='email'
-                type='email'
-                placeholder="What's your email?"
-              />
-              <FormField
-                label='Your Message'
-                name='message'
-                type='textarea'
-                rows={7}
-                placeholder="What do you want to say?"
-              />
+              {/* Status Alert */}
+              {statusMessage && (
+                <div
+                  className={`mb-6 p-4 rounded-xl text-xs font-mono border ${
+                    statusMessage.type === 'success'
+                      ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+                      : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+                  }`}
+                >
+                  {statusMessage.text}
+                </div>
+              )}
 
-              {/* Submit Button */}
-              <motion.button
-                variants={fadeIn('up', 'spring', 0.4, 0.5)}
-                type='submit'
-                disabled={loading}
-                className='mt-4
-                  bg-[#151525]
-                  py-4 px-8 outline-none
-                  w-fit text-white font-bold
-                  border border-purple-500/50
-                  rounded-xl
-                  hover:bg-purple-500/20
-                  hover:border-purple-400
-                  hover:shadow-lg hover:shadow-purple-500/20
-                  hover:scale-105
-                  active:scale-95
-                  transition-all duration-300
-                  disabled:opacity-50
-                  disabled:cursor-not-allowed
-                  disabled:hover:scale-100
-                  disabled:bg-[#151525]'
+              {/* Form */}
+              <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
+                <div className='flex flex-col gap-2'>
+                  <label className='text-xs font-mono tracking-wider text-neutral-400 uppercase'>
+                    Your Name
+                  </label>
+                  <input
+                    type='text'
+                    name='name'
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder='e.g. Alex Morgan'
+                    className='bg-white/[0.03] border border-white/[0.08] focus:border-white/30 focus:bg-white/[0.06] rounded-xl px-4 py-3.5 text-white placeholder:text-neutral-600 outline-none text-sm transition-all'
+                  />
+                </div>
+
+                <div className='flex flex-col gap-2'>
+                  <label className='text-xs font-mono tracking-wider text-neutral-400 uppercase'>
+                    Your Email
+                  </label>
+                  <input
+                    type='email'
+                    name='email'
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder='e.g. alex@example.com'
+                    className='bg-white/[0.03] border border-white/[0.08] focus:border-white/30 focus:bg-white/[0.06] rounded-xl px-4 py-3.5 text-white placeholder:text-neutral-600 outline-none text-sm transition-all'
+                  />
+                </div>
+
+                <div className='flex flex-col gap-2'>
+                  <label className='text-xs font-mono tracking-wider text-neutral-400 uppercase'>
+                    Your Message
+                  </label>
+                  <textarea
+                    rows={5}
+                    name='message'
+                    value={form.message}
+                    onChange={handleChange}
+                    placeholder='Tell me about your project or inquiry...'
+                    className='bg-white/[0.03] border border-white/[0.08] focus:border-white/30 focus:bg-white/[0.06] rounded-xl px-4 py-3.5 text-white placeholder:text-neutral-600 outline-none text-sm transition-all resize-none'
+                  />
+                </div>
+
+                <button
+                  type='submit'
+                  disabled={loading}
+                  className='mt-3 px-8 py-3.5 rounded-xl bg-white text-black font-semibold text-xs tracking-wider uppercase hover:bg-neutral-200 transition-all duration-200 shadow-[0_0_20px_rgba(255,255,255,0.15)] disabled:opacity-50 disabled:cursor-not-allowed self-start'
+                >
+                  {loading ? 'Transmitting...' : 'Transmit Message \u2192'}
+                </button>
+              </form>
+            </div>
+
+            {/* Direct Email link info */}
+            <div className='mt-8 pt-5 border-t border-white/[0.04] flex items-center justify-between text-xs font-mono text-neutral-500'>
+              <span>DIRECT CONTACT</span>
+              <a
+                href='mailto:bettermarry1016@gmail.com'
+                className='text-neutral-400 hover:text-white transition-colors'
               >
-                {loading ? 'Sending...' : 'Send Message'}
-              </motion.button>
-            </form>
+                bettermarry1016@gmail.com
+              </a>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Canvas Section */}
-        <motion.div
-          variants={fadeIn('left', 'spring', 0.2, 1)}
-          className='xl:flex-1 xl:h-auto
-            md:h-[550px]
-            h-[350px]'
-        >
-          <SunCanvas />
-        </motion.div>
+        {/* Right: 3D Sun Canvas Section */}
+        <div className='gsap-reveal flex-1 min-h-[380px] sm:min-h-[480px] xl:min-h-auto relative rounded-3xl overflow-hidden flex items-center justify-center'>
+          {/* Subtle frame & Sun info */}
+          <div className='absolute top-4 right-4 z-10 font-mono text-[10px] text-neutral-500 tracking-wider pointer-events-none'>
+            3D STELLAR SHADER &bull; PERLIN NOISE BLOOM
+          </div>
+          <div className='w-full h-full min-h-[400px]'>
+            <SunCanvas />
+          </div>
+        </div>
       </div>
     </div>
   )

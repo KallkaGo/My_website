@@ -10,6 +10,7 @@ import diffuseUrl from '../../assets/particles/picture-6.png'
 import glowUrl from '../../assets/particles/glow.png'
 import { useRef } from 'react'
 import { useEffect } from 'react'
+import { markModuleReady } from '../../utils/Store'
 
 
 const Particles = () => {
@@ -23,6 +24,8 @@ const Particles = () => {
   const displacementRef = useRef({})
 
   const hoverStateRef = useRef(false)
+
+  useEffect(() => markModuleReady('particles'), [])
 
   const gl = useThree(state => state.gl)
   const { width, height } = gl.domElement

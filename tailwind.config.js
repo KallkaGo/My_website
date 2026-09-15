@@ -5,15 +5,25 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#050816",
-        secondary: "#aaa6c3",
-        tertiary: "#151030",
-        "black-100": "#100d25",
-        "black-200": "#090325",
-        "white-100": "#f3f3f3",
+        primary: "#08080a",
+        secondary: "#9496a1",
+        tertiary: "#121318",
+        surface: "#111217",
+        "surface-card": "#13141b",
+        "surface-elevated": "#1a1b24",
+        "black-100": "#0f1016",
+        "black-200": "#0a0a0f",
+        "white-100": "#f5f5f7",
+        accent: {
+          purple: "#9d68ff",
+          cyan: "#38bdf8",
+          emerald: "#34d399",
+        }
       },
       boxShadow: {
-        card: "0px 35px 120px -15px #211e35",
+        card: "0 20px 40px -15px rgba(0, 0, 0, 0.7)",
+        glow: "0 0 30px -5px rgba(157, 104, 255, 0.15)",
+        "glass-sm": "0 2px 8px 0 rgba(0, 0, 0, 0.37)",
       },
       screens: {
         xs: "450px",
@@ -21,6 +31,7 @@ module.exports = {
       },
       animation: {
         scan: 'scan 2s linear infinite',
+        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         scan: {
@@ -36,7 +47,6 @@ module.exports = {
       backgroundSize: {
         "full": "100% 100%",
       }
-
     },
   },
   plugins: [],

@@ -1,163 +1,87 @@
-import { Tilt } from 'react-tilt'
-import { motion } from 'framer-motion'
 import { styles } from '../styles'
-import { github, preview } from '../assets'
 import SectionWrapper from '../hoc'
 import { projects } from '../constants'
-import { fadeIn, textVariant } from '../utils/motion'
-import { useInteractStore } from '../utils/Store.js'
+import { useGsapReveal } from '../utils/useGsapReveal'
 
-const ProjectCard = ({ index, name, description, tags, image, source_code_link, type = 'github', active = true }) => {
-  const system = useInteractStore((state) => state.system)
-
-  const cardContent = (
-    <motion.div
-      variants={fadeIn('up', 'spring', index * 0.1, 0.5)}
-      className='relative group cursor-pointer h-full'
-    >
-      {/* Subtle glow effect */}
-      <div className='absolute -inset-0.5 bg-gradient-to-br from-purple-600/20 to-pink-600/20
-        rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition duration-500'>
-      </div>
-
-      {/* Card */}
-      <div className='relative bg-[#151525] rounded-2xl p-6 border border-gray-700/50
-        hover:border-purple-500/30 transition-all duration-300
-        shadow-xl overflow-hidden h-[450px] flex flex-col'>
-
-        {/* Hover background */}
-        <div className='absolute inset-0 bg-gradient-to-br from-purple-900/10 to-pink-900/10
-          opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl'>
-        </div>
-
-        {/* Content */}
-        <div className='relative z-10 flex flex-col h-full gap-4'>
-          {/* Project Image */}
-          <div className='relative w-full h-[200px] overflow-hidden rounded-xl'>
+const ProjectCard = ({ name, description, tags, image, source_code_link, type = 'github', active = true }) => {
+  return (
+    // hover 判定放在不位移的外层 wrapper 上，避免光标在卡片底边反复跨越边界导致抖动
+    <div className='gsap-reveal h-full flex group'>
+      <a
+        href={source_code_link || '#'}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='relative w-full h-[375px] rounded-2xl bg-[#0c0d12] border border-white/[0.08] group-hover:border-white/20 p-5 flex flex-col justify-between transition-[transform,border-color,box-shadow] duration-300 [transform:translate3d(0,0,0)] group-hover:[transform:translate3d(0,-8px,0)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.9)] overflow-hidden select-none'
+      >
+        {/* Top: Clean Media Showcase - Absolutely NO buttons, masks, or glare over the image */}
+        <div>
+          <div className='relative w-full h-[195px] overflow-hidden rounded-xl bg-black/40 border border-white/[0.05] mb-4 pointer-events-none'>
             <img
               src={image}
               alt={name}
-              className='w-full h-full object-cover
-                group-hover:scale-110 transition-transform duration-500'
+              className='w-full h-full object-cover transition-transform duration-500 [transform:translate3d(0,0,0)_scale(1)] group-hover:[transform:translate3d(0,0,0)_scale(1.05)]'
+              loading='lazy'
             />
-
-            {/* Inactive badge */}
-            {!active && (
-              <div className='absolute top-3 left-3 bg-red-500/90 backdrop-blur-sm
-                px-4 py-1 rounded-full font-bold text-white text-sm
-                transform -rotate-12 shadow-lg'>
-                END
-              </div>
-            )}
-
-            {/* Link button - only show if active */}
-            {active && (
-              <div className='absolute inset-0 flex justify-end items-start m-3'>
-                <a
-                  href={source_code_link}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm
-                    flex justify-center items-center cursor-pointer
-                    border border-gray-600/50 hover:border-purple-500/50
-                    opacity-0 group-hover:opacity-100
-                    transform translate-y-2 group-hover:translate-y-0
-                    transition-all duration-300
-                    hover:bg-purple-600/30'
-                >
-                  <img
-                    src={type === 'github' ? github : preview}
-                    alt='link'
-                    className='w-1/2 h-1/2 object-contain'
-                  />
-                </a>
-              </div>
-            )}
           </div>
 
-          {/* Project Info */}
-          <div className='flex-1 flex flex-col'>
-            <h3 className='text-white font-bold text-xl line-clamp-1 leading-snug
-              group-hover:text-transparent group-hover:bg-clip-text
-              group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400
-              transition-all duration-300'>
+          {/* Project Title */}
+          <div className='h-[28px] flex items-center mb-1.5 pointer-events-none'>
+            <h3 className='text-lg font-bold text-white tracking-tight group-hover:text-purple-300 transition-colors line-clamp-1'>
               {name}
             </h3>
-            <p className='text-gray-300 text-sm line-clamp-3 mt-2
-              group-hover:text-gray-200 transition-colors duration-300'>
+          </div>
+
+          {/* Description */}
+          <div className='h-[42px] pointer-events-none'>
+            <p className='text-xs sm:text-[13px] text-neutral-400 font-light leading-relaxed line-clamp-2'>
               {description}
             </p>
           </div>
+        </div>
 
-          {/* Tags */}
-          <div className='flex flex-wrap gap-2 mt-auto pt-3 border-t border-gray-700/50'>
-            {tags.map((tag) => (
-              <p
+        {/* Bottom Row: Tags & Direct Action Link */}
+        <div className='pt-3.5 border-t border-white/[0.06] flex items-center justify-between gap-3 pointer-events-none'>
+          <div className='flex flex-wrap gap-1.5 overflow-hidden max-h-[26px]'>
+            {tags.slice(0, 3).map((tag) => (
+              <span
                 key={tag.name}
-                className={`text-xs px-2 py-1 rounded-full
-                  ${tag.color} bg-gray-800/50
-                  group-hover:bg-gray-700/50 transition-colors duration-300`}
+                className='text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-neutral-400 border border-white/[0.04]'
               >
                 #{tag.name}
-              </p>
+              </span>
             ))}
           </div>
 
-          {/* Decorative dots */}
-          <div className='flex gap-1 justify-end'>
-            <div className='w-1.5 h-1.5 rounded-full bg-purple-500/40'></div>
-            <div className='w-1.5 h-1.5 rounded-full bg-pink-500/40'></div>
-            <div className='w-1.5 h-1.5 rounded-full bg-blue-500/40'></div>
+          <div className='text-xs font-mono text-neutral-400 group-hover:text-white flex items-center gap-1.5 transition-colors duration-200 flex-shrink-0'>
+            <span>{type === 'preview' ? 'DEMO' : 'CODE'}</span>
+            <span className='inline-block transition-transform duration-200 ease-out [transform:translate3d(0,0,0)] group-hover:[transform:translate3d(4px,0,0)]'>
+              &rarr;
+            </span>
           </div>
         </div>
-      </div>
-    </motion.div>
-  )
-
-  return (
-    <div className='w-full sm:w-[340px]'>
-      {system === 'pc' ? (
-        <Tilt options={{ max: 10, scale: 1.02, speed: 500 }}>
-          {cardContent}
-        </Tilt>
-      ) : (
-        cardContent
-      )}
+      </a>
     </div>
   )
 }
 
 const Works = () => {
-  return (
-    <div className='relative'>
-      {/* Background grid pattern */}
-      <div className='absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),
-        linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] -z-10'>
-      </div>
+  const containerRef = useGsapReveal({ y: 30, stagger: 0.08 })
 
+  return (
+    <div ref={containerRef} className='relative w-full'>
       {/* Header */}
-      <motion.div variants={textVariant()} className='mb-8'>
-        <p className={`${styles.sectionSubText} text-purple-400`}>My work</p>
-        <h2 className={`${styles.sectionHeadText} bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400
-          bg-clip-text text-transparent`}>
+      <div className='gsap-reveal mb-10'>
+        <p className={styles.sectionSubText}>SELECTED WORKS</p>
+        <h2 className={`${styles.sectionHeadText} mt-2 text-gradient-white`}>
           Projects.
         </h2>
-        <div className='h-1 w-32 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-4'></div>
-      </motion.div>
+        <p className='text-neutral-400 text-sm sm:text-base font-light max-w-2xl mt-3'>
+          A curation of real-time 3D web applications, visual shaders, interactive tools, and open-source experiments.
+        </p>
+      </div>
 
-      {/* Description */}
-      <motion.p
-        variants={fadeIn('', '', 0.1, 1)}
-        className='mt-4 text-gray-300 text-[17px] max-w-3xl leading-[30px]
-          bg-gradient-to-br from-[#1a1a2e]/60 to-[#151525]/60
-          backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50'
-      >
-        Showcasing my skills through real-world projects with links to code repositories and live demos.
-        Each project reflects my ability to work with different technologies and deliver effective solutions.
-      </motion.p>
-
-      {/* Project Cards */}
-      <div className='mt-20 flex flex-wrap gap-8 justify-center'>
+      {/* Projects Grid - Equal height, uniform columns, compact and balanced */}
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch'>
         {[...projects].reverse().map((project, index) => (
           <ProjectCard key={project.name} index={index} {...project} />
         ))}

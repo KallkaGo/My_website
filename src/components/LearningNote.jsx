@@ -1,135 +1,91 @@
-import { Tilt } from 'react-tilt'
-import { motion } from 'framer-motion'
 import { styles } from '../styles'
 import SectionWrapper from '../hoc'
-import { fadeIn, textVariant } from '../utils/motion'
 import { learningNote } from '../constants'
-import { useInteractStore } from '../utils/Store.js'
+import { useGsapReveal } from '../utils/useGsapReveal'
 
 const LearningNoteCard = ({ index, title, description, image, articlelink }) => {
-  const system = useInteractStore((state) => state.system)
+  return (
+    // hover 判定放在不位移的外层 wrapper 上，避免光标在卡片底边反复跨越边界导致抖动
+    <div className='gsap-reveal h-full flex group'>
+      <a
+        href={articlelink}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='relative block w-full h-[230px] rounded-2xl bg-[#0c0d12] border border-white/[0.08] group-hover:border-white/20 p-6 flex flex-col justify-between transition-[transform,border-color,box-shadow] duration-300 [transform:translate3d(0,0,0)] group-hover:[transform:translate3d(0,-8px,0)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8)] overflow-hidden select-none'
+      >
+        {/* Content & Thumbnail */}
+        <div className='flex gap-5 items-start justify-between pointer-events-none'>
+          <div className='flex-1'>
+            <div className='flex items-center gap-2 mb-2'>
+              <span className='font-mono text-[10px] text-purple-400 uppercase tracking-widest'>
+                ARTICLE
+              </span>
+              <span className='text-neutral-600'>&bull;</span>
+              <span className='font-mono text-[10px] text-neutral-500'>NOTE 0{index + 1}</span>
+            </div>
 
-  const cardContent = (
-    <motion.a
-      variants={fadeIn('', 'spring', index * 0.1, 0.5)}
-      href={articlelink}
-      target='_blank'
-      rel='noopener noreferrer'
-      className='relative group cursor-pointer h-full block'
-    >
-      {/* Subtle glow effect */}
-      <div className='absolute -inset-0.5 bg-gradient-to-br from-purple-600/20 to-pink-600/20
-        rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition duration-500'>
-      </div>
-
-      {/* Card */}
-      <div className='relative bg-[#151525] rounded-2xl p-6 border border-gray-700/50
-        hover:border-purple-500/30 transition-all duration-300
-        shadow-xl overflow-hidden h-[280px] flex flex-col'>
-
-        {/* Hover background */}
-        <div className='absolute inset-0 bg-gradient-to-br from-purple-900/10 to-pink-900/10
-          opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl'>
-        </div>
-
-        {/* Content */}
-        <div className='relative z-10 flex flex-col justify-between h-full gap-4'>
-
-          {/* Top: Text + Image */}
-          <div className='flex flex-col sm:flex-row justify-between items-start gap-4'>
-            {/* Text Content */}
-            <div className='flex-1 min-w-0'>
-              <h3 className='text-white font-bold text-lg line-clamp-2 leading-snug
-                group-hover:text-transparent group-hover:bg-clip-text
-                group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400
-                transition-all duration-300'>
+            <div className='h-[48px] flex items-center mb-1'>
+              <h3 className='text-base sm:text-lg font-bold text-white tracking-tight group-hover:text-purple-300 transition-colors line-clamp-2 leading-snug'>
                 {title}
               </h3>
-              <p className='text-gray-300 text-sm line-clamp-2 mt-2
-                group-hover:text-gray-200 transition-colors duration-300'>
+            </div>
+
+            <div className='h-[38px]'>
+              <p className='text-xs sm:text-[13px] text-neutral-400 font-light leading-relaxed line-clamp-2'>
                 {description}
               </p>
             </div>
-
-            {/* Image */}
-            {image && (
-              <div className='relative flex-shrink-0'>
-                <div className='absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600
-                  rounded-xl blur-md opacity-40 group-hover:opacity-60 transition-opacity duration-300'>
-                </div>
-                <img
-                  src={image}
-                  alt={title}
-                  className='relative w-[140px] h-[90px]
-                    object-cover rounded-xl border border-gray-600 group-hover:border-purple-500/50
-                    transition-all duration-300 group-hover:scale-105'
-                />
-              </div>
-            )}
           </div>
 
-          {/* Bottom: Read indicator */}
-          <div className='flex items-center justify-between mt-auto pt-3 border-t border-gray-700/50'>
-            <div className='flex items-center gap-2 opacity-0 group-hover:opacity-100
-              transform translate-y-2 group-hover:translate-y-0 transition-all duration-300'>
-              <span className='text-purple-400 text-sm font-medium'>
-                Read More →
-              </span>
+          {image && (
+            <div className='relative flex-shrink-0 w-[120px] sm:w-[130px] h-[85px] rounded-xl overflow-hidden bg-black/50 border border-white/[0.06] pointer-events-none'>
+              <img
+                src={image}
+                alt={title}
+                className='w-full h-full object-cover transition-transform duration-500 opacity-85 group-hover:opacity-100 [transform:translate3d(0,0,0)_scale(1)] group-hover:[transform:translate3d(0,0,0)_scale(1.05)]'
+                loading='lazy'
+              />
             </div>
-            {/* Decorative dots */}
-            <div className='flex gap-1'>
-              <div className='w-1.5 h-1.5 rounded-full bg-purple-500/40'></div>
-              <div className='w-1.5 h-1.5 rounded-full bg-pink-500/40'></div>
-              <div className='w-1.5 h-1.5 rounded-full bg-blue-500/40'></div>
-            </div>
-          </div>
+          )}
         </div>
-      </div>
-    </motion.a>
-  )
 
-  return system === 'pc' ? (
-    <Tilt options={{ max: 10, scale: 1.02, speed: 500 }}>
-      {cardContent}
-    </Tilt>
-  ) : (
-    cardContent
+        {/* Bottom link indicator */}
+        <div className='pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-neutral-500 text-xs font-mono pointer-events-none'>
+          <span className='group-hover:text-neutral-300 transition-colors tracking-wider text-[11px]'>READ FULL ARTICLE</span>
+          <span className='inline-block text-neutral-400 group-hover:text-white transition-transform duration-200 ease-out [transform:translate3d(0,0,0)] group-hover:[transform:translate3d(6px,0,0)]'>
+            &rarr;
+          </span>
+        </div>
+      </a>
+    </div>
   )
 }
 
 const LearningNote = () => {
+  const containerRef = useGsapReveal({ y: 30, stagger: 0.1 })
+
   return (
-    <div className='relative'>
-      {/* Background grid pattern */}
-      <div className='absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),
-        linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] -z-10'>
+    <div ref={containerRef} className='relative w-full'>
+      {/* Header */}
+      <div className='gsap-reveal mb-10'>
+        <p className={styles.sectionSubText}>WRITINGS &amp; LOGS</p>
+        <h2 className={`${styles.sectionHeadText} mt-2 text-gradient-white`}>
+          Learning Notes.
+        </h2>
+        <p className='text-neutral-400 text-sm sm:text-base font-light max-w-2xl mt-3'>
+          Technical insights, shader breakdowns, and notes documented during front-end and WebGL engineering exploration.
+        </p>
       </div>
 
-      <div className='relative z-10'>
-        {/* Header Section */}
-        <div className={`${styles.padding} mb-8`}>
-          <motion.div variants={textVariant()}>
-            <p className={`${styles.sectionSubText} text-purple-400`}>My Learning Note</p>
-            <h2 className={`${styles.sectionHeadText} bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400
-              bg-clip-text text-transparent`}>
-              Writings.
-            </h2>
-            <div className='h-1 w-32 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-4'>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Cards Grid */}
-        <div className={`${styles.paddingX} pb-14`}>
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto'>
-            {learningNote.length > 0 && learningNote.map((notes, index) => (
-              <LearningNoteCard key={notes.title} index={index} {...notes} />
-            ))}
-          </div>
-        </div>
+      {/* Cards Grid - Uniform equal height rows */}
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch'>
+        {learningNote.length > 0 &&
+          learningNote.map((notes, index) => (
+            <LearningNoteCard key={notes.title} index={index} {...notes} />
+          ))}
       </div>
     </div>
   )
 }
 
-export default SectionWrapper(LearningNote, 'learningNote')
+export default SectionWrapper(LearningNote, 'notes')

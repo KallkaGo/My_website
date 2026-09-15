@@ -1,165 +1,108 @@
-import { Tilt } from 'react-tilt'
-import { motion } from 'framer-motion'
 import { styles } from '../styles'
 import { targets } from '../constants'
-import { fadeIn, textVariant } from '../utils/motion.js'
 import SectionWrapper from '../hoc'
-import { useInteractStore } from '../utils/Store.js'
+import { useGsapReveal } from '../utils/useGsapReveal'
 
-// Custom Icons for each target
 const targetIcons = {
   'Unity learning': (
-    <svg viewBox='0 0 100 100' className='w-16 h-16'>
-      <defs>
-        <linearGradient id='unityGrad' x1='0%' y1='0%' x2='100%' y2='100%'>
-          <stop offset='0%' stopColor='#f97316' stopOpacity='1' />
-          <stop offset='100%' stopColor='#dc2626' stopOpacity='1' />
-        </linearGradient>
-      </defs>
-      {/* Unity 3D Cube */}
-      <polygon points='50,15 85,32 85,68 50,85 15,68 15,32' fill='none' stroke='url(#unityGrad)' strokeWidth='3' />
-      <polygon points='50,15 50,50 85,32' fill='url(#unityGrad)' opacity='0.4' />
-      <polygon points='50,50 85,68 50,85 15,68' fill='url(#unityGrad)' opacity='0.2' />
-      <line x1='50' y1='15' x2='50' y2='85' stroke='url(#unityGrad)' strokeWidth='1' opacity='0.5' />
-      <line x1='15' y1='32' x2='85' y2='32' stroke='url(#unityGrad)' strokeWidth='1' opacity='0.5' />
-      <line x1='15' y1='68' x2='85' y2='68' stroke='url(#unityGrad)' strokeWidth='1' opacity='0.5' />
-      <circle cx='50' cy='50' r='45' fill='none' stroke='url(#unityGrad)' strokeWidth='1' opacity='0.2' />
+    <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.75' className='w-6 h-6 text-amber-400'>
+      <path strokeLinecap='round' strokeLinejoin='round' d='M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9' />
+      <path strokeLinecap='round' strokeLinejoin='round' d='M12 12.75l9-5.25M12 12.75v9M12 12.75L3 7.5' />
     </svg>
   ),
   'fitness every day': (
-    <svg viewBox='0 0 100 100' className='w-16 h-16'>
-      <defs>
-        <linearGradient id='fitnessGrad' x1='0%' y1='0%' x2='100%' y2='100%'>
-          <stop offset='0%' stopColor='#22c55e' stopOpacity='1' />
-          <stop offset='100%' stopColor='#16a34a' stopOpacity='1' />
-        </linearGradient>
-      </defs>
-      {/* Dumbbell */}
-      <rect x='25' y='42' width='50' height='6' rx='3' fill='url(#fitnessGrad)' />
-      <rect x='18' y='35' width='12' height='20' rx='3' fill='url(#fitnessGrad)' opacity='0.8' />
-      <rect x='70' y='35' width='12' height='20' rx='3' fill='url(#fitnessGrad)' opacity='0.8' />
-      {/* Heart rate line */}
-      <polyline points='20,60 35,60 42,50 48,70 55,60 80,60' fill='none' stroke='url(#fitnessGrad)' strokeWidth='2' opacity='0.6' />
-      <circle cx='50' cy='50' r='45' fill='none' stroke='url(#fitnessGrad)' strokeWidth='1' opacity='0.2' />
+    <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.75' className='w-6 h-6 text-emerald-400'>
+      <path strokeLinecap='round' strokeLinejoin='round' d='M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z' />
     </svg>
   ),
   'Opengl learning': (
-    <svg viewBox='0 0 100 100' className='w-16 h-16'>
-      <defs>
-        <linearGradient id='openglGrad' x1='0%' y1='0%' x2='100%' y2='100%'>
-          <stop offset='0%' stopColor='#3b82f6' stopOpacity='1' />
-          <stop offset='100%' stopColor='#8b5cf6' stopOpacity='1' />
-        </linearGradient>
-      </defs>
-      {/* Triangle mesh */}
-      <polygon points='50,20 80,70 20,70' fill='none' stroke='url(#openglGrad)' strokeWidth='2.5' />
-      <polygon points='50,20 50,70 20,70' fill='url(#openglGrad)' opacity='0.2' />
-      <polygon points='80,30 95,50 80,70' fill='none' stroke='url(#openglGrad)' strokeWidth='1.5' opacity='0.6' />
-      <polygon points='20,30 5,50 20,70' fill='none' stroke='url(#openglGrad)' strokeWidth='1.5' opacity='0.6' />
-      {/* Vertices dots */}
-      <circle cx='50' cy='20' r='3' fill='url(#openglGrad)' />
-      <circle cx='80' cy='70' r='3' fill='url(#openglGrad)' />
-      <circle cx='20' cy='70' r='3' fill='url(#openglGrad)' />
-      <circle cx='50' cy='50' r='45' fill='none' stroke='url(#openglGrad)' strokeWidth='1' opacity='0.2' />
+    <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.75' className='w-6 h-6 text-cyan-400'>
+      <path strokeLinecap='round' strokeLinejoin='round' d='M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.25 0h1.5m14.25 0h1.5' />
+      <path strokeLinecap='round' strokeLinejoin='round' d='M12 4.5v15' />
     </svg>
   ),
 }
 
-const TargetCard = ({ index, target, name }) => {
-  const system = useInteractStore((state) => state.system)
+const targetDetails = {
+  'Unity learning': 'C# scripting, gameplay physics, shader graph, and 3D environment architecture.',
+  'fitness every day': 'Daily discipline, progressive strength training, cardio, and physical resilience.',
+  'Opengl learning': 'GLSL pipelines, vertex buffers, memory optimization, and compute shaders.',
+}
 
-  const cardContent = (
-    <motion.div
-      variants={fadeIn('up', 'spring', index * 0.1, 0.5)}
-      className='relative group cursor-pointer h-full'
-    >
-      {/* Subtle glow effect */}
-      <div className='absolute -inset-0.5 bg-gradient-to-br from-purple-600/20 to-pink-600/20
-        rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition duration-500'>
-      </div>
-
-      {/* Card */}
-      <div className='relative bg-[#151525] rounded-2xl p-8 border border-gray-700/50
-        hover:border-purple-500/30 transition-all duration-300
-        shadow-xl overflow-hidden h-[280px] flex flex-col items-center justify-center'>
-        {/* Hover background */}
-        <div className='absolute inset-0 bg-gradient-to-br from-purple-900/10 to-pink-900/10
-          opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-        </div>
-
-        {/* Content */}
-        <div className='relative z-10 flex flex-col items-center justify-center gap-6'>
-          {/* Icon */}
-          <div className='relative'>
-            <div className='absolute inset-0 bg-purple-500/20 blur-xl rounded-full
-              opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-            </div>
-            <div className='relative group-hover:scale-110 transition-transform duration-300'>
+const TargetCard = ({ index, target }) => {
+  return (
+    // hover 判定放在不位移的外层 wrapper 上，避免光标在卡片底边反复跨越边界导致抖动
+    <div className='gsap-reveal h-full flex group'>
+      <div className='relative w-full h-[270px] rounded-2xl bg-[#0c0d12] border border-white/[0.08] group-hover:border-white/20 p-6 flex flex-col justify-between transition-[transform,border-color,box-shadow] duration-300 [transform:translate3d(0,0,0)] group-hover:[transform:translate3d(0,-8px,0)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8)] overflow-hidden select-none'>
+        {/* Top: Status & Icon */}
+        <div className='pointer-events-none'>
+          <div className='flex items-center justify-between mb-4'>
+            <div className='w-11 h-11 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center group-hover:border-white/20 transition-all duration-300'>
               {targetIcons[target] || (
-                <svg viewBox='0 0 100 100' className='w-16 h-16'>
-                  <defs>
-                    <linearGradient id={`targetGrad${index}`} x1='0%' y1='0%' x2='100%' y2='100%'>
-                      <stop offset='0%' stopColor='#a855f7' stopOpacity='1' />
-                      <stop offset='100%' stopColor='#3b82f6' stopOpacity='1' />
-                    </linearGradient>
-                  </defs>
-                  <circle cx='50' cy='50' r='35' fill='none' stroke={`url(#targetGrad${index})`} strokeWidth='2' opacity='0.7' />
-                  <circle cx='50' cy='50' r='25' fill='none' stroke={`url(#targetGrad${index})`} strokeWidth='2' opacity='0.5' />
-                  <circle cx='50' cy='50' r='15' fill='none' stroke={`url(#targetGrad${index})`} strokeWidth='2' opacity='0.3' />
-                  <circle cx='50' cy='50' r='5' fill={`url(#targetGrad${index})`} />
-                </svg>
+                <div className='w-3 h-3 rounded-full bg-purple-400' />
               )}
             </div>
+            <span className='inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-mono text-emerald-400 tracking-wider'>
+              <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse' />
+              IN PROGRESS
+            </span>
           </div>
 
-          <h3 className='text-white text-xl font-bold text-center
-            group-hover:text-transparent group-hover:bg-clip-text
-            group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400
-            transition-all duration-300'>
-            {target}
-          </h3>
+          {/* Title with fixed height */}
+          <div className='h-[36px] flex items-center mb-1.5'>
+            <h3 className='text-lg font-bold text-white tracking-tight group-hover:text-purple-300 transition-colors line-clamp-1'>
+              {target}
+            </h3>
+          </div>
+
+          {/* Description with fixed height */}
+          <div className='h-[46px]'>
+            <p className='text-xs sm:text-[13px] text-neutral-400 font-light leading-relaxed line-clamp-2'>
+              {targetDetails[target] || 'Continuous dedicated practice.'}
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom progress bar aesthetic */}
+        <div className='pt-4 border-t border-white/[0.06] pointer-events-none'>
+          <div className='flex justify-between items-center text-[10px] font-mono text-neutral-500 mb-2'>
+            <span>ACTIVE COMMITMENT</span>
+            <span className='text-neutral-400'>2026 &bull; ON TRACK</span>
+          </div>
+          <div className='w-full h-1.5 bg-white/[0.05] rounded-full overflow-hidden'>
+            <div
+              className='h-full bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-400 rounded-full'
+              style={{ width: `${68 + index * 10}%` }}
+            />
+          </div>
         </div>
       </div>
-    </motion.div>
-  )
-
-  return (
-    <div className='w-[250px]'>
-      {system === 'pc' ? (
-        <Tilt options={{ max: 10, scale: 1.02, speed: 500 }}>
-          {cardContent}
-        </Tilt>
-      ) : (
-        cardContent
-      )}
     </div>
   )
 }
 
 const Target = () => {
+  const containerRef = useGsapReveal({ y: 30, stagger: 0.1 })
+
   return (
-    <div className='relative'>
-      {/* Background grid */}
-      <div className='absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),
-        linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] -z-10'>
+    <div ref={containerRef} className='relative w-full'>
+      {/* Header */}
+      <div className='gsap-reveal mb-10'>
+        <p className={styles.sectionSubText}>MILESTONES</p>
+        <h2 className={`${styles.sectionHeadText} mt-2 text-gradient-white`}>
+          Focus &amp; Targets.
+        </h2>
+        <p className='text-neutral-400 text-sm sm:text-base font-light max-w-xl mt-3'>
+          Current technical milestones and daily disciplines pursued with deliberate consistency.
+        </p>
       </div>
 
-      {/* Header */}
-      <motion.div variants={textVariant()} className='mb-8'>
-        <p className={`${styles.sectionSubText} text-purple-400`}>My plan for this year</p>
-        <h2 className={`${styles.sectionHeadText} bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400
-          bg-clip-text text-transparent`}>
-          Target.
-        </h2>
-        <div className='h-1 w-32 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-4'>
-            </div>
-      </motion.div>
-
-      {/* Target Cards */}
-      <div className='mt-20 flex flex-wrap gap-8 justify-center'>
-        {targets.length > 0 && targets.map((target, index) => (
-          <TargetCard key={target.name} index={index} {...target} />
-        ))}
+      {/* Target Cards Grid - Strictly uniform columns without glare or mask */}
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch'>
+        {targets.length > 0 &&
+          targets.map((target, index) => (
+            <TargetCard key={target.name} index={index} {...target} />
+          ))}
       </div>
     </div>
   )
