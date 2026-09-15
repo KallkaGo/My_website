@@ -45,7 +45,7 @@ const Contact = () => {
           from_name: form.name,
           to_name: 'Kallka',
           from_email: form.email,
-          to_mail: 'bettermarry1016@gmail.com',
+          to_mail: 'kallka.ciallo@gmail.com',
           message: form.message,
         },
         'shVZm0O5U1s-sguCF'
@@ -157,10 +157,10 @@ const Contact = () => {
             <div className='mt-8 pt-5 border-t border-white/[0.04] flex items-center justify-between text-xs font-mono text-neutral-500'>
               <span>DIRECT CONTACT</span>
               <a
-                href='mailto:bettermarry1016@gmail.com'
+                href='mailto:kallka.ciallo@gmail.com'
                 className='text-neutral-400 hover:text-white transition-colors'
               >
-                bettermarry1016@gmail.com
+                kallka.ciallo@gmail.com
               </a>
             </div>
           </div>

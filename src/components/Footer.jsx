@@ -33,15 +33,7 @@ const Footer = () => {
             GitHub
           </a>
           <a
-            href='https://juejin.cn'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='hover:text-white transition-colors'
-          >
-            Juejin
-          </a>
-          <a
-            href='mailto:bettermarry1016@gmail.com'
+            href='mailto:kallka.ciallo@gmail.com'
             className='hover:text-white transition-colors'
           >
             Email
