@@ -2,6 +2,10 @@ import React from 'react'
 
 const Footer = () => {
   const scrollToTop = () => {
+    if (window.lenis) {
+      window.lenis.scrollTo(0)
+      return
+    }
     window.scrollTo({
       top: 0,
       behavior: 'smooth',

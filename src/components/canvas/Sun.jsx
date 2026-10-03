@@ -10,13 +10,14 @@ import * as THREE from 'three'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { markModuleReady } from '../../utils/Store'
 
-const Sun = () => {
+const Sun = ({ onWarmup }) => {
   const sunMatRef = useRef(null)
-
-  useEffect(() => markModuleReady('sun'), [])
+  const warmedUpRef = useRef(false)
+  const warmupFrameRef = useRef(null)
+  const noiseElapsedRef = useRef(1 / 20)
   const aroundRef = useRef(null)
 
-  const { cubeRenderTarget, cubeCamera, noiseScene, noiseMaterial } = useMemo(() => {
+  const { cubeRenderTarget, cubeCamera, noiseScene, noiseMaterial, noiseGeometry } = useMemo(() => {
     const target = new THREE.WebGLCubeRenderTarget(256, {
       colorSpace: THREE.SRGBColorSpace,
       generateMipmaps: true,
@@ -41,15 +42,18 @@ const Sun = () => {
       cubeCamera: cam,
       noiseScene: scn,
       noiseMaterial: mat,
+      noiseGeometry: geo,
     }
   }, [])
 
   useEffect(() => {
     return () => {
+      if (warmupFrameRef.current !== null) cancelAnimationFrame(warmupFrameRef.current)
       cubeRenderTarget.dispose()
       noiseMaterial.dispose()
+      noiseGeometry.dispose()
     }
-  }, [cubeRenderTarget, noiseMaterial])
+  }, [cubeRenderTarget, noiseMaterial, noiseGeometry])
 
   const sunUniforms = useMemo(
     () => ({
@@ -61,14 +65,29 @@ const Sun = () => {
 
   useFrame((state, delta) => {
     const d = delta % 1
-    cubeCamera.update(state.gl, noiseScene)
     noiseMaterial.uniforms.uTime.value += d
+    // 噪声变化较慢；只限立方纹理更新频率，太阳旋转和 Bloom 仍逐帧绘制。
+    noiseElapsedRef.current += d
+    if (noiseElapsedRef.current >= 1 / 20) {
+      cubeCamera.update(state.gl, noiseScene)
+      noiseElapsedRef.current %= 1 / 20
+    }
     if (sunMatRef.current) {
       sunMatRef.current.uniforms.uTime.value += d
       sunMatRef.current.uniforms.uPerlin.value = cubeRenderTarget.texture
     }
     if (aroundRef.current) {
       aroundRef.current.lookAt(state.camera.position)
+    }
+
+    if (!warmedUpRef.current) {
+      warmedUpRef.current = true
+      // 下一次 rAF 才报告就绪，确保本帧的太阳和 Bloom 绘制指令已提交。
+      warmupFrameRef.current = requestAnimationFrame(() => {
+        warmupFrameRef.current = null
+        markModuleReady('sun')
+        if (onWarmup) onWarmup()
+      })
     }
   })
 
@@ -92,7 +111,7 @@ const Sun = () => {
         />
       </mesh>
 
-      <EffectComposer disableNormalPass>
+      <EffectComposer disableNormalPass multisampling={0} frameBufferType={THREE.HalfFloatType} >
         <Bloom
           intensity={1}
           luminanceThreshold={0.6}
@@ -106,13 +125,27 @@ const Sun = () => {
 
 const SunCanvas = () => {
   const canvasRef = useRef(null)
-  const [frameloop, setFrameloop] = useState('never')
+  const isIntersectingRef = useRef(false)
+  const warmedUpRef = useRef(false)
+  // 预热期间保持 'always'，即使初次观察结果为不在视口内也先绘制首帧。
+  const [frameloop, setFrameloop] = useState('always')
+
+  const handleWarmup = () => {
+    warmedUpRef.current = true
+    // 首帧指令提交后，若不在视口内则挂起渲染循环。
+    if (!isIntersectingRef.current) {
+      setFrameloop('never')
+    }
+  }
 
   useEffect(() => {
     const el = canvasRef.current
     if (!el) return
     const observer = new IntersectionObserver(([entry]) => {
-      setFrameloop(entry.isIntersecting ? 'always' : 'never')
+      isIntersectingRef.current = entry.isIntersecting
+      if (warmedUpRef.current) {
+        setFrameloop(entry.isIntersecting ? 'always' : 'never')
+      }
     }, {})
 
     observer.observe(el)
@@ -123,6 +156,7 @@ const SunCanvas = () => {
     <Canvas
       ref={canvasRef}
       frameloop={frameloop}
+      resize={{ scroll: false }}
       camera={{
         fov: 45,
         near: 0.1,
@@ -136,7 +170,7 @@ const SunCanvas = () => {
       dpr={[1, 1.5]}
     >
       <Suspense fallback={null}>
-        <Sun />
+        <Sun onWarmup={handleWarmup} />
       </Suspense>
     </Canvas>
   )

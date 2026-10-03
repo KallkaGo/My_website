@@ -11,7 +11,7 @@ const ProjectCard = ({ name, description, tags, image, source_code_link, type = 
         href={source_code_link || '#'}
         target='_blank'
         rel='noopener noreferrer'
-        className='relative w-full h-[375px] rounded-2xl bg-[#0c0d12] border border-white/[0.08] group-hover:border-white/20 p-5 flex flex-col justify-between transition-[transform,border-color,box-shadow] duration-300 [transform:translate3d(0,0,0)] group-hover:[transform:translate3d(0,-8px,0)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.9)] overflow-hidden select-none'
+        className='relative w-full h-[375px] rounded-2xl bg-[#0c0d12] border border-white/[0.08] group-hover:border-white/20 p-5 flex flex-col justify-between transition-[transform,border-color,box-shadow] duration-300 group-hover:[transform:translateY(-8px)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.9)] overflow-hidden select-none'
       >
         {/* Top: Clean Media Showcase - Absolutely NO buttons, masks, or glare over the image */}
         <div>
@@ -19,8 +19,9 @@ const ProjectCard = ({ name, description, tags, image, source_code_link, type = 
             <img
               src={image}
               alt={name}
-              className='w-full h-full object-cover transition-transform duration-500 [transform:translate3d(0,0,0)_scale(1)] group-hover:[transform:translate3d(0,0,0)_scale(1.05)]'
+              className='w-full h-full object-cover transition-transform duration-500 group-hover:[transform:scale(1.05)]'
               loading='lazy'
+              decoding='async'
             />
           </div>
 
@@ -54,7 +55,7 @@ const ProjectCard = ({ name, description, tags, image, source_code_link, type = 
 
           <div className='text-xs font-mono text-neutral-400 group-hover:text-white flex items-center gap-1.5 transition-colors duration-200 flex-shrink-0'>
             <span>{type === 'preview' ? 'DEMO' : 'CODE'}</span>
-            <span className='inline-block transition-transform duration-200 ease-out [transform:translate3d(0,0,0)] group-hover:[transform:translate3d(4px,0,0)]'>
+            <span className='inline-block transition-transform duration-200 ease-out group-hover:[transform:translateX(4px)]'>
               &rarr;
             </span>
           </div>
@@ -65,7 +66,7 @@ const ProjectCard = ({ name, description, tags, image, source_code_link, type = 
 }
 
 const Works = () => {
-  const containerRef = useGsapReveal({ y: 30, stagger: 0.08 })
+  const containerRef = useGsapReveal({ batch: true, y: 30, stagger: 0.08 })
 
   return (
     <div ref={containerRef} className='relative w-full'>

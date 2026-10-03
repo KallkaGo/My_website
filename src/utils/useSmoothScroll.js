@@ -1,45 +1,33 @@
 import { useEffect } from 'react'
 import Lenis from 'lenis'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 export const useSmoothScroll = (enabled = true) => {
   useEffect(() => {
     if (!enabled) return
 
+    // 使用浏览器的高精度 rAF 时间；不要再从 GSAP ticker 重复驱动。
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      autoRaf: true,
       smoothWheel: true,
-      touchMultiplier: 1.2,
+      lerp: 0.12,
+      wheelMultiplier: 1.1,
+      touchMultiplier: 1,
     })
-
     window.lenis = lenis
 
-    // Synchronize Lenis and GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update)
-
-    const tickerCallback = (time) => {
-      lenis.raf(time * 1000)
-    }
-
-    gsap.ticker.add(tickerCallback)
-    gsap.ticker.lagSmoothing(0)
-
-    // Smooth anchor navigation
+    // ScrollTrigger 已监听原生 scroll；本页的入场动画无需再手动 update。
     const handleAnchorClick = (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return
       const anchor = e.target.closest('a')
-      if (!anchor) return
+      if (!anchor || (anchor.target && anchor.target !== '_self')) return
       const href = anchor.getAttribute('href')
       if (href && href.startsWith('#') && href.length > 1) {
-        e.preventDefault()
-        const targetElement = document.querySelector(href)
+        const targetElement = document.getElementById(href.slice(1))
         if (targetElement) {
+          e.preventDefault()
           lenis.scrollTo(targetElement, {
             offset: -70,
-            duration: 1.2,
+            immediate: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
           })
         }
       }
@@ -48,10 +36,9 @@ export const useSmoothScroll = (enabled = true) => {
     document.addEventListener('click', handleAnchorClick)
 
     return () => {
-      gsap.ticker.remove(tickerCallback)
       document.removeEventListener('click', handleAnchorClick)
       lenis.destroy()
-      window.lenis = null
+      if (window.lenis === lenis) window.lenis = null
     }
   }, [enabled])
 }

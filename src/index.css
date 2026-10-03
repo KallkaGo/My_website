@@ -14,26 +14,6 @@
   -webkit-user-drag: none;
 }
 
-html.lenis, html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-
 body {
   background-color: #08080a;
   color: #f5f5f7;
@@ -46,22 +26,10 @@ body {
   color: #ffffff;
 }
 
-/* Custom minimal scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #08080a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #272732;
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #3f3f50;
+/* 使用标准滚动条着色，避免自绘 thumb 随滚动反复触发页面绘制。 */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #272732 #08080a;
 }
 
 .hash-span {

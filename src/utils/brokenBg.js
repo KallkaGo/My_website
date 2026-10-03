@@ -49,6 +49,8 @@ class x {
   #o
   #r
   #a
+  #resizeHandler = this.#u.bind(this);
+  #visibilityHandler = this.#f.bind(this);
   #c = new e();
   #v = { elapsed: 0, delta: 0 };
   #h
@@ -82,9 +84,9 @@ class x {
   }
   #p () {
     this.#e.size instanceof Object ||
-      (window.addEventListener("resize", this.#u.bind(this)),
+      (window.addEventListener("resize", this.#resizeHandler),
         "parent" === this.#e.size &&
-        ((this.#r = new ResizeObserver(this.#u.bind(this))),
+        ((this.#r = new ResizeObserver(this.#resizeHandler)),
           this.#r.observe(this.canvas.parentNode))),
       (this.#o = new IntersectionObserver(this.#x.bind(this), {
         root: null,
@@ -92,25 +94,29 @@ class x {
         threshold: 0,
       })),
       this.#o.observe(this.canvas),
-      document.addEventListener("visibilitychange", this.#f.bind(this))
+      document.addEventListener("visibilitychange", this.#visibilityHandler)
   }
   #g () {
-    window.removeEventListener("resize", this.#u.bind(this)),
+    window.removeEventListener("resize", this.#resizeHandler),
       this.#r?.disconnect(),
       this.#o?.disconnect(),
-      document.removeEventListener("visibilitychange", this.#f.bind(this))
+      document.removeEventListener("visibilitychange", this.#visibilityHandler)
   }
   #x (e) {
+    if (this.isDisposed) return
     (this.#s = e[0].isIntersecting), this.#s ? this.#z() : this.#y()
   }
   #f (e) {
+    if (this.isDisposed) return
     this.#s && (document.hidden ? this.#y() : this.#z())
   }
   #u () {
+    if (this.isDisposed) return
     this.#a && clearTimeout(this.#a),
       (this.#a = setTimeout(this.resize.bind(this), 100))
   }
   resize () {
+    if (this.isDisposed) return
     let e, i, rect
     this.#e.size instanceof Object
       ? ((e = this.#e.size.width), (i = this.#e.size.height))
@@ -173,8 +179,9 @@ class x {
     (this.#i = e), (this.render = e.render)
   }
   #z () {
-    if (this.#n) return
+    if (this.#n || this.isDisposed) return
     const e = () => {
+      if (this.isDisposed) return
       (this.#h = requestAnimationFrame(e)),
         (this.#v.delta = this.#c.getDelta()),
         (this.#v.elapsed += this.#v.delta),
@@ -191,6 +198,9 @@ class x {
     this.renderer.render(this.scene, this.camera)
   }
   dispose () {
+    if (this.isDisposed) return
+    this.isDisposed = !0
+    clearTimeout(this.#a)
     this.#g(),
       this.#y(),
       this.scene.traverse((e) => {
@@ -207,8 +217,7 @@ class x {
             e.geometry.dispose())
       }),
       this.scene.clear(),
-      this.renderer.dispose(),
-      (this.isDisposed = !0)
+      this.renderer.dispose()
   }
 }
 const f = new Map(),
@@ -244,6 +253,7 @@ function R (e) {
         0 === f.size &&
         (document.body.removeEventListener("pointermove", C),
           document.body.removeEventListener("pointerleave", M),
+          document.body.removeEventListener("click", S),
           (w = !1))
     }),
     i

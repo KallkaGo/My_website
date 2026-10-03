@@ -44,6 +44,7 @@ const LearningNoteCard = ({ index, title, description, image, articlelink }) => 
                 alt={title}
                 className='w-full h-full object-cover transition-transform duration-500 opacity-85 group-hover:opacity-100 [transform:translate3d(0,0,0)_scale(1)] group-hover:[transform:translate3d(0,0,0)_scale(1.05)]'
                 loading='lazy'
+                decoding='async'
               />
             </div>
           )}

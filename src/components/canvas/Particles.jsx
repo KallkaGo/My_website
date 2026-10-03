@@ -1,19 +1,16 @@
 import * as THREE from 'three'
-import { Suspense } from 'react'
+import { Suspense, useMemo, useRef, useEffect, useState } from 'react'
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import vertexShader from './shader/particles/vertex.glsl'
 import fragmentShader from './shader/particles/fragmnet.glsl'
-import { useMemo } from 'react'
 import { useTexture } from '@react-three/drei'
 import picUrl from '../../assets/particles/picture-5.png'
 import diffuseUrl from '../../assets/particles/picture-6.png'
 import glowUrl from '../../assets/particles/glow.png'
-import { useRef } from 'react'
-import { useEffect } from 'react'
 import { markModuleReady } from '../../utils/Store'
 
 
-const Particles = () => {
+const Particles = ({ onWarmup }) => {
   const pictureTex = useTexture(picUrl)
   pictureTex.colorSpace = THREE.SRGBColorSpace
   const diffuseTex = useTexture(diffuseUrl)
@@ -24,8 +21,12 @@ const Particles = () => {
   const displacementRef = useRef({})
 
   const hoverStateRef = useRef(false)
+  const warmedUpRef = useRef(false)
+  const warmupFrameRef = useRef(null)
 
-  useEffect(() => markModuleReady('particles'), [])
+  useEffect(() => () => {
+    if (warmupFrameRef.current !== null) cancelAnimationFrame(warmupFrameRef.current)
+  }, [])
 
   const gl = useThree(state => state.gl)
   const { width, height } = gl.domElement
@@ -139,10 +140,19 @@ const Particles = () => {
     )
 
     displacement.texture.needsUpdate = true
+
+    if (!warmedUpRef.current) {
+      warmedUpRef.current = true
+      // 首帧绘制指令提交后再放行 loading 和视口外暂停。
+      warmupFrameRef.current = requestAnimationFrame(() => {
+        warmupFrameRef.current = null
+        markModuleReady('particles')
+        if (onWarmup) onWarmup()
+      })
+    }
   })
 
   const handleMove = (e) => {
-
     const displacement = displacementRef.current
     const uv = e.uv
     displacement.canvasCursor.x = uv.x * displacement.canvas.width
@@ -170,11 +180,37 @@ const Particles = () => {
   )
 }
 
-
-
 const ParticlesCanvas = () => {
+  const canvasRef = useRef(null)
+  const isIntersectingRef = useRef(false)
+  const warmedUpRef = useRef(false)
+  const [frameloop, setFrameloop] = useState('always')
+
+  const handleWarmup = () => {
+    warmedUpRef.current = true
+    if (!isIntersectingRef.current) {
+      setFrameloop('never')
+    }
+  }
+
+  useEffect(() => {
+    const el = canvasRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry]) => {
+      isIntersectingRef.current = entry.isIntersecting
+      if (warmedUpRef.current) {
+        setFrameloop(entry.isIntersecting ? 'always' : 'never')
+      }
+    }, { rootMargin: '200px' })
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <Canvas
+      ref={canvasRef}
+      frameloop={frameloop}
       camera={{
         fov: 35,
         near: 0.1,
@@ -182,10 +218,10 @@ const ParticlesCanvas = () => {
         position: [0, 0, 20]
       }}
       gl={{ preserveDrawingBuffer: true, toneMapping: THREE.NoToneMapping }}
-      dpr={[1, 2]}
+      dpr={[1,1]}
     >
       <Suspense fallback={null}>
-        <Particles />
+        <Particles onWarmup={handleWarmup} />
       </Suspense>
     </Canvas>
   )

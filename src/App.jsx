@@ -22,7 +22,7 @@ const App = () => {
   const flag = getSystem()
   const appReady = useInteractStore((s) => s.appReady)
 
-  // Lenis 等 loading 结束后再启动，避免与入场动画争抢主线程
+  // WebGL 预热完成后启用 Lenis，避免初始化占用滚动帧。
   useSmoothScroll(appReady)
 
   useEffect(() => {

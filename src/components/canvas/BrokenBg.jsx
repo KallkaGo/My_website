@@ -4,20 +4,19 @@ import { useEffect } from 'react'
 import { Bokeh1Background } from '../../utils/brokenBg.js'
 import { markModuleReady } from '../../utils/Store'
 
-import { useMemo, useRef } from 'react'
+import { useRef } from 'react'
 
 
 const BrokenBg = () => {
-  const loader = useMemo(() => new TextureLoader(), [])
-  const diffuseTex = loader.load(particleTex)
   const canvasRef = useRef(null)
-  diffuseTex.filpY = false
-  diffuseTex.colorSpace = SRGBColorSpace
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
+    const diffuseTex = new TextureLoader().load(particleTex)
+    diffuseTex.flipY = false
+    diffuseTex.colorSpace = SRGBColorSpace
     const bokeh = Bokeh1Background(canvas)
     bokeh.bindMap(diffuseTex)
     bokeh.setColors([0xc18417, 0x510de5, 0xa8381f])

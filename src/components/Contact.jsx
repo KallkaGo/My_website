@@ -167,7 +167,7 @@ const Contact = () => {
         </div>
 
         {/* Right: 3D Sun Canvas Section */}
-        <div className='gsap-reveal flex-1 min-h-[380px] sm:min-h-[480px] xl:min-h-auto relative rounded-3xl overflow-hidden flex items-center justify-center'>
+        <div className='flex-1 min-h-[380px] sm:min-h-[480px] xl:min-h-auto relative rounded-3xl overflow-hidden flex items-center justify-center'>
           {/* Subtle frame & Sun info */}
           <div className='absolute top-4 right-4 z-10 font-mono text-[10px] text-neutral-500 tracking-wider pointer-events-none'>
             3D STELLAR SHADER &bull; PERLIN NOISE BLOOM
