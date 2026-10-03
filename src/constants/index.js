@@ -19,6 +19,9 @@ import {
   dice,
   particles,
   threejs,
+  babylonjs,
+  unity,
+  unrealengine,
   meoCloud,
   aigc,
   su7,
@@ -116,6 +119,21 @@ const technologies = [
   {
     name: "Three JS",
     icon: threejs,
+    monochrome: true,
+  },
+  {
+    name: "Babylon.js",
+    icon: babylonjs,
+  },
+  {
+    name: "Unity",
+    icon: unity,
+    monochrome: true,
+  },
+  {
+    name: "Unreal Engine",
+    icon: unrealengine,
+    monochrome: true,
   },
   {
     name: "git",

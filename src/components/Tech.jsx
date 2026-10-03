@@ -14,7 +14,7 @@ const TechCard = ({ tech }) => {
             src={tech.icon}
             alt={tech.name}
             className={`max-w-full max-h-full object-contain filter ${
-              tech.name === 'Three JS' ? 'brightness-0 invert opacity-90' : 'opacity-85 group-hover:opacity-100'
+              tech.monochrome ? 'brightness-0 invert opacity-90' : 'opacity-85 group-hover:opacity-100'
             } transition-opacity duration-300`}
             loading='lazy'
           />
@@ -41,7 +41,7 @@ const Tech = () => {
           Tech Stack.
         </h2>
         <p className='text-neutral-400 text-sm sm:text-base font-light max-w-xl mt-3'>
-          Modern frameworks, shader tools, and graphics libraries powering real-time web applications.
+          Modern frameworks, game engines, and graphics libraries powering real-time interactive experiences.
         </p>
       </div>
 

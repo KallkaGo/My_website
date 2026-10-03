@@ -20,6 +20,9 @@ import redux from "./tech/redux.png"
 import tailwind from "./tech/tailwind.png"
 import typescript from "./tech/typescript.png"
 import threejs from "./tech/threejs.svg"
+import babylonjs from "./tech/babylonjs.svg"
+import unity from "./tech/unity.svg"
+import unrealengine from "./tech/unrealengine.svg"
 
 import meta from "./company/meta.png"
 import shopify from "./company/shopify.png"
@@ -97,6 +100,9 @@ export {
   tailwind,
   typescript,
   threejs,
+  babylonjs,
+  unity,
+  unrealengine,
   meta,
   shopify,
   starbucks,
