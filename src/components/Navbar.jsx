@@ -72,8 +72,12 @@ const Navbar = () => {
       setScrolled(scrollTop > 40)
     }, 100)
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      handleScroll.cancel()
+    }
   }, [])
 
   return (
@@ -117,7 +121,7 @@ const Navbar = () => {
             className='flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/20 transition-all text-xs text-neutral-300 font-mono'
             title={isPlaying ? 'Pause Background Music' : 'Play Background Music'}
           >
-            <audio loop ref={musicRef} src={bgm} />
+            <audio loop preload='none' ref={musicRef} src={bgm} />
             <div className='flex items-end gap-[3px] h-3 w-3.5 justify-center'>
               <span
                 className={`w-[2px] bg-purple-400 rounded-full transition-all duration-300 ${

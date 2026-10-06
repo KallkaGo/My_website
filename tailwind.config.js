@@ -26,27 +26,8 @@ module.exports = {
         "glass-sm": "0 2px 8px 0 rgba(0, 0, 0, 0.37)",
       },
       screens: {
-        xs: "450px",
-        pc: "1280px"
+        xs: "450px"
       },
-      animation: {
-        scan: 'scan 2s linear infinite',
-        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      },
-      keyframes: {
-        scan: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100%)' },
-        },
-      },
-      backgroundImage: {
-        "hero-pattern": "url('/src/assets/herobg.png')",
-        "particle-pattern": "url('/src/assets/particle.png')",
-        "home-pattern": 'url("/src/assets/other/home.jpg")'
-      },
-      backgroundSize: {
-        "full": "100% 100%",
-      }
     },
   },
   plugins: [],

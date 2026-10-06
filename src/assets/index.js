@@ -2,19 +2,13 @@ import backend from "./about/backend.png"
 import creator from "./about/creator.png"
 import mobile from "./about/mobile.png"
 import web from "./about/web.png"
-import github from "./other/github.png"
-import preview from './other/preview.png'
 import menu from "./svg/menu.svg"
 import close from "./svg/close.svg"
 
 import css from "./tech/css.png"
-import docker from "./tech/docker.png"
-import figma from "./tech/figma.png"
 import git from "./tech/git.png"
 import html from "./tech/html.png"
 import javascript from "./tech/javascript.png"
-import mongodb from "./tech/mongodb.png"
-import nodejs from "./tech/nodejs.png"
 import reactjs from "./tech/reactjs.png"
 import redux from "./tech/redux.png"
 import tailwind from "./tech/tailwind.png"
@@ -24,50 +18,37 @@ import babylonjs from "./tech/babylonjs.svg"
 import unity from "./tech/unity.svg"
 import unrealengine from "./tech/unrealengine.svg"
 
-import meta from "./company/meta.png"
-import shopify from "./company/shopify.png"
-import starbucks from "./company/starbucks.png"
-import tesla from "./company/tesla.png"
-
-import firework from "./project/firework.png"
-import dice from "./project/dice.png"
-import particles from "./project/particles.png"
+import firework from "./project/firework.webp"
+import dice from "./project/dice.webp"
+import particles from "./project/particles.webp"
 
 import bgm1 from './music/bgm.mp3'
 import bgm2 from './music/bgm2.mp3'
 
-import music from './music/music.png'
-import muted from './music/muted.png'
+import tracemoe from './project/tracemoe.webp'
 
-import primogem from './company/primogem.png'
+import meoCloud from './project/meoCloud.webp'
+import aigc from './project/aigc.webp'
+import su7 from './project/su7.webp'
+import carousel from './project/carousel.webp'
+import celShading from './project/celShading.webp'
+import toonWater from './project/toonWater.webp'
+import genshinImpact from './project/genshinImpactxr.webp'
+import smoothNormalTool from './project/smoothNormalTool.webp'
+import customEffect from './project/customEffect.webp'
+import grass from './project/grass.webp'
+import laser from './project/laser.webp'
+import gem from './project/gem.webp'
 
-import tracemoe from './project/tracemoe.jpg'
-
-import meoCloud from './project/meoCloud.png'
-import aigc from './project/aigc.png'
-import su7 from './project/su7.png'
-import carousel from './project/carousel.png'
-import celShading from './project/celShading.png'
-import toonWater from './project/toonWater.png'
-import genshinImpact from './project/genshinImpactxr.jpg'
-import smoothNormalTool from './project/smoothNormalTool.png'
-import customEffect from './project/customEffect.png'
-import grass from './project/grass.png'
-import laser from './project/laser.png'
-import gem from './project/gem.png'
-
-import pen1 from './article/1.png'
-
+import pen1 from './article/1.webp'
 
 import particleTex from './particles/particles.png'
-
 
 export {
   gem,
   laser,
   smoothNormalTool,
   toonWater,
-  preview,
   genshinImpact,
   celShading,
   carousel,
@@ -75,26 +56,18 @@ export {
   aigc,
   meoCloud,
   tracemoe,
-  primogem,
   bgm1,
   bgm2,
-  music,
-  muted,
   backend,
   creator,
   mobile,
   web,
-  github,
   menu,
   close,
   css,
-  docker,
-  figma,
   git,
   html,
   javascript,
-  mongodb,
-  nodejs,
   reactjs,
   redux,
   tailwind,
@@ -103,10 +76,6 @@ export {
   babylonjs,
   unity,
   unrealengine,
-  meta,
-  shopify,
-  starbucks,
-  tesla,
   firework,
   dice,
   particles,

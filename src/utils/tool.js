@@ -2,8 +2,10 @@
 function throttle (func, delay) {
   let lastCall = 0
   let timer = null
+  let latestArgs
 
-  return (...args) => {
+  const throttled = (...args) => {
+    latestArgs = args
     const now = Date.now()
 
     if (now - lastCall >= delay) {
@@ -20,10 +22,18 @@ function throttle (func, delay) {
       timer = setTimeout(() => {
         lastCall = Date.now()
         timer = null
-        func(...args)
+        func(...latestArgs)
       }, delay - (now - lastCall))
     }
   }
+
+  throttled.cancel = () => {
+    clearTimeout(timer)
+    timer = null
+    latestArgs = undefined
+  }
+
+  return throttled
 }
 
 export {

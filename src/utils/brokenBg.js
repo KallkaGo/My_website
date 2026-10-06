@@ -6,7 +6,6 @@ import {
   SRGBColorSpace as n,
   MathUtils as o,
   Vector2 as r,
-  TextureLoader as a,
   Color as c,
   InstancedMesh as v,
   PlaneGeometry as h,
@@ -15,9 +14,6 @@ import {
   Object3D as m,
   Vector3 as p,
 } from "three"
-import "three/addons/loaders/GLTFLoader.js"
-import "three/addons/loaders/DRACOLoader.js"
-import { RGBELoader as u } from "three/addons/loaders/RGBELoader.js"
 
 class x {
   #e
@@ -222,9 +218,7 @@ class x {
 }
 const f = new Map(),
   g = new r()
-let z,
-  y,
-  w = !1
+let w = !1
 function R (e) {
   const i = {
     position: new r(),
@@ -289,21 +283,6 @@ function P (e) {
   const { x: i, y: t } = g,
     { left: s, top: n, width: o, height: r } = e
   return i >= s && i <= s + o && t >= n && t <= n + r
-}
-async function L (e, i) {
-  let t
-  return (
-    (t = e.endsWith(".hdr")
-      ? await (function (e, i) {
-        y || (y = new u())
-        return y.loadAsync(e, i)
-      })(e, i)
-      : await (function (e, i) {
-        z || (z = new a())
-        return z.loadAsync(e, i)
-      })(e, i)),
-    t
-  )
 }
 const { randFloatSpread: A } = o,
   F = { count: 1024, size: 0.5, colors: [0] }
@@ -426,11 +405,6 @@ function E (e, i) {
     {
       three: t,
       particles: s,
-      loadMap: function (e) {
-        L(e).then((e) => {
-          (e.flipY = !1), (s.material.map = e), (s.material.needsUpdate = !0)
-        })
-      },
       bindMap: function (e) {
         e.flipY = !1
         s.material.map = e

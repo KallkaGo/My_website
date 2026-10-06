@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { useInteractStore } from '../utils/Store'
-import { projects } from '../constants'
 
 // 需要等待初始化完成的重型模块，对应各自组件里的 markModuleReady 上报。
 const REQUIRED_MODULES = ['bokeh', 'stars', 'particles', 'sun']
@@ -26,20 +25,6 @@ const AppLoader = () => {
 
   const readyCount = REQUIRED_MODULES.filter((id) => readyModules[id]).length
   const total = REQUIRED_MODULES.length
-
-  // loading 期间在后台预加载并异步解码项目大图，避免后续滚动时触发同步解码掉帧
-  useEffect(() => {
-    projects.forEach((item) => {
-      if (item.image) {
-        const img = new Image()
-        img.src = item.image
-        img.decoding = 'async'
-        if (img.decode) {
-          img.decode().catch(() => {})
-        }
-      }
-    })
-  }, [])
 
   // loading 期间锁住滚动，避免背后的长页面被滚走
   useEffect(() => {

@@ -29,16 +29,20 @@ const Particles = ({ onWarmup }) => {
   }, [])
 
   const gl = useThree(state => state.gl)
-  const { width, height } = gl.domElement
-
+  const size = useThree(state => state.size)
+  const dpr = useThree(state => state.viewport.dpr)
 
   const uniforms = useMemo(() => ({
-    uResolution: new THREE.Uniform(new THREE.Vector2(width, height)),
+    uResolution: new THREE.Uniform(new THREE.Vector2()),
     uPictureTexture: new THREE.Uniform(pictureTex),
     uDiffuseTexture: new THREE.Uniform(diffuseTex),
     uDisplacementTexture: new THREE.Uniform(),
     uIntensity: new THREE.Uniform(1)
-  }), [])
+  }), [pictureTex, diffuseTex])
+
+  useEffect(() => {
+    gl.getDrawingBufferSize(uniforms.uResolution.value)
+  }, [gl, size.width, size.height, dpr, uniforms])
 
   useEffect(() => {
     const points = pointsRef.current
@@ -61,11 +65,6 @@ const Particles = ({ onWarmup }) => {
     displacement.canvas = document.createElement('canvas')
     displacement.canvas.width = 320
     displacement.canvas.height = 180
-    displacement.canvas.style.position = 'fixed'
-    displacement.canvas.style.top = 0
-    displacement.canvas.style.left = 0
-    displacement.canvas.style.zIndex = 10
-    // document.body.append(displacement.canvas)
 
     displacement.context = displacement.canvas.getContext('2d')
     displacement.context.fillRect(0, 0, displacement.canvas.width, displacement.canvas.height)
@@ -75,30 +74,20 @@ const Particles = ({ onWarmup }) => {
       displacement.context.drawImage(displacement.glowImage, 20, 20, 32, 32)
     }
 
-    /* Raycaster */
-    displacement.raycaster = new THREE.Raycaster()
     // Coordinates
-    displacement.screenCursor = new THREE.Vector2(9999, 9999)
     displacement.canvasCursor = new THREE.Vector2(9999, 9999)
     displacement.canvasCursorPrevious = new THREE.Vector2(9999, 9999)
     displacement.texture = new THREE.CanvasTexture(displacement.canvas)
 
     uniforms.uDisplacementTexture.value = displacement.texture
 
-    const handlePointerMove = (event) => {
-      displacement.screenCursor.x = (event.clientX / width) * 2 - 1
-      displacement.screenCursor.y = - (event.clientY / height) * 2 + 1
-    }
-
-    window.addEventListener('pointermove', handlePointerMove)
-
     return () => {
-      window.removeEventListener('pointermove', handlePointerMove)
+      displacement.glowImage.onload = null
+      displacement.texture.dispose()
       displacement.canvas.width = displacement.canvas.height = 0
-      displacement.context.fillRect(0, 0, 0, 0)
     }
 
-  }, [])
+  }, [uniforms])
 
 
   useFrame((state, delta) => {
@@ -217,7 +206,7 @@ const ParticlesCanvas = () => {
         far: 100,
         position: [0, 0, 20]
       }}
-      gl={{ preserveDrawingBuffer: true, toneMapping: THREE.NoToneMapping }}
+      gl={{ toneMapping: THREE.NoToneMapping }}
       dpr={[1,1]}
     >
       <Suspense fallback={null}>
