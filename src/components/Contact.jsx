@@ -172,7 +172,7 @@ const Contact = () => {
           <div className='absolute top-4 right-4 z-10 font-mono text-[10px] text-neutral-500 tracking-wider pointer-events-none'>
             3D STELLAR SHADER &bull; PERLIN NOISE BLOOM
           </div>
-          <div className='w-full h-full min-h-[400px]'>
+          <div className='w-full h-[400px] sm:h-[480px] xl:h-full min-h-[400px]'>
             <SunCanvas />
           </div>
         </div>
