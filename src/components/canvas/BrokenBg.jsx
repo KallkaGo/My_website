@@ -1,7 +1,7 @@
 import { SRGBColorSpace, TextureLoader } from 'three'
 import { particleTex } from '../../assets/index.js'
 import { useEffect } from 'react'
-import { Bokeh1Background } from '../../utils/brokenBg.js'
+import { Bokeh1Background } from '../../utils/bokeh.js'
 import { markModuleReady } from '../../utils/Store'
 
 import { useRef } from 'react'
