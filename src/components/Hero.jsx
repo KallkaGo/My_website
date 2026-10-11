@@ -14,7 +14,7 @@ const Hero = () => (
       <span className='hand-note hero-margin-note' aria-hidden='true'>light, water,<br />& refraction</span>
     </div>
     <div className='hero-project bokeh-hero-project'>
-      <figure className='project-print light-study-print' aria-label='Light study: an animated bokeh experiment'>
+      <figure className='project-print light-study-print' aria-label='Bokeh: animated defocused light'>
         <div className='bokeh-art-camera'>
           <div className='print-mount print-mount-taped'>
             <div className='print-image-window bokeh-study-image'>
@@ -23,7 +23,7 @@ const Hero = () => (
           </div>
         </div>
         <figcaption className='print-caption'>
-          <div><h3><span className='print-number'>00 /</span> Light study</h3><p>Bokeh · light in motion</p></div>
+          <div><h3><span className='print-number'>00 /</span> Bokeh</h3><p>Light in motion</p></div>
           <span className='hand-note light-study-note'>soft focus,<br />drifting light</span>
         </figcaption>
       </figure>

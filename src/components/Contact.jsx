@@ -138,8 +138,8 @@ const Contact = () => {
         </div>
 
         <figure className='notebook-sun-study'>
-          <MotionStudyCard className='motion-sun-card' motionRef={motionRef} label='Interactive solar study' hoverEnabled={false}>
-            <div className='study-card-label' aria-hidden='true'><span>02 / Solar study</span><span>Light, in motion</span></div>
+          <MotionStudyCard className='motion-sun-card' motionRef={motionRef} label='Interactive Sun shader' hoverEnabled={false}>
+            <div className='study-card-label' aria-hidden='true'><span>02 / Sun</span><span>Light, in motion</span></div>
             <div className='notebook-sun-viewport' role='img' aria-label='A rotating golden sun with glowing coronal loops, centered in the notebook'>
               <div className='notebook-sun-canvas'><SunCanvas /></div>
             </div>

@@ -192,7 +192,7 @@ const BokehEntry = () => {
   return (
     <section id='home' ref={entryRef} className={`bokeh-entry${reducedMotion || unavailable ? ' bokeh-entry-still' : ''}`} aria-label='Opening the notebook'>
       <div ref={copyRef} className='bokeh-entry-copy notebook-container'>
-        <p className='bokeh-kicker'>Field study / 00</p>
+        <p className='bokeh-kicker'>Bokeh / 00</p>
         <p className='bokeh-entry-title'>A little light,<br />a world within.</p>
         <p className='bokeh-entry-description'>Every experiment begins with a closer look.</p>
       </div>

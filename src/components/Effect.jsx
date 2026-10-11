@@ -18,8 +18,8 @@ const MouseEffect = () => {
         </p>
       </div>
       <figure className='notebook-lab-study'>
-        <MotionStudyCard className='motion-field-card' motionRef={motionRef} label='Interactive particle study card' hoverEnabled={false}>
-          <div className='study-card-label' aria-hidden='true'><span>01 / Motion</span><span>Move to explore ↗</span></div>
+        <MotionStudyCard className='motion-field-card' motionRef={motionRef} label='Interactive particle effect' hoverEnabled={false}>
+          <div className='study-card-label' aria-hidden='true'><span>01 / Particles</span><span>Move to explore ↗</span></div>
           <div className='notebook-lab-viewport' aria-label='Interactive GPU particle shader'>
             <ParticlesCanvas />
           </div>
