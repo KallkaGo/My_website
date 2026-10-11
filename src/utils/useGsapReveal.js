@@ -13,6 +13,7 @@ export const useGsapReveal = (options = {}) => {
 
     const targets = el.querySelectorAll('.gsap-reveal')
     if (!targets.length) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const ctx = gsap.context(() => {
       if (options.batch) {

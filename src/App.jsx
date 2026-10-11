@@ -5,7 +5,6 @@ import {
   Navbar,
   Tech,
   Works,
-  StarsCanvas,
   Target,
   Effect,
   LearningNote,
@@ -14,6 +13,7 @@ import {
 } from './components'
 import { useInteractStore } from './utils/Store'
 import { useSmoothScroll } from './utils/useSmoothScroll'
+import BokehEntry from './components/BokehEntry'
 
 const App = () => {
   const appReady = useInteractStore((s) => s.appReady)
@@ -24,19 +24,19 @@ const App = () => {
   return (
     <>
       <AppLoader />
-      <div className='relative z-0 bg-[#08080a] text-[#f5f5f7] min-h-screen overflow-x-hidden selection:bg-purple-500/30 selection:text-white'>
+      <div className='notebook-app'>
         <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Tech />
-          <Effect />
-          <Works />
-          <LearningNote />
-          <Target />
-          <div className='relative z-0'>
+        <main id='main' className='notebook-camera' tabIndex={-1}>
+          <BokehEntry />
+          <div className='notebook-pages'>
+            <Hero />
+            <Works />
+            <LearningNote />
+            <Effect />
+            <About />
+            <Tech />
+            <Target />
             <Contact />
-            <StarsCanvas />
           </div>
         </main>
         <Footer />

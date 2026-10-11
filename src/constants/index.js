@@ -417,6 +417,7 @@ const projects = [
       }
     ],
     image: customEffect,
+    imageScale: 1.08,
     source_code_link: "https://github.com/KallkaGo/CustomEffect",
   },
   {
@@ -438,6 +439,7 @@ const projects = [
       }
     ],
     image: grass,
+    imageScale: 1.09,
     source_code_link: "https://github.com/KallkaGo/Grass",
   },
   {
@@ -455,6 +457,7 @@ const projects = [
       },
     ],
     image: laser,
+    imageScale: 1.045,
     source_code_link: "https://github.com/KallkaGo/Laser",
   },
   {

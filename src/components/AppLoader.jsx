@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useInteractStore } from '../utils/Store'
 
 // 需要等待初始化完成的重型模块，对应各自组件里的 markModuleReady 上报。
-const REQUIRED_MODULES = ['bokeh', 'stars', 'particles', 'sun']
+const REQUIRED_MODULES = ['bokeh', 'particles', 'sun']
 
 // 全屏 loading：盖住首屏，等字体、首帧和全部 WebGL 模块初始化完成后再淡出，
 // 之后才放行 Hero / Navbar 的入场动画，避免动画与 WebGL 上下文创建、
@@ -102,22 +102,23 @@ const AppLoader = () => {
   return (
     <div
       data-app-loader
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#08080a] ${
+      className={`notebook-loader fixed inset-0 z-[100] flex flex-col items-center justify-center ${
         leaving ? 'loader-leave pointer-events-none' : ''
       }`}
     >
       <div className='loader-rise flex flex-col items-center'>
-        <div className='w-[320px] sm:w-[460px]'>
-          <div className='h-[3px] w-full bg-white/[0.08] overflow-hidden'>
+        <div className='w-[min(320px,80vw)] sm:w-[400px]'>
+          <p className='hand-note mb-6 text-center'>Opening the notebook…</p>
+          <div className='h-[2px] w-full bg-[#263b2c]/10 overflow-hidden'>
             <div
-              className='h-full w-full origin-left bg-gradient-to-r from-purple-500 via-indigo-400 to-cyan-300'
+              className='h-full w-full origin-left bg-[#526549]'
               style={{ transform: `scaleX(${progress / 100})` }}
             />
           </div>
 
           <div className='mt-4 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em]'>
-            <span className='text-neutral-500'>Initializing WebGL</span>
-            <span className='text-neutral-300 tabular-nums'>
+            <span className='text-[#6f7565]'>A few ideas taking shape</span>
+            <span className='text-[#263b2c] tabular-nums'>
               {String(progress).padStart(3, '0')}%
             </span>
           </div>

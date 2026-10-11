@@ -7,33 +7,14 @@ varying vec3 vLayer2;
 varying vec3 dir;
 varying vec3 vNormal;
 
-float sun() {
-  float sum = 0.;
-  sum += textureCube(uPerlin, vLayer0).r;
-  sum += textureCube(uPerlin, vLayer1).r;
-  sum += textureCube(uPerlin, vLayer2).r;
-  sum *= .33;
-  return sum;
-}
-
-vec3 brightnessToColor(float b) {
-  b *= .25;
-  return (vec3(b, b * b, b * b * b * b) / .25) * .8;
-}
-
-float fresnel(vec3 dir, vec3 worldNormal) {
-  return pow(1. - clamp(dot(dir, worldNormal), 0., 1.), 5.);
-}
-
 void main() {
-  float brightness = sun();
-  float strength = fresnel(dir, vNormal);
-  brightness = brightness * 4. + 1.;
-  brightness += strength;
-  vec3 col = brightnessToColor(brightness);
-  gl_FragColor = vec4(col, 1.);
-  // gl_FragColor = vec4(strength );
-  #include <tonemapping_fragment>
-	#include <colorspace_fragment>
-
+  float layers = textureCube(uPerlin, vLayer0).r
+    + textureCube(uPerlin, vLayer1).r
+    + textureCube(uPerlin, vLayer2).r;
+  float edge = 1. - clamp(dot(normalize(dir), normalize(vNormal)), 0., 1.);
+  float brightness = layers * .33 * 4. + 1. + edge * 1.2;
+  float heat = brightness * .26;
+  vec3 color = vec3(heat, heat * heat, pow(heat, 4.)) * (.6 / .26);
+  // 参考的曲线直接产生显示颜色，避免再做一次 sRGB 转换而漂白细节。
+  gl_FragColor = vec4(clamp(color, 0., 1.), 1.);
 }

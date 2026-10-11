@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import emailJs from '@emailjs/browser'
-import { styles } from '../styles'
 import { SunCanvas } from './canvas'
+import MotionStudyCard from './MotionStudyCard'
 import SectionWrapper from '../hoc'
 import { useGsapReveal } from '../utils/useGsapReveal'
+import './notebook-interactive.css'
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -14,6 +15,7 @@ const Contact = () => {
   const [loading, setLoading] = useState(false)
   const [statusMessage, setStatusMessage] = useState(null)
   const containerRef = useGsapReveal({ y: 30, stagger: 0.15 })
+  const motionRef = useRef({ x: 0, y: 0, hover: 0 })
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -69,113 +71,88 @@ const Contact = () => {
   }
 
   return (
-    <div ref={containerRef} className='relative w-full'>
-      <div className='flex flex-col-reverse xl:flex-row gap-10 items-stretch'>
-        {/* Left: Contact Form Card */}
-        <div className='gsap-reveal flex-[0.8] relative'>
-          <div className='relative h-full bg-[#0c0d12] rounded-3xl p-8 sm:p-10 border border-white/[0.08] shadow-[0_20px_60px_rgba(0,0,0,0.8)] flex flex-col justify-between'>
-            {/* Header */}
+    <div ref={containerRef} className='notebook-contact'>
+      <div className='notebook-contact-layout'>
+        <div className='gsap-reveal notebook-contact-note'>
+          <p className='section-kicker'>GET IN TOUCH</p>
+          <h2 className='section-title notebook-contact-title'>Let’s make something.</h2>
+          <p className='body-copy notebook-contact-intro'>
+            Have an inquiry, a project in mind, or a shader you want to talk about? Leave me a note.
+          </p>
+
+          <div className='notebook-contact-status' role='status' aria-live='polite' aria-atomic='true'>
+            {statusMessage && (
+              <p className={`notebook-status-message notebook-status-${statusMessage.type}`}>
+                {statusMessage.text}
+              </p>
+            )}
+          </div>
+
+          <form onSubmit={handleSubmit} className='notebook-contact-form' aria-busy={loading}>
+            <div className='notebook-contact-field'>
+              <label htmlFor='contact-name'>Your name</label>
+              <input
+                id='contact-name'
+                type='text'
+                name='name'
+                autoComplete='name'
+                value={form.name}
+                onChange={handleChange}
+                placeholder='Alex Morgan'
+              />
+            </div>
+            <div className='notebook-contact-field'>
+              <label htmlFor='contact-email'>Your email</label>
+              <input
+                id='contact-email'
+                type='email'
+                name='email'
+                autoComplete='email'
+                value={form.email}
+                onChange={handleChange}
+                placeholder='alex@example.com'
+              />
+            </div>
+            <div className='notebook-contact-field'>
+              <label htmlFor='contact-message'>Your message</label>
+              <textarea
+                id='contact-message'
+                rows={4}
+                name='message'
+                value={form.message}
+                onChange={handleChange}
+                placeholder='Tell me what you’re thinking…'
+              />
+            </div>
+            <button type='submit' disabled={loading} className='notebook-button notebook-contact-send'>
+              {loading ? 'Sending…' : 'Send your note ↗'}
+            </button>
+          </form>
+
+          <div className='notebook-contact-direct'>
+            <span>Or write directly</span>
+            <a href='mailto:kallka.ciallo@gmail.com' className='notebook-link'>
+              kallka.ciallo@gmail.com
+            </a>
+          </div>
+        </div>
+
+        <figure className='notebook-sun-study'>
+          <MotionStudyCard className='motion-sun-card' motionRef={motionRef} label='Interactive solar study' hoverEnabled={false}>
+            <div className='study-card-label' aria-hidden='true'><span>02 / Solar study</span><span>Light, in motion</span></div>
+            <div className='notebook-sun-viewport' role='img' aria-label='A rotating golden sun with glowing coronal loops, centered in the notebook'>
+              <div className='notebook-sun-canvas'><SunCanvas /></div>
+            </div>
+            <div className='sun-card-footnote' aria-hidden='true'><span>A little warmth,<br />for the next idea.</span><span>↗</span></div>
+          </MotionStudyCard>
+          <figcaption className='notebook-sun-caption'>
             <div>
-              <div className='mb-6'>
-                <p className={styles.sectionSubText}>GET IN TOUCH</p>
-                <h2 className={`${styles.sectionHeadText} mt-2 text-gradient-white`}>
-                  Contact.
-                </h2>
-                <p className='text-neutral-400 text-sm font-light mt-2'>
-                  Have an inquiry, collaborative project idea, or just want to discuss WebGL and shaders? Drop a message.
-                </p>
-              </div>
-
-              {/* Status Alert */}
-              {statusMessage && (
-                <div
-                  className={`mb-6 p-4 rounded-xl text-xs font-mono border ${
-                    statusMessage.type === 'success'
-                      ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-                      : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
-                  }`}
-                >
-                  {statusMessage.text}
-                </div>
-              )}
-
-              {/* Form */}
-              <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
-                <div className='flex flex-col gap-2'>
-                  <label className='text-xs font-mono tracking-wider text-neutral-400 uppercase'>
-                    Your Name
-                  </label>
-                  <input
-                    type='text'
-                    name='name'
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder='e.g. Alex Morgan'
-                    className='bg-white/[0.03] border border-white/[0.08] focus:border-white/30 focus:bg-white/[0.06] rounded-xl px-4 py-3.5 text-white placeholder:text-neutral-600 outline-none text-sm transition-all'
-                  />
-                </div>
-
-                <div className='flex flex-col gap-2'>
-                  <label className='text-xs font-mono tracking-wider text-neutral-400 uppercase'>
-                    Your Email
-                  </label>
-                  <input
-                    type='email'
-                    name='email'
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder='e.g. alex@example.com'
-                    className='bg-white/[0.03] border border-white/[0.08] focus:border-white/30 focus:bg-white/[0.06] rounded-xl px-4 py-3.5 text-white placeholder:text-neutral-600 outline-none text-sm transition-all'
-                  />
-                </div>
-
-                <div className='flex flex-col gap-2'>
-                  <label className='text-xs font-mono tracking-wider text-neutral-400 uppercase'>
-                    Your Message
-                  </label>
-                  <textarea
-                    rows={5}
-                    name='message'
-                    value={form.message}
-                    onChange={handleChange}
-                    placeholder='Tell me about your project or inquiry...'
-                    className='bg-white/[0.03] border border-white/[0.08] focus:border-white/30 focus:bg-white/[0.06] rounded-xl px-4 py-3.5 text-white placeholder:text-neutral-600 outline-none text-sm transition-all resize-none'
-                  />
-                </div>
-
-                <button
-                  type='submit'
-                  disabled={loading}
-                  className='mt-3 px-8 py-3.5 rounded-xl bg-white text-black font-semibold text-xs tracking-wider uppercase hover:bg-neutral-200 transition-all duration-200 shadow-[0_0_20px_rgba(255,255,255,0.15)] disabled:opacity-50 disabled:cursor-not-allowed self-start'
-                >
-                  {loading ? 'Transmitting...' : 'Transmit Message \u2192'}
-                </button>
-              </form>
+              <span className='notebook-study-title'>Keep a little light.</span>
+              <span className='notebook-study-detail'>A living sun, turning with every new idea.</span>
             </div>
-
-            {/* Direct Email link info */}
-            <div className='mt-8 pt-5 border-t border-white/[0.04] flex items-center justify-between text-xs font-mono text-neutral-500'>
-              <span>DIRECT CONTACT</span>
-              <a
-                href='mailto:kallka.ciallo@gmail.com'
-                className='text-neutral-400 hover:text-white transition-colors'
-              >
-                kallka.ciallo@gmail.com
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Right: 3D Sun Canvas Section */}
-        <div className='flex-1 min-h-[380px] sm:min-h-[480px] xl:min-h-auto relative rounded-3xl overflow-hidden flex items-center justify-center'>
-          {/* Subtle frame & Sun info */}
-          <div className='absolute top-4 right-4 z-10 font-mono text-[10px] text-neutral-500 tracking-wider pointer-events-none'>
-            3D STELLAR SHADER &bull; PERLIN NOISE BLOOM
-          </div>
-          <div className='w-full h-[400px] sm:h-[480px] xl:h-full min-h-[400px]'>
-            <SunCanvas />
-          </div>
-        </div>
+            <span className='notebook-margin-note' aria-hidden='true'>keep exploring ↗</span>
+          </figcaption>
+        </figure>
       </div>
     </div>
   )

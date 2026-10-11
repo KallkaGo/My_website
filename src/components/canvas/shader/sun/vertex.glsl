@@ -19,19 +19,19 @@ mat2 rotate(float a) {
 void main() {
 
   vNormal = (modelMatrix * vec4(normal, 0.)).xyz;
-  float t = uTime * 0.05;
+  float t = uTime * .015;
   mat2 rot = rotate(t);
 
   vec3 p0 = position;
   p0.yz = rot * p0.yz;
   vLayer0 = p0;
 
-  mat2 rot1 = rotate(t + 10.);
+  mat2 rot1 = rotate(t + 2.094);
   vec3 p1 = position;
-  p1.xz = rot1 * p1.xz;
+  p1.zx = rot1 * p1.zx;
   vLayer1 = p1;
 
-  mat2 rot2 = rotate(t + 30.);
+  mat2 rot2 = rotate(t + 4.188);
   vec3 p2 = position;
   p2.xy = rot2 * p2.xy;
   vLayer2 = p2;

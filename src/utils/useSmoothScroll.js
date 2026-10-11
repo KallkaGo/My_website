@@ -14,6 +14,7 @@ export const useSmoothScroll = (enabled = true) => {
       touchMultiplier: 1,
     })
     window.lenis = lenis
+    window.dispatchEvent(new Event('lenis-ready'))
 
     // ScrollTrigger 已监听原生 scroll；本页的入场动画无需再手动 update。
     const handleAnchorClick = (e) => {
@@ -25,9 +26,16 @@ export const useSmoothScroll = (enabled = true) => {
         const targetElement = document.getElementById(href.slice(1))
         if (targetElement) {
           e.preventDefault()
-          lenis.scrollTo(targetElement, {
-            offset: -70,
+          if (href === '#main') targetElement.focus({ preventScroll: true })
+          const scrollTarget = href === '#main' ? document.getElementById('notebook') ?? targetElement : targetElement
+          // 开场期间页面暂时平移到视口，锚点仍落在开场结束后的文档位置。
+          const opening = document.querySelector('.bokeh-entry')
+          const offset = scrollTarget.closest('.notebook-pages') && opening
+            ? Math.max(0, opening.getBoundingClientRect().bottom)
+            : 0
+          lenis.scrollTo(scrollTarget, {
             immediate: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+            offset,
           })
         }
       }

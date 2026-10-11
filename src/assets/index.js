@@ -22,7 +22,6 @@ import firework from "./project/firework.webp"
 import dice from "./project/dice.webp"
 import particles from "./project/particles.webp"
 
-import bgm1 from './music/bgm.mp3'
 import bgm2 from './music/bgm2.mp3'
 
 import tracemoe from './project/tracemoe.webp'
@@ -56,7 +55,6 @@ export {
   aigc,
   meoCloud,
   tracemoe,
-  bgm1,
   bgm2,
   backend,
   creator,

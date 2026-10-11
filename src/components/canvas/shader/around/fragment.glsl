@@ -1,23 +1,11 @@
-uniform samplerCube uPerlin;
-
-varying vec3 vPosition;
-
-vec3 brightnessToColor(float b) {
-  b *= .25;
-  return (vec3(b, b * b, b * b * b * b) / .25) * .8;
-}
+varying vec2 vUv;
 
 void main() {
-  float radial = 1. - vPosition.z;
-
-  radial = pow(radial, 3.);
-
-  float birghtness = 1. + radial * .83;
-
-  gl_FragColor.rgb = brightnessToColor(birghtness) * radial;
-
-  gl_FragColor.a = radial * .5;
-
-  #include <tonemapping_fragment>
-	#include <colorspace_fragment>
+  float radius = length((vUv - .5) * 2.6);
+  float radial = (radius - 1.) / .3;
+  if (radial < 0. || radial > 1.) discard;
+  float alpha = pow(1. - radial, 2.);
+  float heat = (1. + alpha * .5) * .46;
+  vec3 color = vec3(heat, heat * heat, pow(heat, 4.)) * (1.06 / .46);
+  gl_FragColor = vec4(color * alpha, alpha);
 }

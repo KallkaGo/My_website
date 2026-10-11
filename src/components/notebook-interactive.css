@@ -1,0 +1,412 @@
+.notebook-contact,
+.notebook-lab,
+.notebook-footer {
+  color: var(--ink, #263b2c);
+}
+
+.notebook-contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
+.notebook-contact-title {
+  max-width: 10ch;
+}
+
+.notebook-contact-intro,
+.notebook-lab-intro {
+  max-width: 42rem;
+  margin-top: 1.2rem;
+}
+
+.notebook-contact-form {
+  display: grid;
+  gap: 1.6rem;
+  margin-top: 2.1rem;
+}
+
+.notebook-contact-field {
+  display: grid;
+  gap: .45rem;
+}
+
+.notebook-contact-field label {
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+.notebook-contact-field input,
+.notebook-contact-field textarea {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  border-bottom: 1px solid var(--line, rgba(38, 59, 44, .22));
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink, #263b2c);
+  padding: .6rem 0 .85rem;
+  font: inherit;
+  font-size: .9rem;
+  line-height: 1.7;
+  transition: border-color .2s;
+}
+
+.notebook-contact-field textarea {
+  resize: vertical;
+  min-height: 7rem;
+}
+
+.notebook-contact-field input::placeholder,
+.notebook-contact-field textarea::placeholder {
+  color: var(--muted, #6f7565);
+  opacity: .8;
+}
+
+.notebook-contact-field input:focus,
+.notebook-contact-field textarea:focus {
+  border-color: var(--ink, #263b2c);
+  outline: 2px solid var(--line, rgba(38, 59, 44, .22));
+  outline-offset: 5px;
+}
+
+.notebook-contact-send {
+  justify-self: start;
+  margin-top: .25rem;
+}
+
+.notebook-contact-send:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+.notebook-status-message {
+  margin-top: 1.25rem;
+  padding: .85rem 1rem;
+  border-left: 2px solid currentColor;
+  font-size: .85rem;
+  line-height: 1.6;
+  background: var(--paper-light, #faf6ed);
+}
+
+.notebook-status-success {
+  color: var(--ink, #263b2c);
+}
+
+.notebook-status-error {
+  color: #9d432d;
+}
+
+.notebook-contact-direct {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  margin-top: 2rem;
+  font-size: .8rem;
+  color: var(--muted, #6f7565);
+}
+
+.notebook-contact-direct a {
+  font-size: inherit;
+  overflow-wrap: anywhere;
+}
+
+.notebook-sun-study {
+  margin: 0;
+  min-width: 0;
+}
+
+.motion-study-shell {
+  --study-x: 0;
+  --study-y: 0;
+  --study-hover: 0;
+  --study-enter: 0;
+  position: relative;
+  perspective: 1200px;
+  touch-action: pan-y;
+}
+
+.motion-study-surface {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid #656b5530;
+  box-shadow: 0 20px 40px -24px #293f3059, 0 3px 10px #293f3014;
+  opacity: var(--study-enter);
+  transform: translate3d(0, calc((1 - var(--study-enter)) * 70px - var(--study-hover) * 7px), calc((1 - var(--study-enter)) * -100px)) rotateX(calc((1 - var(--study-enter)) * 12deg - var(--study-y) * 3.5deg)) rotateY(calc(var(--study-x) * 5deg)) rotateZ(calc((1 - var(--study-enter)) * -3deg)) scale(calc(.94 + var(--study-enter) * .06));
+}
+
+.motion-study-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: calc(var(--study-hover) * .38);
+  background: radial-gradient(ellipse at calc(50% + var(--study-x) * 38%) calc(50% + var(--study-y) * 38%), #fff6dc45, transparent 65%);
+}
+
+.study-card-label {
+  position: absolute;
+  inset: 25px 26px auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  z-index: 2;
+  color: #eeeada;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  pointer-events: none;
+}
+
+.motion-field-card {
+  max-width: 1060px;
+  margin-inline: auto;
+}
+
+.motion-field-card .motion-study-surface {
+  background: radial-gradient(ellipse at 75% 20%, #312735, #191619 70%);
+  transform: translate3d(0, calc((1 - var(--study-enter)) * 70px), calc((1 - var(--study-enter)) * -100px)) rotateX(calc((1 - var(--study-enter)) * 12deg)) rotateZ(calc((1 - var(--study-enter)) * -3deg)) scale(calc(.94 + var(--study-enter) * .06));
+}
+
+.motion-field-card .motion-study-sheen {
+  display: none;
+}
+
+.motion-field-card .motion-study-surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(#21192370, transparent 20%, transparent 80%, #21192330);
+}
+
+.motion-sun-card .motion-study-surface {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  transform: translate3d(0, calc((1 - var(--study-enter)) * 45px), 0);
+}
+
+.motion-sun-card .motion-study-sheen {
+  display: none;
+}
+
+.motion-sun-card .study-card-label {
+  color: #58624d;
+  inset: 10px 0 auto;
+}
+
+.sun-card-footnote {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 0 25px;
+  color: #4d5942;
+  font-size: 28px;
+  line-height: 1.15;
+  font-family: 'Caveat', cursive;
+}
+
+.notebook-sun-caption {
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.notebook-sun-viewport {
+  position: relative;
+  width: 100%;
+  height: clamp(430px, 48vw, 650px);
+  overflow: hidden;
+  background: transparent;
+}
+
+.notebook-sun-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.notebook-sun-caption,
+.notebook-lab-caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.notebook-study-title,
+.notebook-study-detail {
+  display: block;
+}
+
+.notebook-study-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.notebook-study-detail {
+  margin-top: .35rem;
+  color: var(--muted, #6f7565);
+  font-size: .75rem;
+  line-height: 1.7;
+}
+
+.notebook-margin-note {
+  align-self: center;
+  color: var(--muted, #6f7565);
+  font-family: 'Caveat', cursive;
+  font-size: 1.45rem;
+  transform: rotate(-5deg);
+}
+
+.notebook-lab-header {
+  margin-bottom: 2rem;
+}
+
+.notebook-lab-study {
+  margin: 0;
+}
+
+.notebook-lab-viewport {
+  height: clamp(320px, 41vw, 520px);
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.notebook-lab-hint {
+  max-width: 24rem;
+  align-self: center;
+  color: var(--muted, #6f7565);
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+
+.notebook-lab-hint span {
+  color: var(--accent, #b96946);
+  margin-left: .3rem;
+}
+
+.notebook-footer {
+  position: relative;
+  z-index: 1;
+  padding: 1.8rem 1.5rem 2.3rem;
+}
+
+.notebook-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
+  max-width: 1152px;
+  margin: 0 auto;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line, rgba(38, 59, 44, .22));
+}
+
+.notebook-footer-brand > span {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -.05em;
+}
+
+.notebook-footer-brand p {
+  margin-top: .3rem;
+  font-size: .7rem;
+  color: var(--muted, #6f7565);
+}
+
+.notebook-footer-links {
+  display: flex;
+  gap: 1.5rem;
+  font-size: .8rem;
+}
+
+.notebook-footer-top {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .65rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink, #263b2c);
+  font: inherit;
+  font-size: .8rem;
+  cursor: pointer;
+}
+
+.notebook-footer-top:hover {
+  color: var(--accent, #b96946);
+}
+
+.notebook-footer-top:focus-visible {
+  outline: 2px solid var(--ink, #263b2c);
+  outline-offset: 5px;
+}
+
+@media (max-width: 767px) {
+  .motion-study-surface {
+    border-radius: 15px;
+  }
+
+  .study-card-label {
+    inset: 20px 20px auto;
+    font-size: 9px;
+  }
+
+  .notebook-lab-viewport {
+    height: 320px;
+  }
+
+  .notebook-contact-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3rem;
+  }
+
+  .notebook-contact-title {
+    max-width: none;
+  }
+
+  .notebook-sun-study {
+    margin-top: 0;
+  }
+
+  .notebook-sun-viewport {
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .sun-card-footnote {
+    font-size: 25px;
+  }
+
+  .notebook-footer-brand {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-study-surface,
+  .motion-field-card .motion-study-surface {
+    transform: none;
+    opacity: 1;
+  }
+
+  .motion-study-sheen {
+    display: none;
+  }
+
+  .motion-sun-card .motion-study-surface {
+    transform: none;
+  }
+
+  .notebook-contact-field input,
+  .notebook-contact-field textarea {
+    transition: none;
+  }
+}

@@ -1,15 +1,9 @@
-import { styles } from '../styles'
-
 const SectionWrapper = (Component, idName) =>
   function HighOrderComponent() {
     return (
-      <section className={`${styles.padding} max-w-7xl mx-auto relative z-0`}>
-        <span className='hash-span' id={idName}>
-          &nbsp;
-        </span>
+      <section id={idName} className={'notebook-section notebook-container notebook-section-' + idName}>
         <Component />
       </section>
     )
   }
-
 export default SectionWrapper

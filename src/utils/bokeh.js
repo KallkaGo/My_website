@@ -42,6 +42,7 @@ class ThreeScene {
   onAfterResize = () => {}
   #isIntersecting = false
   #isAnimating = false
+  #enabled = true
   isDisposed = false
   #intersectionObserver
   #resizeObserver
@@ -54,6 +55,8 @@ class ThreeScene {
 
   constructor(config) {
     this.#config = { ...config }
+    this.maxPixelRatio = config.maxPixelRatio
+    this.minPixelRatio = config.minPixelRatio
     this.#createCamera()
     this.#createScene()
     this.#createRenderer()
@@ -116,7 +119,7 @@ class ThreeScene {
   #handleIntersection(entries) {
     if (this.isDisposed) return
     this.#isIntersecting = entries[0].isIntersecting
-    if (this.#isIntersecting) {
+    if (this.#isIntersecting && this.#enabled && !document.hidden) {
       this.#startAnimation()
     } else {
       this.#stopAnimation()
@@ -125,7 +128,7 @@ class ThreeScene {
 
   #handleVisibilityChange() {
     if (this.isDisposed) return
-    if (this.#isIntersecting) {
+    if (this.#isIntersecting && this.#enabled) {
       if (document.hidden) {
         this.#stopAnimation()
       } else {
@@ -147,9 +150,9 @@ class ThreeScene {
       width = this.#config.size.width
       height = this.#config.size.height
     } else if (this.#config.size === "parent" && this.canvas.parentNode) {
-      const bounds = this.canvas.parentNode.getBoundingClientRect()
-      width = Number(bounds.width.toFixed(2))
-      height = Number(bounds.height.toFixed(2))
+      // 相机拉远只缩放 DOM，画布分辨率不跟着每一帧的视觉尺寸变化。
+      width = this.canvas.parentNode.clientWidth
+      height = this.canvas.parentNode.clientHeight
     } else {
       width = window.innerWidth
       height = window.innerHeight
@@ -220,8 +223,16 @@ class ThreeScene {
     this.render = postprocessing.render
   }
 
+  // 固定画布离开开场后仍与视口相交，需要显式停止渲染。
+  setEnabled(enabled) {
+    if (this.isDisposed || this.#enabled === enabled) return
+    this.#enabled = enabled
+    if (enabled && this.#isIntersecting && !document.hidden) this.#startAnimation()
+    else this.#stopAnimation()
+  }
+
   #startAnimation() {
-    if (this.#isAnimating || this.isDisposed) return
+    if (this.#isAnimating || this.isDisposed || !this.#enabled) return
     const animate = () => {
       if (this.isDisposed) return
       this.#animationFrameId = requestAnimationFrame(animate)
@@ -255,7 +266,7 @@ class ThreeScene {
     this.#removeListeners()
     this.#stopAnimation()
     this.scene.traverse((object) => {
-      if (object.isMesh && typeof object.material === "object") {
+      if ((object.isMesh || object.isLine) && typeof object.material === "object") {
         Object.keys(object.material).forEach((key) => {
           const resource = object.material[key]
           if (
@@ -626,6 +637,8 @@ class BokehParticles extends InstancedMesh {
     super(geometry, material, config.count)
     this.config = config
     this.uniforms = uniforms
+    // 噪声位移在着色器中完成。
+    this.frustumCulled = false
     // 保留原有属性名；复用临时对象生成每个实例的变换矩阵。
     this.dummyO = new Object3D()
     this.#initializeInstances()
@@ -671,14 +684,19 @@ class BokehParticles extends InstancedMesh {
   }
 }
 
-// 第二个参数在原代码中未使用，保留参数位置以兼容原接口。
-function Bokeh1Background(canvas, options) {
-  const three = new ThreeScene({ canvas, size: "parent" })
+function Bokeh1Background(canvas, options = {}) {
+  const three = new ThreeScene({
+    canvas,
+    size: "parent",
+    maxPixelRatio: options.maxPixelRatio,
+    minPixelRatio: options.minPixelRatio,
+    rendererOptions: options.rendererOptions,
+  })
   three.cameraMaxAspect = 1.7
   three.camera.position.z = 1
   three.updateWorldSize()
 
-  const particles = new BokehParticles()
+  const particles = new BokehParticles({ count: options.count ?? 1024 })
   particles.setSize(three.size.width, three.size.height)
   three.scene.add(particles)
 
@@ -689,12 +707,15 @@ function Bokeh1Background(canvas, options) {
     targetPosition.y = 0.1 * -pointer.nPosition.y
   }
   three.onBeforeRender = (time) => {
+    options.onFrame?.(time)
     particles.position.lerp(targetPosition, 0.05)
     particles.update(time)
   }
   three.onAfterResize = (size) => {
     particles.setSize(size.width, size.height)
+    options.onResize?.(size)
   }
+  three.resize()
 
   return {
     three,

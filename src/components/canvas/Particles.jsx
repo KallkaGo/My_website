@@ -19,8 +19,8 @@ const Particles = ({ onWarmup }) => {
   const pointsRef = useRef(null)
 
   const displacementRef = useRef({})
-
   const hoverStateRef = useRef(false)
+
   const warmedUpRef = useRef(false)
   const warmupFrameRef = useRef(null)
 
@@ -31,13 +31,15 @@ const Particles = ({ onWarmup }) => {
   const gl = useThree(state => state.gl)
   const size = useThree(state => state.size)
   const dpr = useThree(state => state.viewport.dpr)
+  const viewport = useThree(state => state.viewport)
+  const fillScale = Math.max(viewport.width / 16, viewport.height / 9) * 1.04
 
   const uniforms = useMemo(() => ({
     uResolution: new THREE.Uniform(new THREE.Vector2()),
     uPictureTexture: new THREE.Uniform(pictureTex),
     uDiffuseTexture: new THREE.Uniform(diffuseTex),
     uDisplacementTexture: new THREE.Uniform(),
-    uIntensity: new THREE.Uniform(1)
+    uIntensity: new THREE.Uniform(1),
   }), [pictureTex, diffuseTex])
 
   useEffect(() => {
@@ -70,9 +72,6 @@ const Particles = ({ onWarmup }) => {
     displacement.context.fillRect(0, 0, displacement.canvas.width, displacement.canvas.height)
     displacement.glowImage = new Image()
     displacement.glowImage.src = glowUrl
-    displacement.glowImage.onload = () => {
-      displacement.context.drawImage(displacement.glowImage, 20, 20, 32, 32)
-    }
 
     // Coordinates
     displacement.canvasCursor = new THREE.Vector2(9999, 9999)
@@ -96,18 +95,12 @@ const Particles = ({ onWarmup }) => {
 
     const displacement = displacementRef.current
 
-    const hoveState = hoverStateRef.current
-
-    if (hoveState) {
-      uniforms.uIntensity.value = THREE.MathUtils.lerp(uniforms.uIntensity.value, 1, delta * 2)
-    } else {
-      uniforms.uIntensity.value = THREE.MathUtils.lerp(uniforms.uIntensity.value, 0, delta * 2)
-    }
+    uniforms.uIntensity.value = THREE.MathUtils.lerp(uniforms.uIntensity.value, hoverStateRef.current ? 1 : 0, delta * 2)
 
 
     // Fade out
     displacement.context.globalCompositeOperation = 'source-over'
-    displacement.context.globalAlpha = 0.02
+    displacement.context.globalAlpha = .02
     displacement.context.fillRect(0, 0, displacement.canvas.width, displacement.canvas.height)
 
 
@@ -120,7 +113,7 @@ const Particles = ({ onWarmup }) => {
     const glowSize = displacement.canvas.width * 0.1 * .8
     displacement.context.globalCompositeOperation = 'lighter'
     displacement.context.globalAlpha = alpha
-    displacement.context.drawImage(
+    if (displacement.glowImage.complete && displacement.glowImage.naturalWidth) displacement.context.drawImage(
       displacement.glowImage,
       displacement.canvasCursor.x - glowSize * .5,
       displacement.canvasCursor.y - glowSize * .5,
@@ -141,15 +134,13 @@ const Particles = ({ onWarmup }) => {
     }
   })
 
-  const handleMove = (e) => {
+  const handleMove = (event) => {
     const displacement = displacementRef.current
-    const uv = e.uv
-    displacement.canvasCursor.x = uv.x * displacement.canvas.width
-    displacement.canvasCursor.y = (1. - uv.y) * displacement.canvas.height
+    displacement.canvasCursor.set(event.uv.x * displacement.canvas.width, (1 - event.uv.y) * displacement.canvas.height)
   }
 
   return (
-    <>
+    <group scale={fillScale}>
       <points ref={pointsRef}>
         <planeGeometry args={[16, 9, 256, 256]} />
         <shaderMaterial
@@ -161,11 +152,11 @@ const Particles = ({ onWarmup }) => {
           transparent
         ></shaderMaterial>
       </points>
-      <mesh visible={false} onPointerMove={handleMove} position={[0, 0, .01]} onPointerEnter={() => hoverStateRef.current = true} onPointerLeave={() => hoverStateRef.current = false} >
+      <mesh visible={false} position={[0, 0, .01]} onPointerMove={handleMove} onPointerEnter={() => { hoverStateRef.current = true }} onPointerLeave={() => { hoverStateRef.current = false }}>
         <planeGeometry args={[16, 9]} />
         <meshBasicMaterial />
       </mesh>
-    </>
+    </group>
   )
 }
 
@@ -200,6 +191,8 @@ const ParticlesCanvas = () => {
     <Canvas
       ref={canvasRef}
       frameloop={frameloop}
+      resize={{ scroll: false, offsetSize: true }}
+      style={{ pointerEvents: 'auto' }}
       camera={{
         fov: 35,
         near: 0.1,
