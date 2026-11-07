@@ -18,7 +18,7 @@ import BokehEntry from './components/BokehEntry'
 const App = () => {
   const appReady = useInteractStore((s) => s.appReady)
 
-  // WebGL 预热完成后启用 Lenis，避免初始化占用滚动帧。
+  // 使用浏览器原生滚动；WebGL 预热完成后再接管站内锚点。
   useSmoothScroll(appReady)
 
   return (

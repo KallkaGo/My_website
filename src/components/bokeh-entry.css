@@ -13,6 +13,15 @@
   opacity: var(--opening-caption-opacity, 0);
   visibility: var(--opening-caption-visibility, hidden);
 }
+/* 开场按滚动进度改 opacity；提升为合成层，避免每帧重新栅格化文字。 */
+.bokeh-intro-active .bokeh-entry-copy,
+.bokeh-intro-active .bokeh-entry-footer,
+.notebook-opening .hero-intro,
+.notebook-opening .light-study-print > .print-caption,
+.notebook-opening .hero-wind-note {
+  will-change: opacity;
+}
+/* 下方 section 的透明度在离屏时才变化，不为它们创建整段合成层。 */
 .light-study-print .bokeh-study-image { position: relative; background: radial-gradient(ellipse at 30% 44%, #9c521972, transparent 36%), radial-gradient(ellipse at 72% 58%, #611aad8c, transparent 39%), #07060b; }
 .bokeh-study-canvas { display: block; width: 100% !important; height: 100% !important; }
 .light-study-note { margin: 4px 7px 0 0; font-size: 22px; transform: rotate(-4deg); }
@@ -28,7 +37,7 @@
 .bokeh-entry-footer > a > span { padding-left: 14px; }
 .bokeh-entry.bokeh-entry-still { height: 0; }
 .bokeh-entry-still > * { display: none; }
-.bokeh-intro-active .notebook-header { background: rgba(243, 237, 223, var(--bokeh-nav-paper, 0)); backdrop-filter: none; color: var(--bokeh-nav-ink, #f5eee7); }
+.bokeh-intro-active .notebook-header { background: rgba(243, 237, 223, var(--bokeh-nav-paper, 0)); color: var(--bokeh-nav-ink, #f5eee7); }
 .bokeh-intro-active .notebook-nav { border-bottom-color: currentColor; }
 .bokeh-intro-active .notebook-nav::after { background: currentColor; opacity: .15; }
 .bokeh-intro-active .sound-button, .bokeh-intro-active .menu-button { color: inherit; }

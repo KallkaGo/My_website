@@ -30,7 +30,7 @@ const ServiceEntry = ({ index, title }) => (
 )
 
 const About = () => {
-  const containerRef = useGsapReveal({ y: 30, stagger: 0.1 })
+  const containerRef = useGsapReveal({ stagger: 0.1 })
   return (
     <div ref={containerRef} className='notebook-about'>
       <div className='notebook-about-intro'>

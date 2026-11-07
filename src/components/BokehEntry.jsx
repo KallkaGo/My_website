@@ -34,15 +34,58 @@ const BokehEntry = () => {
     const art = document.querySelector('.bokeh-art-camera')
     const canvas = document.getElementById('bokeh-study-canvas')
     const root = document.documentElement
+    const header = document.querySelector('.notebook-header')
     let bokeh
     let texture
     let disposed = false
     let frame = 0
     let imageLayout
-    let removeLenisListener
+    let styleCache = new WeakMap()
+    let lastProgress = Number.NaN
+    let lastProgressText
+    let lastRendering
+    let lastOpening
+    let lastIntroActive
     const still = reducedMotion || unavailable
 
-    const update = () => {
+    // 滚动回调每帧都会改写同一批样式；缓存后只在值真正变化时写入，
+    // 避免重复写入触发样式/布局重算。
+    const cacheFor = (el) => {
+      let cache = styleCache.get(el)
+      if (!cache) {
+        cache = new Map()
+        styleCache.set(el, cache)
+      }
+      return cache
+    }
+    const setStyle = (el, property, value) => {
+      if (!el) return
+      const cache = cacheFor(el)
+      if (cache.get(property) === value) return
+      cache.set(property, value)
+      el.style[property] = value
+    }
+    const setVar = (el, name, value) => {
+      if (!el) return
+      const cache = cacheFor(el)
+      if (cache.get(name) === value) return
+      cache.set(name, value)
+      el.style.setProperty(name, value)
+    }
+    const invalidate = () => {
+      styleCache = new WeakMap()
+      lastProgress = Number.NaN
+    }
+    const updateRendering = (active) => {
+      const next = active ? 'active' : 'paused'
+      if (lastRendering !== next) {
+        lastRendering = next
+        entry.dataset.rendering = next
+      }
+      bokeh?.three.setEnabled(active)
+    }
+
+    const update = (force = false) => {
       if (disposed || !imageLayout) return
       const entryTop = imageLayout.entryTop - window.scrollY
       const entryBottom = entryTop + imageLayout.entryHeight
@@ -55,35 +98,54 @@ const BokehEntry = () => {
       const scale = Math.exp(Math.log(startScale) * (1 - pullback))
       const x = (window.innerWidth / 2 - imageLayout.centerX) * (1 - pullback)
       const y = (window.innerHeight / 2 - imageLayout.centerY) * (1 - pullback)
-      pages.style.transform = remaining > 0 ? `translate3d(0, ${-remaining}px, 0)` : ''
-      art.style.transform = progress < 1 ? `translate3d(${x}px, ${y}px, 0) scale(${scale})` : ''
-      pages.classList.toggle('notebook-opening', progress < 1)
-      const textOpacity = smooth(0.64, 0.92, progress)
-      const captionOpacity = smooth(0.84, 0.98, progress)
-      pages.style.setProperty('--opening-text-opacity', String(textOpacity))
-      pages.style.setProperty('--opening-text-visibility', textOpacity > 0.001 ? 'visible' : 'hidden')
-      pages.style.setProperty('--opening-caption-opacity', String(captionOpacity))
-      pages.style.setProperty('--opening-caption-visibility', captionOpacity > 0.001 ? 'visible' : 'hidden')
-
-      const copyOpacity = 1 - smooth(0.01, 0.16, progress)
-      copyRef.current.style.opacity = String(copyOpacity)
-      copyRef.current.style.visibility = copyOpacity < 0.001 || still ? 'hidden' : 'visible'
-      const footerOpacity = 1 - smooth(0.025, 0.15, progress)
-      footerRef.current.style.opacity = String(footerOpacity)
-      footerRef.current.style.visibility = footerOpacity < 0.001 || still ? 'hidden' : 'visible'
-
-      const navPaper = smooth(0.025, 0.16, progress)
-      root.classList.toggle('bokeh-intro-active', progress < 1)
-      root.style.setProperty('--bokeh-nav-paper', String(navPaper))
-      root.style.setProperty('--bokeh-nav-ink', `rgb(${Math.round(mix(245, 41, navPaper))}, ${Math.round(mix(238, 63, navPaper))}, ${Math.round(mix(231, 48, navPaper))})`)
-      entry.dataset.progress = progress.toFixed(3)
 
       // 用已测量的坐标判断可见性，避免刚写入 transform 就强制浏览器重新布局。
       const centerY = entryBottom + imageLayout.centerY - remaining + (progress < 1 ? y : 0)
       const halfHeight = imageLayout.height * scale / 2
       const active = !still && centerY + halfHeight > 0 && centerY - halfHeight < window.innerHeight
-      entry.dataset.rendering = active ? 'active' : 'paused'
-      bokeh?.three.setEnabled(active)
+      updateRendering(active)
+
+      // 开场结束后 progress 长期停在 1；只保留上面的渲染开关检查，跳过全部样式写入。
+      if (!force && progress === lastProgress) return
+      lastProgress = progress
+
+      setStyle(pages, 'transform', remaining > 0 ? `translate3d(0, ${-remaining}px, 0)` : '')
+      setStyle(art, 'transform', progress < 1 ? `translate3d(${x}px, ${y}px, 0) scale(${scale})` : '')
+      const textOpacity = smooth(0.64, 0.92, progress)
+      const captionOpacity = smooth(0.84, 0.98, progress)
+      setVar(pages, '--opening-text-opacity', String(textOpacity))
+      setVar(pages, '--opening-text-visibility', textOpacity > 0.001 ? 'visible' : 'hidden')
+      setVar(pages, '--opening-caption-opacity', String(captionOpacity))
+      setVar(pages, '--opening-caption-visibility', captionOpacity > 0.001 ? 'visible' : 'hidden')
+
+      const opening = progress < 1
+      if (lastOpening !== opening) {
+        lastOpening = opening
+        pages.classList.toggle('notebook-opening', opening)
+      }
+
+      const copyOpacity = 1 - smooth(0.01, 0.16, progress)
+      setStyle(copyRef.current, 'opacity', String(copyOpacity))
+      setStyle(copyRef.current, 'visibility', copyOpacity < 0.001 || still ? 'hidden' : 'visible')
+      const footerOpacity = 1 - smooth(0.025, 0.15, progress)
+      setStyle(footerRef.current, 'opacity', String(footerOpacity))
+      setStyle(footerRef.current, 'visibility', footerOpacity < 0.001 || still ? 'hidden' : 'visible')
+
+      // 导航色只作用在 header 自身；写到 :root 会让整页样式失效。
+      const navPaper = smooth(0.025, 0.16, progress)
+      setVar(header, '--bokeh-nav-paper', String(navPaper))
+      setVar(header, '--bokeh-nav-ink', `rgb(${Math.round(mix(245, 41, navPaper))}, ${Math.round(mix(238, 63, navPaper))}, ${Math.round(mix(231, 48, navPaper))})`)
+      const introActive = progress < 1
+      if (lastIntroActive !== introActive) {
+        lastIntroActive = introActive
+        root.classList.toggle('bokeh-intro-active', introActive)
+      }
+
+      const progressText = progress.toFixed(3)
+      if (lastProgressText !== progressText) {
+        lastProgressText = progressText
+        entry.dataset.progress = progressText
+      }
     }
 
     const measure = () => {
@@ -103,6 +165,7 @@ const BokehEntry = () => {
         entryHeight: entryBounds.height,
       }
       art.style.transformOrigin = `${bounds.left - artBounds.left + bounds.width / 2}px ${bounds.top - artBounds.top + bounds.height / 2}px`
+      invalidate()
       update()
     }
     const scheduleMeasure = () => {
@@ -113,16 +176,14 @@ const BokehEntry = () => {
     const resetCamera = () => {
       pages.style.transform = ''
       art.style.transform = ''
+      invalidate()
     }
-    const bindLenis = () => {
-      removeLenisListener?.()
-      // Lenis 写入滚动位置后立即同步相机，不等下一帧的原生 scroll 事件。
-      removeLenisListener = window.lenis?.on('scroll', update)
-    }
+    const onScroll = () => update()
+    const handleRefresh = () => update(true)
 
     // 入场动画按文档中的最终位置测量，不能把开场放大的坐标缓存下来。
     ScrollTrigger.addEventListener('refreshInit', resetCamera)
-    ScrollTrigger.addEventListener('refresh', update)
+    ScrollTrigger.addEventListener('refresh', handleRefresh)
 
     measure()
     if (!unavailable) {
@@ -158,21 +219,17 @@ const BokehEntry = () => {
     observer.observe(image)
     document.fonts?.ready.then(scheduleMeasure)
     const refresh = requestAnimationFrame(() => ScrollTrigger.refresh())
-    window.addEventListener('scroll', update, { passive: true })
-    window.addEventListener('lenis-ready', bindLenis)
-    bindLenis()
+    window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', scheduleMeasure)
     return () => {
       disposed = true
       cancelAnimationFrame(frame)
       cancelAnimationFrame(refresh)
       observer.disconnect()
-      window.removeEventListener('scroll', update)
-      window.removeEventListener('lenis-ready', bindLenis)
-      removeLenisListener?.()
+      window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', scheduleMeasure)
       ScrollTrigger.removeEventListener('refreshInit', resetCamera)
-      ScrollTrigger.removeEventListener('refresh', update)
+      ScrollTrigger.removeEventListener('refresh', handleRefresh)
       pages.style.transform = ''
       pages.classList.remove('notebook-opening')
       pages.style.removeProperty('--opening-text-opacity')
@@ -182,6 +239,9 @@ const BokehEntry = () => {
       art.style.transform = ''
       art.style.transformOrigin = ''
       root.classList.remove('bokeh-intro-active')
+      header?.style.removeProperty('--bokeh-nav-paper')
+      header?.style.removeProperty('--bokeh-nav-ink')
+      // 兼容热更新前旧版本写在 :root 上的值。
       root.style.removeProperty('--bokeh-nav-paper')
       root.style.removeProperty('--bokeh-nav-ink')
       bokeh?.dispose()

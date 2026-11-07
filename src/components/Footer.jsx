@@ -3,10 +3,6 @@ import React from 'react'
 const Footer = () => {
   const scrollToTop = () => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (window.lenis) {
-      window.lenis.scrollTo(0, { immediate: reduceMotion })
-      return
-    }
     window.scrollTo({
       top: 0,
       behavior: reduceMotion ? 'instant' : 'smooth',

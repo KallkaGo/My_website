@@ -14,7 +14,7 @@ const Contact = () => {
   })
   const [loading, setLoading] = useState(false)
   const [statusMessage, setStatusMessage] = useState(null)
-  const containerRef = useGsapReveal({ y: 30, stagger: 0.15 })
+  const containerRef = useGsapReveal({ stagger: 0.15 })
   const motionRef = useRef({ x: 0, y: 0, hover: 0 })
 
   const handleChange = (e) => {

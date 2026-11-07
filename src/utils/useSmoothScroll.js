@@ -1,22 +1,10 @@
 import { useEffect } from 'react'
-import Lenis from 'lenis'
 
+// 原生滚动由浏览器合成器驱动；锚点使用浏览器的 smooth scroll。
 export const useSmoothScroll = (enabled = true) => {
   useEffect(() => {
     if (!enabled) return
 
-    // 使用浏览器的高精度 rAF 时间；不要再从 GSAP ticker 重复驱动。
-    const lenis = new Lenis({
-      autoRaf: true,
-      smoothWheel: true,
-      lerp: 0.12,
-      wheelMultiplier: 1.1,
-      touchMultiplier: 1,
-    })
-    window.lenis = lenis
-    window.dispatchEvent(new Event('lenis-ready'))
-
-    // ScrollTrigger 已监听原生 scroll；本页的入场动画无需再手动 update。
     const handleAnchorClick = (e) => {
       if (e.defaultPrevented || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return
       const anchor = e.target.closest('a')
@@ -33,20 +21,17 @@ export const useSmoothScroll = (enabled = true) => {
           const offset = scrollTarget.closest('.notebook-pages') && opening
             ? Math.max(0, opening.getBoundingClientRect().bottom)
             : 0
-          lenis.scrollTo(scrollTarget, {
-            immediate: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-            offset,
+          const immediate = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          const scrollMarginTop = Number.parseFloat(getComputedStyle(scrollTarget).scrollMarginTop) || 0
+          window.scrollTo({
+            top: scrollTarget.getBoundingClientRect().top + window.scrollY + offset - scrollMarginTop,
+            behavior: immediate ? 'instant' : 'smooth',
           })
         }
       }
     }
 
     document.addEventListener('click', handleAnchorClick)
-
-    return () => {
-      document.removeEventListener('click', handleAnchorClick)
-      lenis.destroy()
-      if (window.lenis === lenis) window.lenis = null
-    }
+    return () => document.removeEventListener('click', handleAnchorClick)
   }, [enabled])
 }

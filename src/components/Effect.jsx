@@ -5,7 +5,7 @@ import SectionWrapper from '../hoc'
 import { useGsapReveal } from '../utils/useGsapReveal'
 
 const MouseEffect = () => {
-  const containerRef = useGsapReveal({ y: 30, stagger: 0.1 })
+  const containerRef = useGsapReveal({ stagger: 0.1 })
   const motionRef = useRef({ x: 0, y: 0, hover: 0 })
 
   return (

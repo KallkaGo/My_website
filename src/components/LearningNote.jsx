@@ -25,7 +25,7 @@ const LearningNoteEntry = ({ index, title, description, image, articlelink }) =>
 )
 
 const LearningNote = () => {
-  const containerRef = useGsapReveal({ y: 30, stagger: 0.1 })
+  const containerRef = useGsapReveal({ stagger: 0.1 })
   return (
     <div ref={containerRef} className='notebook-notes'>
       <div className='gsap-reveal notebook-section-heading'>

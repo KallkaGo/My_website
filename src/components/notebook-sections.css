@@ -109,8 +109,11 @@
 }
 
 .notebook-tech-icon-mono {
-  filter: brightness(0);
+  display: block;
+  background-color: currentColor;
   opacity: .78;
+  -webkit-mask: var(--tech-icon) center / contain no-repeat;
+  mask: var(--tech-icon) center / contain no-repeat;
 }
 
 .notebook-note-list {
