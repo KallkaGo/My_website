@@ -34,14 +34,27 @@ const Works = () => {
       <div id='project-archive' hidden={!expanded} className='project-archive'>
         <div className='archive-heading'><p className='section-kicker'>More pages from the notebook</p><h3 className='section-title'>Keep exploring.</h3></div>
         <div className='archive-grid'>
-          {otherProjects.map((project, index) => <article key={project.name} className='archive-project'>
-            <a href={project.source_code_link} target='_blank' rel='noopener noreferrer'>
-              <div className='print-mount'><div className='print-image-window'><img src={project.image} alt={project.name} loading='lazy' decoding='async' style={project.imageScale ? { '--image-scale': project.imageScale } : undefined} /></div></div>
-              <div className='archive-project-title'><h4><span>{String(index + 3).padStart(2, '0')} /</span> {project.name}</h4><span aria-hidden='true'>↗</span></div>
-              <p>{project.description}</p>
-              <div className='archive-project-tags'>{project.tags.map((tag) => <span key={tag.name}>{tag.name}</span>)}<span>{project.type === 'preview' ? 'Demo' : 'Code'} ↗</span></div>
-            </a>
-          </article>)}
+          {otherProjects.map((project, index) => {
+            const ended = project.active === false
+            const Wrapper = ended ? 'div' : 'a'
+            const linkProps = ended ? {} : { href: project.source_code_link, target: '_blank', rel: 'noopener noreferrer' }
+
+            return <article key={project.name} className={'archive-project' + (ended ? ' archive-project-ended' : '')}>
+              <Wrapper {...linkProps}>
+                <div className='print-mount'><div className='print-image-window'><img src={project.image} alt={project.name} loading='lazy' decoding='async' style={project.imageScale ? { '--image-scale': project.imageScale } : undefined} /></div></div>
+                <div className='archive-project-title'>
+                  <h4><span>{String(index + 3).padStart(2, '0')} /</span> {project.name}</h4>
+                  {ended ? <span className='archive-project-status'>ENDED</span> : <span aria-hidden='true'>↗</span>}
+                </div>
+                <p>{project.description}</p>
+                <div className='archive-project-tags'>
+                  {project.tags.map((tag) => <span key={tag.name}>{tag.name}</span>)}
+                  {!ended && <span>{project.type === 'preview' ? 'Demo' : 'Code'} ↗</span>}
+                </div>
+                {ended && <p className='archive-project-ended-note'>This experience has ended.</p>}
+              </Wrapper>
+            </article>
+          })}
         </div>
       </div>
     </div>

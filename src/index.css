@@ -140,11 +140,14 @@ img { display: block; max-width: 100%; -webkit-user-drag: none; }
 .archive-project a { display: block; }
 .archive-project .print-image-window { aspect-ratio: 1.7; }
 .archive-project-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 15px; }
-.archive-project-title h4 { font-size: 15px; font-weight: 600; letter-spacing: -.035em; }
-.archive-project-title h4 span { font-size: 11px; font-weight: 400; color: var(--muted); }
-.archive-project p { color: var(--muted); margin: 9px 0 14px; font-size: 12px; line-height: 1.8; }
-.archive-project-tags { display: flex; flex-wrap: wrap; gap: 8px 13px; padding-top: 10px; border-top: 1px solid var(--line); font-family: "JetBrains Mono", monospace; color: var(--muted); font-size: 9px; }
-.archive-project-tags span:last-child { margin-left: auto; color: var(--accent); }
+.archive-project-title h4 { font-size: 18px; font-weight: 600; letter-spacing: -.035em; }
+.archive-project-title h4 span { font-size: 12px; font-weight: 400; color: var(--muted); }
+.archive-project-ended .archive-project-title { flex-wrap: wrap; align-items: center; gap: 8px; }
+.archive-project-status { flex-shrink: 0; padding: 4px 8px; border: 1px solid currentColor; border-radius: 2px; color: var(--accent); font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 500; line-height: 1.4; letter-spacing: .1em; transform: rotate(-4deg); }
+.archive-project p { color: var(--muted); margin: 9px 0 14px; font-size: 14px; line-height: 1.8; }
+.archive-project-tags { display: flex; flex-wrap: wrap; gap: 8px 13px; padding-top: 10px; border-top: 1px solid var(--line); font-family: "JetBrains Mono", monospace; color: var(--muted); font-size: 12px; }
+.archive-project:not(.archive-project-ended) .archive-project-tags span:last-child { margin-left: auto; color: var(--accent); }
+.archive-project p.archive-project-ended-note { margin: 10px 0 0; font-size: 13px; font-style: italic; }
 .notebook-loader { background: var(--paper); color: var(--ink); }
 
 @keyframes loader-rise { from { opacity: 0; transform: translate3d(0,14px,0); } to { opacity: 1; transform: translate3d(0,0,0); } }
